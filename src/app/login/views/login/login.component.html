@@ -1,0 +1,30 @@
+<div class="h-full w-full flex flex-row">
+    <div class="flex justify-content-center w-6 h-full login-left">
+        <img class = "max-w-24rem relative m-auto opacity-80" src="assets/images/logo_white.png"/>
+    </div>
+    <div class="w-6 h-full flex align-items-center flex-column justify-content-center min-h-full p-fluid">
+        <div class="flex align-items-center flex-column justify-content-center">
+            <h3>Retrieval Augmented Generation</h3>
+        </div>
+        <div class="mt-6 w-5">
+            <div class="p-float-label field">
+                <input id="username" type="username" pInputText required [(ngModel)]="user" (keyup.enter)="login()"/>
+                <label for="username">Username</label>
+            </div>
+            <div class="p-float-label mt-5 field">
+                <input id="password" type="password" pInputText required [(ngModel)]="password" (keyup.enter)="login()"/>
+                <label for="password">Contraseña</label>
+            </div>
+            <button pButton class = "p-button mt-4" label="Login" [disabled]="user == '' || password == ''" (click)="login()"></button>   
+        </div>
+        <div class="mt-6 flex align-items-center flex-column justify-content-center">
+            <div class="w-7 text-gray-500">If you need us to support you to resolve doubts or technical problems, send us an email to <a class = "text-gray-700" [href]="getEmailRef()">{{getEmail()}}</a>.</div>
+        </div>
+    </div>
+</div>
+
+<p-toast position="bottom-center"></p-toast>
+
+<div class="loadWrapper flex align-items-center flex-column justify-content-center" *ngIf="isloading">
+    <p-progressSpinner></p-progressSpinner>
+</div>

@@ -1,0 +1,71 @@
+$button-primary: #0070AD;
+$button-secondary: #FF5770;
+
+.p-button.p-button-outlined {
+  color: $button-primary !important;
+  border:0px solid $button-primary !important;
+}
+
+.p-button-secondary.p-button-outlined {
+  color: $button-secondary !important;
+  border:0px solid $button-secondary !important;
+}
+
+.p-button.p-button-text {
+  color: $button-primary !important;
+}
+
+.p-button.p-button-text.p-button-danger {
+  color: $button-secondary !important;
+}
+
+.p-button-outlined {   
+    height: 45px;
+}
+
+.p-button-outlined:focus {
+  background: none !important;
+}
+
+.p-button {
+  background-color: $button-primary;
+  height: 45px;
+  min-width: 150px;
+}
+
+.p-card:hover {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+.material-icons {
+  font-family: 'Material Icons'; 
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  
+/* Support for all WebKit browsers. */
+-webkit-font-smoothing: antialiased;
+/* Support for Safari and Chrome. */
+text-rendering: optimizeLegibility;
+
+/* Support for Firefox. */
+-moz-osx-font-smoothing: grayscale;
+
+/* Support for IE. */
+font-feature-settings: 'liga';
+}
+
+.material-icons.outlined { font-family: 'Material Icons Outlined'; }
+.material-icons.size-18 { font-size: 18px; }
+.material-icons.size-24 { font-size: 24px; }
+.material-icons.size-36 { font-size: 36px; }
+.material-icons.size-48 { font-size: 48px; }
+.material-icons.color-gray { color: rgba(0, 0, 0, 0.6); }

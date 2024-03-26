@@ -1,1 +1,172 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,600,700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons+Outlined");
+
+@import './assets/scss/master';
+
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: "Ubuntu", sans-serif; 
+    font-size: 0.85rem;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+h3{
+    color: #272936;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Estilos de la ventana fileupload */ 
+.p-fileupload-buttonbar {
+    border: 0px !important;
+}
+
+.p-fileupload {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.p-fileupload-content {
+    padding: 0px !important;
+    flex:1;
+}
+
+.p-fileupload-row>div {
+    flex: content !important;
+}
+
+.comment-fill:before {
+    content: url('assets/images/comments.png');
+}
+
+.p-multiselect-header {
+    display: none !important;
+}
+
+.h-1_5rem {
+    height: 1.5rem;
+}
+
+.h-2_5rem {
+    height: 2.5rem;
+}
+
+.w-2_5rem {
+    width: 2.5rem;
+}
+
+.h-1rem {
+    height: 2rem!important;
+}
+
+.ml-auto {
+    margin-left: 10px!important;
+}
+
+.p-component {
+    font-family: "Ubuntu",Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-size: 0.85rem !important;
+    font-weight: 400;    
+}
+
+.p-inputtext {
+    font-family: "Ubuntu",Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-size: 0.85rem !important;
+    font-weight: 400;   
+    height: 42px; 
+}
+
+
+.p-sidebar .p-sidebar-content {
+    padding: 0rem; 
+}
+
+p-autocomplete {
+    span {
+        width: 100%;
+        input { width: 100%; }
+    }
+}
+
+
+.p-menuitem-link {
+    height: 30px;
+}
+
+
+.context-menu-color-0 {
+    height: 20px;
+    width: 25px;
+    border: solid 1px #909090;
+    content: "\274c"; /* use the hex value here... */
+}
+
+.context-menu-color-1 {
+    height: 20px;
+    background-color: #7F7F7F;
+    border: solid 1px #5F5F5F;
+}
+
+.context-menu-color-2 {
+    height: 20px;
+    background-color: #4472C4;
+    border: solid 1px #2452A4;
+}
+
+.context-menu-color-3 {
+    height: 20px;
+    background-color: #FFC000;
+    border: solid 1px #CF9000;
+}
+
+.context-menu-color-3b {
+    height: 20px;
+    background-color: #FFC099;
+    border: solid 1px #CF9099;
+}
+
+
+.context-menu-color-4 {
+    height: 20px;
+    background-color: #FF0000;
+    border: solid 1px #CF0000;
+}
+
+.context-menu-color-5 {
+    height: 20px;
+    background-color: #FFFF00;
+    border: solid 1px #CFCF00;
+}
+
+.context-menu-color-6 {
+    height: 20px;
+    background-color: #CCCCFF;
+    border: solid 1px #ACACCF;
+}
+
+.context-menu-color-7 {
+    height: 20px;
+    background-color: #00B050;
+    border: solid 1px #009030;
+}   
+
+.context-menu-color-8 {
+    height: 20px;
+    background-color: #bebebe;
+    border: solid 1px #888888;
+}   
+
+.row-color-1 { background-color: #7F7F7F !important; }
+.row-color-2 { background-color: #4472C4 !important; }
+.row-color-3 { background-color: #FFC000 !important; }
+.row-color-3b{ background-color: #FFC099 !important; }
+.row-color-4 { background-color: #FF0000 !important; }
+.row-color-5 { background-color: #FFFF00 !important; }
+.row-color-6 { background-color: #CCCCFF !important; }
+.row-color-7 { background-color: #00B050 !important; }
+.row-color-8 { background-color: #bebebe !important; }

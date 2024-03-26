@@ -1,0 +1,16 @@
+@import "./src/assets/scss/master";
+
+.private-layout {
+  ::ng-deep {
+    .p-sidebar {
+      box-shadow: none;
+      background-color: $primary;
+      position: relative;
+      
+    }
+    .p-sidebar-left {
+        top:auto;
+        width: auto;
+    }
+  }
+}

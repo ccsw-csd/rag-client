@@ -1,0 +1,86 @@
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 0px;
+    border: 1px solid #babfc7;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #000000de;
+    background: #f8f8f8;
+    transition: none;
+
+    input, .p-dropdown, .p-multiselect {
+        height: 1.6rem;
+        padding-left: 0.25rem;
+
+        span, 
+        .p-multiselect-label {
+            padding-top: 0.15rem;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .p-dropdown-trigger,
+        .p-multiselect-trigger {
+            padding-right: 5px;
+            width: auto;
+        }
+
+
+        .p-dropdown-clear-icon,
+        .p-multiselect-clear-icon {
+            margin-top: 0.15rem;
+            margin-right: 5px;
+            position: initial;
+        }
+
+        .p-dropdown-label {
+            padding-right: 0px;
+        }
+        
+    }    
+}
+
+.p-datatable .p-datatable-thead>tr:nth-of-type(2)>th {
+    padding: 0.25rem;
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
+    height: 2.5rem;
+}
+
+.p-datatable-scrollable .p-datatable-wrapper {
+    position: relative;
+    overflow: auto;
+    border: 1px solid #babfc7;
+}
+
+.no-border.p-datatable-scrollable .p-datatable-wrapper {
+    position: relative;
+    overflow: auto;
+    border: none;
+}
+
+.p-datatable .p-sortable-column.p-highlight {
+    background: #f8f8f8;
+    color: #000000de;
+}
+
+.top-header {
+    padding: 8px 3px 8px 3px; 
+    height: 34px;
+    margin-bottom: 0px !important;
+}
+
+.foot-header {
+    padding: 8px 3px 8px 3px; 
+    margin-bottom: 0px !important;
+    border-top: 1px solid #babfc7;
+}
+
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr {
+    cursor: pointer;
+}
+
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
+    background: rgba(200, 200, 255, 0.5);
+}

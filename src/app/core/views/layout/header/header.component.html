@@ -1,0 +1,67 @@
+<div class="toolbar-header">
+    <p-toolbar>
+      <div class="header-button p-toolbar-group-left">
+        <button pButton pRipple type="button" icon="pi pi-bars" (click)="toggleSideNav()" class="p-button-rounded"></button>
+        <div class="flex align-items-center justify-content-start p-fluid">
+          <div class="ml-1 text-xl text-white" routerLink="/welcome">
+            <b>Retrieval Augmented Generation</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-button p-toolbar-group-right gap-2">
+
+        <div class="p-buttonset" class="flex flex-row text-white cursor-pointer gap-2 align-items-center" (click)="menu.toggle($event)">
+  
+          <img *ngIf="userPicture != null" [src]="userPicture" class="w-2rem h-2rem" style="border-radius: 50%;" />
+          <div *ngIf="userPicture == null" class="header-icon"><i class="pi pi-user"></i></div>
+  
+          <span>{{getName()}}</span>
+  
+          <div class="header-icon">
+            <span class="pi pi-angle-down"></span>
+          </div>
+        </div>
+      </div>
+    </p-toolbar>
+</div>
+
+
+<p-overlayPanel #menu>
+  <div class="flex flex-column pt-3 pb-2">
+
+      <div class="flex flex-row w-full align-items-center gap-4 pl-4 pr-4">              
+        <img *ngIf="userPicture != null" [src]="userPicture" class="w-4rem h-4rem" style="border-radius: 50%;" />
+
+
+        <div *ngIf="userPicture == null" class="header-icon">
+          <span class="pi pi-user" style="color: lightgray; font-size: 3rem"></span>
+        </div>
+
+        <div class="flex flex-1 flex-column gap-2">
+          <span><b>{{getName()}}</b></span>
+          <span class="text-xs">{{getEmail()}}</span>
+        </div>
+      </div>
+
+      <div class="w-full b-0 mt-4 mb-2" style="border-top-color: #cdcdcd; border-top-style: solid; border-top-width: 1px"></div>
+
+      <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu" (click)="emailRef()">
+        <span class="pi pi-question-circle"></span>
+        <span>Feedback</span>
+      </div>
+
+
+      <div class="w-full b-0 mt-2 mb-2" style="border-top-color: #cdcdcd; border-top-style: solid; border-top-width: 1px"></div>
+
+      <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu" (click)="apps()">
+        <span class="pi pi-th-large"></span>
+        <span>Other Apps</span>
+      </div>
+
+      <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu" (click)="logout()">
+        <span class="pi pi-sign-out"></span>
+        <span>Sign out</span>
+      </div>
+  </div>
+</p-overlayPanel>

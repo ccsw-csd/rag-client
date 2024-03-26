@@ -1,0 +1,54 @@
+@import "./src/assets/scss/master";
+
+::ng-deep {
+    .toolbar-header {
+        height: 56px; 
+
+        .p-toolbar {
+            background-color: #272936;
+            border-radius: 0px !important;
+
+            padding-top: 5px;
+            padding-bottom: 6px;;
+        }
+    }
+
+    .header-button {
+        height: 45px; 
+
+        .p-button {
+            min-width: 0px;
+            background: transparent;
+
+            .p-avatar{
+                background: transparent;
+            }
+        }
+
+        .p-button:enabled:focus {
+            background: transparent;
+        }
+
+        .p-button:enabled:hover {
+            background: transparent;
+        }
+    }
+
+    .p-overlaypanel-content{
+        padding: 0 !important;
+    }
+
+    .header-icon .pi {
+        font-size: 21px;
+        font-style: normal;
+        color: #dedede;
+    }
+
+    .item-menu {
+        padding: 12px 0px;
+    }
+
+    .item-menu:hover {
+        background-color: #ededed;
+    }
+}

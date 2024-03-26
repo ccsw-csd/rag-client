@@ -1,0 +1,65 @@
+@import "./src/assets/scss/master";
+
+
+::ng-deep .p-sidebar .p-sidebar-header {
+  padding: 0px;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-panel {
+  border: 0px !important;
+  box-shadow: none;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-content {
+  padding: 0px;
+}
+
+::ng-deep .menu {
+  
+  background-color: $primary;
+  border:none;
+  width: 200px;
+  margin-left: 0px;
+  padding-left: 0px;
+  
+  
+  a {
+    background-color: $primary !important;
+    color: #15011D !important;
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem !important;
+    font-size: 15px !important;
+    height: 40px !important;
+  }
+
+
+  .p-panelmenu-content {
+    background-color: $primary;
+    color: #15011D !important;
+
+    span {
+      color: #15011D !important;
+      padding-left: 15px;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+    }
+  }
+
+  a:not(.p-menuitem-link-active):hover {
+    background-color: rgba(0,0,0,.04) !important;
+  }
+
+  a:not(.p-menuitem-link-active) {
+    border-left: 6px solid $primary !important;
+    color: #15011D !important;
+
+  }
+
+  .p-menuitem-link-active {
+    font-weight: bold !important;
+    border-left: 6px solid #0070AD !important;
+    border-radius: 0px !important;
+    color: #0070AD !important;
+  }
+
+}
+

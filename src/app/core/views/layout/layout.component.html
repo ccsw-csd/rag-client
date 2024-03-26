@@ -1,0 +1,14 @@
+<div class="private-layout flex flex-column h-full">
+    <app-header (navOpenEvent)="toggleMenu()">
+    </app-header>
+
+    <div class="flex h-full w-full content">        
+        <p-sidebar visible="true" [modal]="false" [showCloseIcon]="false" [(visible)]="visibleSideBar">
+            <app-nav></app-nav>
+        </p-sidebar>
+
+        <div class="flex-1 p-4"> 
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
