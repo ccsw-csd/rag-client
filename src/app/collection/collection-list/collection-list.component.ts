@@ -38,6 +38,10 @@ export class CollectionListComponent {
     });
   }
 
+  editCollection(collection: Collection){
+    
+  }
+
 
   resizeTable() {
     if (document.getElementById('p-slideMenu')) {

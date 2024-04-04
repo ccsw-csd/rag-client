@@ -18,8 +18,11 @@
             </th>
         
             <th pFrozenColumn class="flex-none w-12rem align-items-center justify-content-center top-header">
-                <span>Description</span>
+              <span>Description</span>
             </th>
+            <th pFrozenColumn class="flex-none w-5rem align-items-center justify-content-center top-header">
+              <span>Actions</span>
+            </th> 
           </tr>
         </ng-template>
         
@@ -29,7 +32,10 @@
               {{ collection.name }}
             </td>
             <td pFrozenColumn class="flex-none w-12rem border-none">
-                {{ collection.description }}
+              {{ collection.description }}
+            </td>
+            <td pFrozenColumn class="flex-none w-5rem  border-none">
+              <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="editCollection(collection)"></button>
             </td>
           </tr>
         </ng-template>
