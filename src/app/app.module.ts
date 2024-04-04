@@ -17,6 +17,7 @@ import { RefreshTokenResolverService } from './core/services/refresh-token-resol
 import { LoginModule } from './login/login.module';
 import { StorageModule } from './storage/storage.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CollectionModule } from './collection/collection.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginModule,
     ChatModule,
     StorageModule,
-    PreferencesModule
+    PreferencesModule,
+    CollectionModule
   ],
   providers: [
     HttpClientModule,

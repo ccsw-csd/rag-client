@@ -7,6 +7,7 @@ import { PreferencesComponent } from './preferences/views/preferences/preference
 import { StorageComponent } from './storage/views/storage/storage.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { AuthGuard } from './core/services/auth.guard';
+import { CollectionListComponent } from './collection/collection-list/collection-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'main', component: ChatComponent },
       { path: 'storage', component: StorageComponent},
       { path: 'preferences', component: PreferencesComponent},
+      { path: 'collections', component: CollectionListComponent},
       { path: '**', redirectTo: 'storage', pathMatch: 'full' },
     ]
   },  
