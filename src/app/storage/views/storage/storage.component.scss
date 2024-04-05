@@ -4,4 +4,20 @@
     .p-fieldset-legend {
         background-color: lightgrey !important;
     }
+
+    button.p-tree-toggler {
+        visibility: hidden !important;
+        width: 0px !important;
+    }
+
+    .pi-ia {
+        background-image: url(../../../../assets/images/icons8-ai.png);
+        width: 16px;
+        height: 16px;
+    }
+
+    .p-menuitem-icon {
+        margin-top: -4px !important;
+    }
 }
+

@@ -2,15 +2,61 @@
 
     <div class="w-20rem h-full">
         <p-fieldset styleClass="h-full" legend="Documents"> 
-            <p-listbox [listStyle]="{'height': 'calc(100vh - 180px)'}" [options]="documents" [(ngModel)]="selectedDocument" optionLabel="name"></p-listbox>
+            <p-tree [value]="files" class="w-full" [style]="{'height': 'calc(100vh - 180px)', 'max-height': 'none'}" [contextMenu]="cmTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="selectDocument($event)" emptyMessage="Ningún documento cargado">
+                <ng-template let-node pTemplate="default">
+                    <div class="w-12rem flex flex-row">
+                        <div class="flex-1">{{ node.label }}</div>
+                        <div *ngIf="node.data.status == 'PROCESING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
+                        <div *ngIf="node.data.status == 'CHUNK'" class="flex-none w-1rem pi pi-th-large text-400"></div>
+                        <img *ngIf="node.data.status == 'EMBEDDINGS'" class="flex-none w-1rem" src="/assets/images/icons8-ai.png">
+                        
+                        
+                    </div>
+                </ng-template>
+            </p-tree>
         </p-fieldset> 
     </div>
 
     <div class="flex-1 h-full">
         <p-fieldset styleClass="h-full" legend="Content">
-            <p-editor [(ngModel)]="text" [style]="{ height: '320px' }"></p-editor>
+
+            <div class="flex flex-1 flex-row">
+
+                <p-tabView class="flex-1">
+
+                    <p-tabPanel header="Original Content">
+                        <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 180px)" (valueChanged)="onCodeChanged()"></ngs-code-editor>
+
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Generated Content">
+
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Personal Notes">
+
+                    </p-tabPanel>
+
+
+                </p-tabView>
+
+                <div class="w-20rem">
+                    <h2>Document Info</h2>
+                    
+                </div>
+
+            </div>
+
         </p-fieldset>
     </div>
-
     
 </div>
+
+<p-contextMenu #cmTree [model]="itemsContextMenuTree"></p-contextMenu>
+
+<p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
+    <ng-template pTemplate="footer">
+        <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+        <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

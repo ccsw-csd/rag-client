@@ -12,6 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import {MenuModule} from 'primeng/menu';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -39,7 +41,8 @@ import { NavComponent } from './views/layout/nav/nav.component';
     MenuModule,
     SlideMenuModule,
     PanelMenuModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ProgressSpinnerModule
   ],
 })
 export class CoreModule { }

@@ -23,7 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, 
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -32,7 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginModule,
     ChatModule,
     StorageModule,
-    PreferencesModule
+    PreferencesModule,
   ],
   providers: [
     HttpClientModule,

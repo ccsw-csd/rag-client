@@ -6,13 +6,12 @@ import { NavigatorService } from '../../services/navigator.service';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
 
-  @Output() toggleMenuEmitter: EventEmitter<any> = new EventEmitter();
-
   visibleSideBar = false;
+  isLoading : boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,13 +21,21 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
+    this.navigatorService.getLoadingChangeEmitter().subscribe(loading => {
+      this.isLoading = loading;
+    });
+  
     this.authService.registerAccess().subscribe();
 
     this.activatedRoute.data.subscribe(response => { 
       this.authService.refreshToken(response.credentials);
       //this.loadDetailedUserInfo(response);
+
     }); 
+
+
+      
     
   }
 
@@ -50,5 +57,7 @@ export class LayoutComponent implements OnInit {
 
     this.navigatorService.emitNavigatorChangeEvent(this.visibleSideBar);
   }
+
+
 
 }

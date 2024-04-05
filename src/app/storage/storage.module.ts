@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StorageComponent } from './views/storage/storage.component';
 import { FieldsetModule } from 'primeng/fieldset';
-import {ListboxModule} from 'primeng/listbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditorModule } from 'primeng/editor';
-
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { TreeModule } from 'primeng/tree';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -14,10 +16,15 @@ import { EditorModule } from 'primeng/editor';
   imports: [
     CommonModule,
     FieldsetModule,
-    ListboxModule,
+    TreeModule,
+    ConfirmDialogModule,
+    ContextMenuModule,
     FormsModule,
     ReactiveFormsModule,
-    EditorModule,
+    TabViewModule,
+    CodeEditorModule.forRoot({
+      baseUrl: 'assets/monaco'
+    }),
   ]
 })
 export class StorageModule { }

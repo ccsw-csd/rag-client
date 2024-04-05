@@ -1,3 +1,7 @@
+<div *ngIf="isLoading" class="loadWrapper flex align-items-center flex-column justify-content-center">
+    <p-progressSpinner styleClass="w-14rem h-14rem" strokeWidth="2" animationDuration="1.5s"></p-progressSpinner>
+</div>
+
 <div class="private-layout flex flex-column h-full">
     <app-header (navOpenEvent)="toggleMenu()">
     </app-header>
