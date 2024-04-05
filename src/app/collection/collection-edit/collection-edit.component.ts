@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Collection } from '../model/Collection';
+import { CollectionService } from '../collection.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CollectionEditComponent {
 
   constructor(
     private ref: DynamicDialogRef,
+    private collectionService: CollectionService,
     private fb: FormBuilder,
     private config: DynamicDialogConfig,
 
@@ -58,7 +60,10 @@ export class CollectionEditComponent {
     if(this.profileForm.valid){
       this.loading = true;
       this.formToCollectionObject();
-      this.name = this.profileForm.get('name').value;
+      this.name = this.collection.name;
+      let id = this.collection.id;
+
+      this.collectionService.update(id, this.name, this.description);
     }
         
   }

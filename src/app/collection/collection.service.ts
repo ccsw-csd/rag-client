@@ -14,4 +14,8 @@ export class CollectionService {
   loadCollections():Observable<Collection[]>{
     return this.http.get<Collection[]>(environment.server+"/collection/");
   }
+
+  update(id: number, name: string, description: string){
+    
+  }
 }

@@ -5,6 +5,8 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CollectionEditComponent } from './collection-edit/collection-edit.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -17,7 +19,10 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     CommonModule,
     TableModule,
     ButtonModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    ReactiveFormsModule,
+    FormsModule,
+    InputTextModule
   ]
 })
 export class CollectionModule { }
