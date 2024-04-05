@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PreferencesComponent } from './views/preferences/preferences.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 
 
 @NgModule({
   declarations: [
-    PreferencesComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule
   ]
 })
-export class PreferencesModule { }
+export class DashboardModule { }
