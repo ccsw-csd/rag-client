@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { Collection } from '../model/Collection';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { CollectionService } from '../collection.service';
+import { CollectionEditComponent } from '../collection-edit/collection-edit.component';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: './collection-list.component.html',
-  styleUrls: ['./collection-list.component.scss']
+  styleUrls: ['./collection-list.component.scss'],
+  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 })
 export class CollectionListComponent {
 
@@ -17,6 +21,8 @@ export class CollectionListComponent {
   constructor(
     private navigatorService: NavigatorService,
     private collectionService: CollectionService,
+    private ref: DynamicDialogRef,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +45,26 @@ export class CollectionListComponent {
   }
 
   editCollection(collection: Collection){
-    
+    let header = 'Edit collection';
+    this.ref = this.dialogService.open(CollectionEditComponent,{
+      width:'75vw',
+      data:{
+        collection: collection,
+        name: collection.name,
+        description: collection.description,
+      },
+      closable:false,
+      showHeader: true,
+      header: header
+    });
+    this.onClose();
+  }
+
+
+  onClose(): void {
+    this.ref.onClose.subscribe((results: any) => {
+      this.loadCollections();
+    });
   }
 
 
