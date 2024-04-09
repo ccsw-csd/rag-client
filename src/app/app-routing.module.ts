@@ -4,6 +4,7 @@ import { LayoutComponent } from './core/views/layout/layout.component';
 import { LoginComponent } from './login/views/login/login.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { AuthGuard } from './core/services/auth.guard';
+import { CollectionListComponent } from './collection/collection-list/collection-list.component';
 import { DashboardComponent } from './dashboard/views/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -14,6 +15,10 @@ const routes: Routes = [
     resolve: {credentials: RefreshTokenResolverService},
     canActivate: [AuthGuard],
     children: [
+      { path: 'main', component: ChatComponent },
+      { path: 'storage', component: StorageComponent},
+      { path: 'preferences', component: PreferencesComponent},
+      { path: 'collections', component: CollectionListComponent},
       { path: 'main', component: DashboardComponent },
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]

@@ -14,6 +14,7 @@ import { HttpInterceptorService } from './core/services/http-interceptor.service
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { LoginModule } from './login/login.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CollectionModule } from './collection/collection.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
@@ -28,6 +29,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
     ReactiveFormsModule,
     CoreModule,
     LoginModule,
+    ChatModule,
+    StorageModule,
+    PreferencesModule,
+    CollectionModule
     DashboardModule,
   ],
   providers: [
