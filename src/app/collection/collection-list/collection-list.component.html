@@ -3,10 +3,11 @@
         <h3 class="p-0 m-0 mb-2">
             Collections
         </h3>
+        <button pButton pRipple type="button" icon="pi pi-plus-circle" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="createCollection()"></button>
     </div>
-  </div>
+</div>
   
-  <p-table id="DataTable" [style]="{'height':'calc(100vh - 175px)','width':tableWidth}"  
+<p-table id="DataTable" [style]="{'height':'calc(100vh - 175px)','width':tableWidth}"  
          [scrollable]="true" scrollHeight="flex" selectionMode="single" 
          [value]="collections" [responsive]="true" 
          [rows]="collections.length" sortField="name" [sortOrder]="1">

@@ -28,25 +28,42 @@ export class CollectionEditComponent {
 
   ngOnInit(): void{
     this.loading = false;
-    this.name = this.config.data.name;
-    this.description = this.config.data.description;
-    this.collection = this.config.data.collection;
+    if(this.config.data.name != null){
+      this.name = this.config.data.name;
+      this.description = this.config.data.description;
+      this.collection = this.config.data.collection;
+    }else{
+      this.collection = new Collection();
+      this.collection.name = "";
+      this.collection.description = "";
+    }
+
     this.setFormGroup();
+    
   }
 
   setFormGroup(){
+    if(this.collection.name != null){
     this.profileForm =this.fb.group({
       name: [this.collection.name,Validators.required],
       description: [this.collection.description, Validators.required]
     },{
     });
 
+  }else{
+    this.profileForm =this.fb.group({
+      name: ["",Validators.required],
+      description: ["", Validators.required]
+    },{
+    });
+  }
+
     this.fillInputs();
   }
 
   formToCollectionObject(){
-    this.collection.name = this.profileForm.get('name').value;
-    this.collection.description = this.profileForm.get('description').value;
+    this.collection.name = this.profileForm.value.name;
+    this.collection.description = this.profileForm.value.description;
   }
 
   fillInputs(){
@@ -61,13 +78,15 @@ export class CollectionEditComponent {
       this.loading = true;
       this.formToCollectionObject();
 
-      this.collectionService.update(this.collection);
+      this.collectionService.save(this.collection).subscribe();
       this.closeWindow();
     }
         
   }
 
   closeWindow(){
-    this.ref.close();
+    setTimeout(() => {
+      this.ref.close({ toRefresh: true });
+    }, 100);
   }
 }

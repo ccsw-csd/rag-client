@@ -60,6 +60,22 @@ export class CollectionListComponent {
     this.onClose();
   }
 
+  createCollection(){
+    let header = 'New collection';
+    this.ref = this.dialogService.open(CollectionEditComponent,{
+      width:'75vw',
+      data:{
+        collection: null,
+        name: null,
+        description: null,
+      },
+      closable:false,
+      showHeader: true,
+      header: header
+    });
+    this.onClose();
+  }
+
 
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
