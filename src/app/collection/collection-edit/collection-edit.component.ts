@@ -60,10 +60,9 @@ export class CollectionEditComponent {
     if(this.profileForm.valid){
       this.loading = true;
       this.formToCollectionObject();
-      this.name = this.collection.name;
-      let id = this.collection.id;
 
-      this.collectionService.update(id, this.name, this.description);
+      this.collectionService.update(this.collection);
+      this.closeWindow();
     }
         
   }
