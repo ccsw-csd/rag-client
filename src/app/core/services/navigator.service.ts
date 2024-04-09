@@ -6,8 +6,12 @@ import { EventEmitter, Injectable } from "@angular/core";
 export class NavigatorService {
 
   navchange: EventEmitter<boolean> = new EventEmitter();
+  loadchange: EventEmitter<boolean> = new EventEmitter(true);
 
-  constructor() {}
+  private cancelLoading : any = null;
+
+  constructor() {    
+  }
 
   emitNavigatorChangeEvent(toogleMenu: boolean) {
     this.navchange.emit(toogleMenu);
@@ -16,4 +20,21 @@ export class NavigatorService {
   getNavivagorChangeEmitter() {
     return this.navchange;
   }
+
+  getLoadingChangeEmitter() {
+    return this.loadchange;
+  }
+
+  setLoading(isLoading: boolean) {
+    this.loadchange.emit(isLoading);
+
+    if (isLoading) {
+      if (this.cancelLoading != null) clearTimeout(this.cancelLoading);
+
+      this.cancelLoading = setTimeout(() => this.setLoading(false), 60000);
+    }
+    else if (this.cancelLoading != null) clearTimeout(this.cancelLoading);
+  }
+
+
 }

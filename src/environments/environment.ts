@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appCode: 'airag',
+  appCode: 'moodmeter',
   server: 'http://localhost:8080',
   sso: 'http://frparccsw/dev/sso',
   ssoApp: '/dev/apps'

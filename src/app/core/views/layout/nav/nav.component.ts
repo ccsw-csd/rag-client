@@ -28,7 +28,8 @@ export class NavComponent implements OnInit {
       {label: "Chat", routerLink: '/main'},
       {label: "Storage", routerLink: '/storage'},
       {label: "Preferences", routerLink: '/preferences'},
-      {label: "Collections", routerLink: '/collections'}
+      {label: "Collections", routerLink: '/collections'},
+      {label: "Dashboard", routerLink: '/main'},
     ];
 
     
