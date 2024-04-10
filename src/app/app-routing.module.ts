@@ -5,22 +5,23 @@ import { LoginComponent } from './login/views/login/login.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { AuthGuard } from './core/services/auth.guard';
 import { CollectionListComponent } from './collection/collection-list/collection-list.component';
-import { DashboardComponent } from './dashboard/views/dashboard/dashboard.component';
+import { ChatComponent } from './chat/views/chat/chat.component';
+import { StorageComponent } from './storage/views/storage/storage.component';
+import { CollectionResolverService } from './core/services/collection-resolver.service';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: '',
     component: LayoutComponent,
-    resolve: {credentials: RefreshTokenResolverService},
+    resolve: {credentials: RefreshTokenResolverService, collections: CollectionResolverService},
     canActivate: [AuthGuard],
     children: [
       { path: 'main', component: ChatComponent },
       { path: 'storage', component: StorageComponent},
-      { path: 'preferences', component: PreferencesComponent},
       { path: 'collections', component: CollectionListComponent},
-      { path: 'main', component: DashboardComponent },
-      { path: '**', redirectTo: 'main', pathMatch: 'full' },
+      { path: '**', redirectTo: 'storage', pathMatch: 'full' },
     ]
   },  
   { path: '**', redirectTo: '', pathMatch: 'full' }

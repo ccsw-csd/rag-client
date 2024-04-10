@@ -13,7 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import {MenuModule} from 'primeng/menu';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -42,7 +42,8 @@ import { NavComponent } from './views/layout/nav/nav.component';
     SlideMenuModule,
     PanelMenuModule,
     OverlayPanelModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    DropdownModule,
   ],
 })
 export class CoreModule { }

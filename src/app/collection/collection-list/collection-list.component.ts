@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Collection } from '../model/Collection';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
-import { CollectionService } from '../collection.service';
+import { CollectionService } from '../../core/services/collection.service';
 import { CollectionEditComponent } from '../collection-edit/collection-edit.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
@@ -37,7 +37,7 @@ export class CollectionListComponent {
   }
 
   loadCollections(){
-    this.collectionService.loadCollections().subscribe({
+    this.collectionService.findAll().subscribe({
       next: (res: Collection[]) => {
         this.collections = res;
       },

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output  } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output  } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserInfoSSO } from 'src/app/core/models/UserInfoSSO';
 import { environment } from 'src/environments/environment';
+import { Collection } from 'src/app/collection/model/Collection';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,8 @@ export class HeaderComponent implements OnInit {
   navOpen = true;
   isloading : boolean = false;
   @Output() navOpenEvent = new EventEmitter();
+  @Input() collections : Collection[];
+  selectedCollection : Collection;
 
   constructor(
     public auth: AuthService,
@@ -25,6 +28,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.auth.getUserInfo();
     this.userPicture = this.auth.getSSOPicture();
+    this.selectedCollection = this.auth.getProperty("selected-collection");
   }
 
   toggleSideNav() {
@@ -64,5 +68,10 @@ export class HeaderComponent implements OnInit {
   emailRef() {
     window.open("mailto:ccsw.support@"+this.getDomain()+".com?subject=["+environment.appCode+"] Consulta / Feedback");
   }  
+
+  changeCollection(event) : void {
+    this.auth.setProperty("selected-collection", this.selectedCollection);
+    window.location.reload();
+  }
 
 }

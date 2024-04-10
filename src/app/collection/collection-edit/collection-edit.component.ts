@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Collection } from '../model/Collection';
-import { CollectionService } from '../collection.service';
+import { CollectionService } from '../../core/services/collection.service';
 
 
 @Component({

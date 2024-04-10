@@ -13,7 +13,6 @@ import { UserInfoSSO } from '../models/UserInfoSSO';
   providedIn: 'root'
 })
 export class AuthService {
-
   ssoCredentialsKey : string = 'ssoCredentials';
   ssoPictureKey : string = 'ssoPicture';
   ssoToken : string = null;
@@ -175,4 +174,27 @@ export class AuthService {
     if (roles == null || roles.length == 0) return false;
     return roles.indexOf(role) >= 0;
   }  
+
+
+  setProperty(key: string, value: any) {
+    let composedKey = environment.appCode + '_' + key;
+
+    if (environment.production == false) {
+      composedKey += '_Dev';
+    }
+
+    localStorage.setItem(composedKey, JSON.stringify(value));
+  }
+
+  getProperty(key: string) : any{
+    let composedKey = environment.appCode + '_' + key;
+
+    if (environment.production == false) {
+      composedKey += '_Dev';
+    }
+
+    return JSON.parse(localStorage.getItem(composedKey));
+  }
+
+
 }

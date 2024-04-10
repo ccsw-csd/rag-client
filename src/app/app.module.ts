@@ -15,7 +15,9 @@ import { RefreshTokenResolverService } from './core/services/refresh-token-resol
 import { LoginModule } from './login/login.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CollectionModule } from './collection/collection.module';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { StorageModule } from './storage/storage.module';
+import { ChatModule } from './chat/chat.module';
+import { CollectionResolverService } from './core/services/collection-resolver.service';
 
 @NgModule({
   declarations: [
@@ -30,10 +32,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     CoreModule,
     LoginModule,
     ChatModule,
+    CollectionModule,
     StorageModule,
-    PreferencesModule,
-    CollectionModule
-    DashboardModule,
   ],
   providers: [
     HttpClientModule,
@@ -43,6 +43,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     DialogService,
     MessageService,
     RefreshTokenResolverService,
+    CollectionResolverService,
     DatePipe,
     ConfirmationService
   ],
