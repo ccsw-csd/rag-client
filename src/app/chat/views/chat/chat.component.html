@@ -1,1 +1,56 @@
-<p>chat works!</p>
+<div class="flex flex-row h-full mt-0 mb-0 pt-0 pb-0 surface-0">
+
+    <div class="flex-none w-10rem"></div>
+    <div class="flex flex-1 flex-column">
+
+        <div style="height: calc(100vh - 160px); overflow: auto" class="flex flex-column gap-5 mt-3 scrollbar">
+            
+            <div *ngFor="let message of messages" class="w-full pl-8 pr-8">
+            
+                <div class="flex flex-column" [ngClass]="message.user ? 'border-user' : 'border-ia'">
+                    <div class="flex flex-row p-2">
+                        <div *ngIf="message.user == false" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
+                            <img class="flex-none" src="/assets/images/icons8-ai-white.png">
+                        </div>
+                        <div *ngIf="message.user == true" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle text-white" style="background-color: #272936;">
+                            {{getAbbreviatedName(message.author)}}
+                        </div>
+                        <div class="flex flex-1 h-2rem align-items-center pl-4">
+                            <span class="text-base"><b>{{message.author}}</b></span><span class="text-xs pl-3">({{message.date | date: 'dd/MM/yyyy HH:mm'}})</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-1 flex-row pl-2 pr-2">
+                        <div class="flex w-2rem"></div>
+                        <div class="flex flex-1 align-items-center pl-4">
+                            <markdown [data]="message.content" [disableSanitizer]="true"></markdown>
+                        </div>                        
+                    </div>
+
+                </div>
+                
+            
+            </div>
+
+            <div *ngIf="asking" class="flex p-4 justify-content-end w-full">
+                <div class="loader"></div>
+            </div>
+
+        
+        </div>
+        <div style="height: 100px;">        
+            <div class="w-full pl-8 pr-8 pt-4">
+                <span class="p-float-label p-input-icon-right w-full">
+                    <i class="pi pi-send" (click)="onQuestionSubmit($event)"></i>
+                    <input id="question" type="text" pInputText class="p-inputtext-lg w-full" [(ngModel)]="question" (keydown.enter)="onQuestionSubmit($event)" />
+                    <label htmlFor="question">Message IA...</label>
+                </span>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="flex-none" style="width: 5px;"></div>
+
+</div>

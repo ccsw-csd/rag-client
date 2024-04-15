@@ -1,5 +1,5 @@
 
-::ng-deep {
+:host ::ng-deep {
 
     .p-fieldset-legend {
         background-color: lightgrey !important;
@@ -21,7 +21,8 @@
     }
 
     .p-tabview-panels {
-        padding-bottom: 0px;
+        padding: 0px;
+        padding-top: 10px;
     }
 }
 

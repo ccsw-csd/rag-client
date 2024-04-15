@@ -1,100 +1,12 @@
-<div class="flex flex-row w-full h-full gap-3">
-
-    <div class="w-20rem h-full" style="background-color: yellowgreen;">
-        <p-fieldset legend="Documents"> 
-            <p-tree [value]="files" class="w-full" [style]="{'height': 'calc(100vh - 180px)', 'max-height': 'none'}" [contextMenu]="cmTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="selectDocument($event)" emptyMessage="No document selected">
-                <ng-template let-node pTemplate="default">
-                    <div class="w-12rem flex flex-row">
-                        <div class="flex-1">{{ node.label }}</div>
-                        <div *ngIf="node.data.status == 'PROCESING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
-                        <div *ngIf="node.data.status == 'CHUNK'" class="flex-none w-1rem pi pi-th-large text-400"></div>
-                        <img *ngIf="node.data.status == 'EMBEDDINGS'" class="flex-none w-1rem" src="/assets/images/icons8-ai.png">
-                        
-                        
-                    </div>
-                </ng-template>
-            </p-tree>
-        </p-fieldset> 
-    </div>
-
-    <div class="flex-1 h-full" style="background-color: lightblue;">
-        <p-fieldset legend="Content">
-
-            <div class="flex flex-1 flex-row gap-4" style="background-color: lightgreen;">
-
-                <div class="flex-1" style="background-color: lightgray;">
-
-                    <p-tabView>
-
-                        <p-tabPanel header="Original Content" style="padding-bottom: 0px;">
-                            <div style="border:1px solid lightgray;">
-                                <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 230px); width: 200px;" (valueChanged)="onCodeChanged()"></ngs-code-editor>
-                            </div>
-                        </p-tabPanel>
-
-                        <p-tabPanel header="Generated Content">
-
-                        </p-tabPanel>
-
-                        <p-tabPanel header="Personal Notes">
-
-                        </p-tabPanel>
-
-
-                    </p-tabView>
-
-                </div>
-
-                <div class="w-20rem flex-column gap-5" style="padding-top: 38px;background-color: lightseagreen;">
-
-                    <p-table [value]="properties" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'200px'}" styleClass="p-datatable-striped">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th class="flex-none w-7rem top-header justify-content-start"><div class="ml-2">Property</div></th>
-                                <th class="flex-1 top-header justify-content-start"><div class="ml-2">Value</div></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td class="flex-none w-7rem justify-content-start">{{rowData.name}}</td>
-                                <td class="flex-1 justify-content-start">{{rowData.value}}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-
-                    <p-table [value]="documentChunks" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'calc(100vh - 415px)'}" scrollHeight="calc(100vh - 415px)" styleClass="p-datatable-striped">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th class="flex-1 top-header justify-content-start"><div class="ml-2">Chunks</div></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td class="flex-1 justify-content-start">  Chunk {{rowData.order}}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-
-                </div>
-
-            </div>
-
-        </p-fieldset>
-    </div>
-
-
-</div>
-
-<!--
-
+<div class="flex flex-row w-full h-full gap-3 p-4">
 
     <div class="w-20rem h-full">
-        <p-fieldset styleClass="h-full" legend="Documents"> 
-            <p-tree [value]="files" class="w-full" [style]="{'height': 'calc(100vh - 155px)', 'max-height': 'none'}" [contextMenu]="cmTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="selectDocument($event)" emptyMessage="No document selected">
+        <p-fieldset legend="Documents"> 
+            <p-tree #treePanel [value]="files" class="w-full" [style]="{'height': 'calc(100vh - 180px)', 'max-height': 'none'}" [contextMenu]="cmTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" emptyMessage="No document selected">
                 <ng-template let-node pTemplate="default">
                     <div class="w-12rem flex flex-row">
                         <div class="flex-1">{{ node.label }}</div>
-                        <div *ngIf="node.data.status == 'PROCESING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
+                        <div *ngIf="node.data.status == 'PROCESSING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
                         <div *ngIf="node.data.status == 'CHUNK'" class="flex-none w-1rem pi pi-th-large text-400"></div>
                         <img *ngIf="node.data.status == 'EMBEDDINGS'" class="flex-none w-1rem" src="/assets/images/icons8-ai.png">
                         
@@ -106,22 +18,21 @@
     </div>
 
     <div class="flex-1 h-full">
-        <p-fieldset styleClass="h-full" legend="Content">
+        <p-fieldset legend="Content">
 
-            <div class="flex flex-1 flex-row w-full gap-4">
+            <div class="flex flex-1 flex-row gap-4">
 
                 <div class="flex-1">
+
                     <p-tabView>
 
-                        <p-tabPanel header="Original Content">
+                        <p-tabPanel #tabPanelContent header="Original Content">
                             <div style="border:1px solid lightgray;">
-
-                                <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 210px)" (valueChanged)="onCodeChanged()"></ngs-code-editor>
+                                <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 232px);" (valueChanged)="onCodeChanged()"></ngs-code-editor>
                             </div>
-
                         </p-tabPanel>
 
-                        <p-tabPanel header="Generated Content">
+                        <p-tabPanel header="Enhanced Content">
 
                         </p-tabPanel>
 
@@ -131,10 +42,14 @@
 
 
                     </p-tabView>
-                </div>
-                <div class="w-20rem flex-column gap-5" style="padding-top: 38px;">
 
-                    <p-table [value]="properties" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'200px'}" styleClass="p-datatable-striped">
+                </div>
+
+                <div class="w-16rem flex flex-column">
+
+                    <button pButton pRipple p-button-label="10px" label="Guardar" (click)="onSave()" class="w-10rem align-self-end" [disabled]="documentModified == false"></button>
+
+                    <p-table [value]="properties" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'200px', 'margin-top':'12px'}" styleClass="p-datatable-striped">
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th class="flex-none w-7rem top-header justify-content-start"><div class="ml-2">Property</div></th>
@@ -145,32 +60,34 @@
                             <tr>
                                 <td class="flex-none w-7rem justify-content-start">{{rowData.name}}</td>
                                 <td class="flex-1 justify-content-start">{{rowData.value}}</td>
+                            </tr> 
+                        </ng-template>
+                    </p-table>
+
+                    <p-table [value]="documentChunks" selectionMode="single" [(selection)]="selectedDocumentChunk" (onRowSelect)="onSelectDocumentChunk($event)" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'calc(100vh - 450px)', 'margin-top':'12px'}" scrollHeight="calc(100vh - 450px)" styleClass="p-datatable-striped">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th class="flex-1 top-header justify-content-start"><div class="ml-2">Chunks</div></th>
+                                <th class="flex-1 top-header text-right"><div class="mr-2">Tokens</div></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr [pSelectableRow]="rowData">
+                                <td class="flex-1 justify-content-start">  Chunk {{rowData.order}}</td>
+                                <td class="flex-1 text-right">{{rowData.tokens}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
 
-                    <p-table [value]="documentChunks" [scrollable]="true" responsiveLayout="scroll" [style]="{height:'calc(100vh - 350px)'}" scrollHeight="calc(100vh - 350px)" styleClass="p-datatable-striped">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th class="flex-1 top-header justify-content-start"><div class="ml-2">Chunk</div></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td class="flex-1 justify-content-start">Chunk {{rowData.order}}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                    
                 </div>
 
             </div>
 
         </p-fieldset>
     </div>
-    
+
+
 </div>
--->
 
 <p-contextMenu #cmTree [model]="itemsContextMenuTree"></p-contextMenu>
 

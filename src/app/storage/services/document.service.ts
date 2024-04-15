@@ -31,9 +31,12 @@ export class DocumentService {
     return this.http.post<Document[]>(environment.server + '/document/list-by-ids', body,  {headers: headers});
   }
 
+  saveDocumentChunks(documentId: number, contents: string[]): Observable<void> {
+    return this.http.post<void>(environment.server + '/document/'+documentId+'/chunks', {contents: contents});
+  }
 
   getDocumentChunks(documentId: number): Observable<DocumentChunk[]> {
-    return this.http.get<DocumentChunk[]>(environment.server + '/document/'+documentId+'/chunks');
+    return this.http.get<DocumentChunk[]>(environment.server + '/document/'+documentId+'/chunks/0');
   }
 
   getContentFromDocumentChunk(documentId: number, chunkId: number): Observable<DocumentChunk> {
@@ -43,6 +46,16 @@ export class DocumentService {
   parseDocument(document: Document, parseType: string): Observable<void> {
     return this.http.post<void>(environment.server + '/document/parse', {collectionId: document.collectionId, filename: document.filename, parseType: parseType, overwrite: true});
   }
+
+
+  generateChunks(documentId: number, tokens: number): Observable<void> {
+    return this.http.post<void>(environment.server + '/document/'+documentId+'/action', {deleteEmbeddings: true, deleteEnhacedChunks: true, deleteChunks: true, createChunks: true, chunkConfig: {chunkSize: tokens}});
+  }
+
+  generateEmbeddings(documentId: number): Observable<void> {
+    return this.http.post<void>(environment.server + '/document/'+documentId+'/action', {deleteEmbeddings: true, createEmbeddings: true});
+  }
+
   
 }
 

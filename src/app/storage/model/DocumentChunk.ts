@@ -4,4 +4,6 @@ export interface DocumentChunk {
     filename: string,
     content: string,
     loaded: boolean,
+    lineNumber?: number,
+    tokens?: number,
 }

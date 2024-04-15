@@ -9,16 +9,23 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ChunkDialogComponent } from './views/chunk-dialog/chunk-dialog.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
-    StorageComponent
+    StorageComponent,
+    ChunkDialogComponent
   ],
   imports: [
     CommonModule,
     FieldsetModule,
     TreeModule,
     ConfirmDialogModule,
+    ButtonModule,
     ContextMenuModule,
     FormsModule,
     ReactiveFormsModule,
@@ -27,6 +34,9 @@ import { TableModule } from 'primeng/table';
       baseUrl: 'assets/monaco'
     }),
     TableModule,
+    DynamicDialogModule,
+    InputTextModule,
+    InputNumberModule,
   ]
 })
 export class StorageModule { }

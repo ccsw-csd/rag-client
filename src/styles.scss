@@ -99,74 +99,25 @@ p-autocomplete {
 }
 
 
-.context-menu-color-0 {
-    height: 20px;
-    width: 25px;
-    border: solid 1px #909090;
-    content: "\274c"; /* use the hex value here... */
+
+.scrollbar {
+    overflow: auto;
+    padding: 0 10px;
 }
 
-.context-menu-color-1 {
-    height: 20px;
-    background-color: #7F7F7F;
-    border: solid 1px #5F5F5F;
+.scrollbar::-webkit-scrollbar {
+    width: 16px;
 }
 
-.context-menu-color-2 {
-    height: 20px;
-    background-color: #4472C4;
-    border: solid 1px #2452A4;
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #e7e7e7;
+    border: 1px solid #cacaca;
 }
 
-.context-menu-color-3 {
-    height: 20px;
-    background-color: #FFC000;
-    border: solid 1px #CF9000;
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    background-color: #272936;
 }
-
-.context-menu-color-3b {
-    height: 20px;
-    background-color: #FFC099;
-    border: solid 1px #CF9099;
-}
-
-
-.context-menu-color-4 {
-    height: 20px;
-    background-color: #FF0000;
-    border: solid 1px #CF0000;
-}
-
-.context-menu-color-5 {
-    height: 20px;
-    background-color: #FFFF00;
-    border: solid 1px #CFCF00;
-}
-
-.context-menu-color-6 {
-    height: 20px;
-    background-color: #CCCCFF;
-    border: solid 1px #ACACCF;
-}
-
-.context-menu-color-7 {
-    height: 20px;
-    background-color: #00B050;
-    border: solid 1px #009030;
-}   
-
-.context-menu-color-8 {
-    height: 20px;
-    background-color: #bebebe;
-    border: solid 1px #888888;
-}   
-
-.row-color-1 { background-color: #7F7F7F !important; }
-.row-color-2 { background-color: #4472C4 !important; }
-.row-color-3 { background-color: #FFC000 !important; }
-.row-color-3b{ background-color: #FFC099 !important; }
-.row-color-4 { background-color: #FF0000 !important; }
-.row-color-5 { background-color: #FFFF00 !important; }
-.row-color-6 { background-color: #CCCCFF !important; }
-.row-color-7 { background-color: #00B050 !important; }
-.row-color-8 { background-color: #bebebe !important; }
