@@ -14,7 +14,7 @@ export class ChatComponent implements OnInit {
 
   messages: Message[];
   question: string = 'Como puedo realizar la vinculación de paciente? Dame un listado de campos que debo rellenar';
-  asking: boolean = false;
+  asking: boolean = true;
 
   
   constructor(

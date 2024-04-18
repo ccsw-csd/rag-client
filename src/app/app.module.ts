@@ -18,6 +18,7 @@ import { CollectionModule } from './collection/collection.module';
 import { StorageModule } from './storage/storage.module';
 import { ChatModule } from './chat/chat.module';
 import { CollectionResolverService } from './core/services/collection-resolver.service';
+import { PromptModule } from './prompt/prompt.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CollectionResolverService } from './core/services/collection-resolver.s
     ChatModule,
     CollectionModule,
     StorageModule,
+    PromptModule,
   ],
   providers: [
     HttpClientModule,

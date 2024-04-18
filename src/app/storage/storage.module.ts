@@ -14,16 +14,22 @@ import { ChunkDialogComponent } from './views/chunk-dialog/chunk-dialog.componen
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TreeTableModule } from 'primeng/treetable';
+import { UploadDialogComponent } from './views/upload-dialog/upload-dialog.component';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 @NgModule({
   declarations: [
-    StorageComponent,
-    ChunkDialogComponent
+    StorageComponent, 
+    ChunkDialogComponent,
+    UploadDialogComponent
   ],
   imports: [
     CommonModule,
     FieldsetModule,
     TreeModule,
+    TreeTableModule,
     ConfirmDialogModule,
     ButtonModule,
     ContextMenuModule,
@@ -37,6 +43,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DynamicDialogModule,
     InputTextModule,
     InputNumberModule,
+    FileUploadModule,
   ]
 })
 export class StorageModule { }

@@ -1,0 +1,36 @@
+<div>
+    <div>
+        Selecciona que ficheros quieres subir al sistema. Puedes seleccionar más de un fichero.<br/><br/>
+        Te recomendamos subir documentación en formato pdf y código fuente comprimido en formato zip. 
+    </div>
+
+    <div class="flex flex-row gap-5 mt-6 mb-5">
+        <div class="flex flex-1">
+            Al subir ficheros, se hará un split de los documentos incluidos.<br/>Debes seleccionar que tamaño quieres para los splits (en tokens).
+        </div>
+        <span class="flex-none w-8rem p-float-label">
+            <p-inputNumber [(ngModel)]="tokensDoc" class="w-8rem" inputStyleClass="w-full" [inputStyle]="{'height':'42px'}" [min]="100" [max]="4000" maxFractionDigits="0" locale="es-ES"></p-inputNumber>
+            <label for="name">Documentación<span class="text-red-600 text-base">*</span></label>
+        </span>
+        <span class="flex-none w-8rem p-float-label">
+            <p-inputNumber [(ngModel)]="tokensCode" class="w-8rem" inputStyleClass="w-full" [inputStyle]="{'height':'42px'}" [min]="100" [max]="4000" maxFractionDigits="0" locale="es-ES"></p-inputNumber>
+            <label for="name">Código fuente<span class="text-red-600 text-base">*</span></label>
+        </span>
+    </div>
+
+
+    <p-fileUpload mode="advanced" [showUploadButton]="false" [showCancelButton]="false" [removeStyleClass]="{'width': '30px'}" 
+        [multiple]="true" accept="application/*" maxFileSize="100_000_000" chooseLabel="Seleccionar archivos" >                
+        <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+        </ng-template>
+    </p-fileUpload>
+
+
+    <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
+        <button pButton pRipple styleClass="" label="Cancel" class="p-button p-button-secondary p-button-outlined bg-white" (click)="closeWindow()"></button>
+        <button pButton pRipple p-button-label="10px" label="Generate Chunks" (click)="onSave()" ></button>
+    </div>
+</div>

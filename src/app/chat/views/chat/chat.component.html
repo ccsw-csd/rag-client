@@ -3,12 +3,12 @@
     <div class="flex-none w-10rem"></div>
     <div class="flex flex-1 flex-column">
 
-        <div style="height: calc(100vh - 160px); overflow: auto" class="flex flex-column gap-5 mt-3 scrollbar">
+        <div style="height: calc(100vh - 160px); overflow: auto" class="flex flex-column gap-5 mt-3 scrollbar" #divMessages [scrollTop]="divMessages.scrollHeight">
             
             <div *ngFor="let message of messages" class="w-full pl-8 pr-8">
             
                 <div class="flex flex-column" [ngClass]="message.user ? 'border-user' : 'border-ia'">
-                    <div class="flex flex-row p-2">
+                    <div class="flex flex-row p-2 pb-0">
                         <div *ngIf="message.user == false" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
                             <img class="flex-none" src="/assets/images/icons8-ai-white.png">
                         </div>
@@ -19,7 +19,7 @@
                             <span class="text-base"><b>{{message.author}}</b></span><span class="text-xs pl-3">({{message.date | date: 'dd/MM/yyyy HH:mm'}})</span>
                         </div>
                     </div>
-                    <div class="flex flex-1 flex-row pl-2 pr-2">
+                    <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
                         <div class="flex w-2rem"></div>
                         <div class="flex flex-1 align-items-center pl-4">
                             <markdown [data]="message.content" [disableSanitizer]="true"></markdown>
@@ -31,7 +31,7 @@
             
             </div>
 
-            <div *ngIf="asking" class="flex p-4 justify-content-end w-full">
+            <div *ngIf="asking" class="flex p-2 justify-content-end w-full pr-8">
                 <div class="loader"></div>
             </div>
 

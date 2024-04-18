@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { DocumentFile } from '../../model/DocumentFile';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DocumentService } from '../../services/document.service';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
+import { DocumentService } from '../../services/document.service';
 
 @Component({
-  selector: 'app-chunk-dialog',
-  templateUrl: './chunk-dialog.component.html',
-  styleUrls: ['./chunk-dialog.component.scss']
+  selector: 'app-upload-dialog',
+  templateUrl: './upload-dialog.component.html',
+  styleUrls: ['./upload-dialog.component.scss']
 })
-export class ChunkDialogComponent {
+export class UploadDialogComponent {
 
-  document: DocumentFile;
-  tokens: number = 1000;
+  uploadedFiles: any[] = [];
+  tokensDoc: number = 1000;
+  tokensCode: number = 4000;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -21,20 +22,24 @@ export class ChunkDialogComponent {
     private navigatorService: NavigatorService,
 
   ) {
-    this.document = config.data.document;
+    //this.document = new DocumentFile();
   }
 
 
   onSave(){
+    /*
     this.navigatorService.setLoading(true);
     this.documentService.generateChunks(this.document.id, this.tokens).subscribe(() => {
       this.ref.close({ toRefresh: true});
     });
-
+    */
   }
 
   closeWindow(){
     this.ref.close({ toRefresh: false });
   }
 
+  onUpload(event) {
+    console.log('onUpload', event);
+  }
 }

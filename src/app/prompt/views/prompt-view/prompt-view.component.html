@@ -1,0 +1,75 @@
+<div style="overflow: auto; height:calc(100vh - 60px)" class="flex flex-column w-full scrollbar">
+
+    <div class="flex flex-row mt-0 mb-0 pt-4 pb-0">
+
+
+        <div class="flex-none" style="width: 100px;"></div>
+        <div class="flex flex-1 flex-column gap-3">
+
+            <p-fieldset legend="Información del prompt"> 
+
+                <div class="flex flex-column gap-3">
+                    <div class="flex flex-row gap-2">
+                        <span class="p-float-label" style="flex:2">
+                            <input class="p-inputtext-lg" [(ngModel)]="prompt.title"  type="text" class="w-full" pInputText>
+                            <label for="name">Title<span class="text-red-600 text-base">*</span></label>
+                        </span>
+                        <span class="p-float-label flex-1" style="flex:2">
+                            <input class="p-inputtext-lg" [(ngModel)]="prompt.person.displayName" type="text" class="w-full" pInputText >
+                            <label for="description">Author<span class="text-red-600 text-base">*</span></label>
+                        </span>
+                    </div>
+                    <div class="card flex align-items-center gap-2 flex-wrap">
+                        <span>Tags:</span>
+                        <p-chip *ngFor="let item of prompt.tags" label="{{item}}"></p-chip>
+                    </div>
+                    <textarea class="h-9rem" cols="30" pInputTextarea [(ngModel)]="prompt.description"></textarea>
+                </div>
+            
+
+
+            </p-fieldset>
+
+            <p-fieldset legend="Prompt"> 
+
+                <div #contentData class="flex flex-column gap-5 mt-3" #divMessages [scrollTop]="divMessages.scrollHeighta" pDroppable (onDrop)="drop($event)">
+                
+                    <div *ngFor="let message of prompt.posts" class="w-full pl-8 pr-8" pDraggable >
+                    
+                        <div class="flex flex-column" [ngClass]="message.author == 'user' ? 'border-user' : 'border-ia'">
+                            <div class="flex flex-row p-2 pb-0">
+                                <div *ngIf="message.author == 'assistant'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
+                                    <img class="flex-none" src="/assets/images/icons8-ai-white.png">
+                                </div>
+                                <div *ngIf="message.author != 'assistant'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle text-white" style="background-color: #272936;">
+                                    {{getAbbreviatedName(message.author)}}
+                                </div>
+                                <div class="flex flex-1 h-2rem align-items-center pl-4">
+                                    <span class="text-base"><b>{{message.author}}</b></span>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
+                                <div class="flex w-2rem"></div>
+                                <div class="flex flex-1 align-items-center pl-4">
+                                    <div *ngIf="message.type == 'text'" [innerHTML]="message.content" class="pt-2 pb-2"></div>
+                                    <markdown *ngIf="message.type == 'markdown'" [data]="message.content" [disableSanitizer]="true"></markdown>
+                                </div>                        
+                            </div>
+        
+                        </div>
+                        
+                    
+                    </div>
+        
+                
+                </div>
+
+            </p-fieldset>
+
+
+
+        </div>
+        <div class="flex-none" style="width: 100px;"></div>
+
+    </div>
+</div>

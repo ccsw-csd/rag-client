@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Document } from '../../model/Document';
+import { DocumentFile } from '../../model/DocumentFile';
 import { CodeEditorComponent, CodeModel } from '@ngstack/code-editor';
 import { DocumentService } from '../../services/document.service';
 import { DocumentChunk } from '../../model/DocumentChunk';
@@ -11,6 +11,7 @@ import { TabPanel } from 'primeng/tabview';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ChunkDialogComponent } from '../chunk-dialog/chunk-dialog.component';
 import { Tree } from 'primeng/tree';
+import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
 
 
 
@@ -33,13 +34,14 @@ export class StorageComponent implements OnInit {
 
   documentModified : boolean = false;
 
-  documents : Document[] = [];
+  documents : DocumentFile[] = [];
   documentChunks: DocumentChunk[] = [];
   selectedDocumentChunk: DocumentChunk;
-  selectedDocument: Document;
+  selectedDocument: DocumentFile;
 
-  files: TreeNode[] = [];
+  files!: TreeNode[];
   selectedFile: TreeNode;
+
 
   itemsContextMenuTree!: MenuItem[];
 
@@ -73,8 +75,6 @@ export class StorageComponent implements OnInit {
   @ViewChild(CodeEditorComponent, { static: false })
   private codeEditor: CodeEditorComponent;
 
-  @ViewChild('treePanel', { static: false })
-  private treePanel: Tree;
 
   
 
@@ -104,8 +104,47 @@ export class StorageComponent implements OnInit {
   }
 
 
-  launchAction(action: number, data: Document) {
+  launchAction(action: number, data: any) {
+
+    console.log(data)
+
+    if (action == 4) {
+
+
+      if (data.isRoot == false) {
+
+        this.confirmationService.confirm({
+          message: 'Tan solo puedes borrar documentos completos, no puedes borrar rutas de documento. <br/><br/>Por favor, selecciona un documento raíz para borrar.',
+          header: 'Acción no permitida',
+          icon: 'pi pi-times-circle',
+          rejectVisible: false
+        });
+
+        return;
+      }
+
+      this.confirmationService.confirm({
+        message: 'Si borras este documento, se eliminará todo rastro de notas personales, chunks y embbedings generados.<br/><br/>¿Estás seguro que quieres eliminar el documento?',
+        header: 'Atención, pérdida de datos',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+
+          this.navigatorService.setLoading(true);
+          this.documentService.deleteDocument(data.parentDocumentId).subscribe( res => {
+            this.loadDocuments();
+          });
+        },
+        reject: () => {
+
+        }
+      });
+      
+
+    }
     
+
+    return
+
     if (action == 0) {
 
       this.confirmationService.confirm({
@@ -114,10 +153,12 @@ export class StorageComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
 
+          /*
           this.navigatorService.setLoading(true);
           this.documentService.parseDocument(data, 'chunk').subscribe( res => {
             this.loadDocuments();
           });
+          */
         },
         reject: () => {
 
@@ -169,6 +210,81 @@ export class StorageComponent implements OnInit {
   }
 
 
+
+  createNode(key: string, documentId: number, id:number, path: string, label: string) : TreeNode {
+    return {
+      key: key,
+      leaf: false,
+      expanded: false,
+      selectable: true,
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      data: {leaf:false, isRoot: false, parentDocumentId: documentId, data: {filename: label, id:id, path: path}},
+      children: []
+    }
+  }
+
+  sanitizePath(path: string) : string {
+    return path.startsWith('/') ? path.substring(1) : path;
+  }
+
+  createTree(document: any, documentFiles: DocumentFile[]) : TreeNode {
+
+    documentFiles.forEach(c => c.path = this.sanitizePath(c.path));
+
+    let uniquePaths = Array.from(documentFiles.map(c => c.path));
+
+
+    let nodes = [];
+    nodes.push(this.createNode('tree-'+document.id+'-', document.id, documentFiles[0].id, '/', document.filename));
+    nodes[0].data.isRoot = true;
+
+
+    for (let path of uniquePaths) {
+
+      let key = 'tree-'+document.id+'-'+path;
+
+      let existingNode = nodes.find(node => node.key == key);
+      if (existingNode) continue;
+
+
+      let splitPaths = path.split('/');
+      let currentPath = '';
+      for (let splitPath of splitPaths) {
+
+        let root = nodes.find(node => node.key == 'tree-'+document.id+'-'+currentPath);
+        currentPath = this.sanitizePath(currentPath + '/' + splitPath);
+
+        let node = this.createNode('tree-'+document.id+'-'+currentPath, document.id, documentFiles[0].id, '/'+currentPath, splitPath);
+        nodes.push(node);
+        root.children.push(node);
+      }
+
+
+      for (let documentFile of documentFiles) {
+
+        let parentNode = nodes.find(node => node.key == 'tree-'+document.id+'-'+documentFile.path);
+
+        let icon = "pi pi-file";
+        if (documentFile.filename.endsWith('.docx')) icon = "pi pi-file-word";
+        if (documentFile.filename.endsWith('.pdf')) icon = "pi pi-file-pdf";
+  
+        let node = {
+          key: ''+documentFile.id,
+          leaf: true,
+          data: {leaf:true, data: documentFile, icon: icon, parentDocumentId: documentFile.document.id, id: documentFile.id, isRoot: false}
+        };
+
+        parentNode.children.push(node);
+      }
+
+    }
+
+    return nodes[0];
+
+  }
+
+
   loadDocuments() : void {
     this.navigatorService.setLoading(true);
     this.documents = [];
@@ -183,26 +299,39 @@ export class StorageComponent implements OnInit {
       documents => {
 
         this.documents = documents;
+        this.navigatorService.setLoading(false);        
 
-        for (let document of documents) {
 
-          let icon = "pi pi-file";
-          if (document.filename.endsWith('.docx')) icon = "pi pi-file-word";
-          if (document.filename.endsWith('.pdf')) icon = "pi pi-file-pdf";
+        this.files = [];
 
-          this.files.push({
-            key: ''+document.id,
-            label: document.filename,
-            icon: icon,
-            leaf: true,
-            selectable: document.status != "PROCESSING",          
-            data: document
-          });
-         
+        let rootDocuments = Array.from((new Map(documents.map(c => [c.document.id, c.document]))).values());
+
+        for (let document of rootDocuments) {
+
+          let children = documents.filter(doc => doc.document.id == document.id);
+          if (children.length == 1) {
+              
+              let documentFile = children[0];
+
+              let icon = "pi pi-file";
+              if (documentFile.filename.endsWith('.docx')) icon = "pi pi-file-word";
+              if (documentFile.filename.endsWith('.pdf')) icon = "pi pi-file-pdf";
+                
+              this.files.push({
+                key: ''+documentFile.id,
+                leaf: true,
+                data: {leaf:true, data: documentFile, icon: icon, parentDocumentId: documentFile.document.id,  id: documentFile.id, isRoot: true}
+              });
+              
+          }
+          else {
+            this.files.push(this.createTree(document, children));          
+          }
+
         }
 
         this.navigatorService.setLoading(false);        
-        this.updateDocumentStatus();
+        //this.updateDocumentStatus();
         this.documentModified = false;
       }
     ); 
@@ -317,7 +446,7 @@ export class StorageComponent implements OnInit {
 
   private fillProperties() : void {
     
-    let document: Document = this.selectedFile.data;
+    let document: DocumentFile = this.selectedFile.data;
 
     this.properties = [
       { id: -1, name: 'Name', value: document.filename },
@@ -387,10 +516,15 @@ export class StorageComponent implements OnInit {
   onSelectDocument(event) : void {   
     let node = event.node;
 
+    if (!node.data.leaf) return;
+
+    return;
+    /*
     if (node.children && node.children.length > 0) {
       node.expanded=!node.expanded;
       return;
     }
+    */
 
     this.navigatorService.setLoading(true);
     this.documentModified = false;
@@ -419,6 +553,30 @@ export class StorageComponent implements OnInit {
     
 
   }
+
+  onUploadFile() : void {
+    
+    let ref = this.dialogService.open(UploadDialogComponent, {
+      header: 'Upload document',
+      width: '800px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false
+    });
+
+    ref.onClose.subscribe((result) => {
+      if (result.toRefresh) {
+        this.navigatorService.setLoading(true);
+        this.loadDocuments();
+      }
+    });    
+
+
+  }
+
+
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event) : void {

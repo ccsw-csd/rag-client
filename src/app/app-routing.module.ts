@@ -8,6 +8,7 @@ import { CollectionListComponent } from './collection/collection-list/collection
 import { ChatComponent } from './chat/views/chat/chat.component';
 import { StorageComponent } from './storage/views/storage/storage.component';
 import { CollectionResolverService } from './core/services/collection-resolver.service';
+import { PromptViewComponent } from './prompt/views/prompt-view/prompt-view.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'main', component: ChatComponent },
+      { path: 'prompt', component: PromptViewComponent },
       { path: 'storage', component: StorageComponent},
       { path: 'collections', component: CollectionListComponent},
       { path: '**', redirectTo: 'storage', pathMatch: 'full' },

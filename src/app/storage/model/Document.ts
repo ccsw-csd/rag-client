@@ -1,7 +1,6 @@
 export interface Document {
     id: number,
-    collectionId: string,
+    collectionId: number,
     filename: string,
-    source: string,
-    status: string,
+    type: string,
 }

@@ -1,19 +1,41 @@
 <div class="flex flex-row w-full h-full gap-3 p-4">
 
-    <div class="w-20rem h-full">
+    <div class="w-23rem h-full">
         <p-fieldset legend="Documents"> 
-            <p-tree #treePanel [value]="files" class="w-full" [style]="{'height': 'calc(100vh - 180px)', 'max-height': 'none'}" [contextMenu]="cmTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" emptyMessage="No document selected">
-                <ng-template let-node pTemplate="default">
-                    <div class="w-12rem flex flex-row">
-                        <div class="flex-1">{{ node.label }}</div>
-                        <div *ngIf="node.data.status == 'PROCESSING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
-                        <div *ngIf="node.data.status == 'CHUNK'" class="flex-none w-1rem pi pi-th-large text-400"></div>
-                        <img *ngIf="node.data.status == 'EMBEDDINGS'" class="flex-none w-1rem" src="/assets/images/icons8-ai.png">
-                        
-                        
-                    </div>
-                </ng-template>
-            </p-tree>
+
+            <div class="flex flex-row justify-content-center pb-2">
+                <button pButton pRipple label="Añadir documento" (click)="onUploadFile()" class="w-10rem p-button p-button-secondary p-button-outlined"></button>
+            </div>
+
+            <div *ngIf="files == null || files.length == 0" style="height:calc(100vh - 233px)" class="flex flex-row justify-content-center pt-6">There are no documents in the collection</div>
+
+            <p-treeTable *ngIf="files != null && files.length > 0" [value]="files" [scrollable]="true" [contextMenu]="cmTree" [(contextMenuSelection)]="selectedFile" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" 
+                [tableStyle]="{'width':'18rem'}" [style]="{'height': 'calc(100vh - 233px)', 'max-height': 'none', 'border': '1px solid lightgray'}" >
+                <ng-template pTemplate="header">
+                </ng-template>       
+                <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+
+                    <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode">
+
+                        <td class="flex flex-row align-items-center w-16rem">
+                            <p-treeTableToggler *ngIf="rowData.leaf == false" [rowNode]="rowNode"></p-treeTableToggler>
+                            <div *ngIf="rowData.leaf == true" [ngStyle]="{'margin-left': 'calc('+rowNode.level+'* 18px)', 'min-width':rowNode.level+'px' }" class="h-2rem w-2rem mr-2 text-center align-content-center">
+                                <span class="{{rowData.icon}}"></span>
+                            </div>
+                            {{ rowData.data.filename }}
+                        </td>
+
+                        <td class="w-2rem">
+                            <div *ngIf="rowData.data?.status == 'PROCESSING'" class="flex-none w-1rem pi pi-spin pi-refresh"></div>
+                            <div *ngIf="rowData.data?.status == 'CHUNK'" class="flex-none w-1rem pi pi-th-large text-400"></div>
+                            <img *ngIf="rowData.data?.status == 'EMBEDDINGS'" class="flex-none w-1rem" src="/assets/images/icons8-ai.png">
+                        </td>
+
+                    </tr>
+                </ng-template>         
+            </p-treeTable>
+
+          
         </p-fieldset> 
     </div>
 
@@ -93,7 +115,13 @@
 
 <p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
     <ng-template pTemplate="footer">
-        <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
-        <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+        <div *ngIf="cd.confirmationOptions.rejectVisible == false">
+            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+        </div>
+
+        <div *ngIf="cd.confirmationOptions.rejectVisible == true">
+            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+        </div>
     </ng-template>
 </p-confirmDialog>

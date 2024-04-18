@@ -24,16 +24,15 @@
         padding: 0px;
         padding-top: 10px;
     }
-
-    .p-treetable .p-treetable-tbody > tr > td {
-        border: 0px;
-        border-width: 0;
-    }
-
-
-    .p-treetable .p-treetable-tbody > tr {
-        border: 1px solid #e4e4e4;
-        border-width: 0 0 1px 0;
-    }
-
 }
+
+
+.border-user {
+    border-radius: 25px; 
+    border: thin solid #27293665;
+  }
+
+  .border-ia {
+    border-radius: 25px; 
+    border: thin solid #4472C465;    
+  }
