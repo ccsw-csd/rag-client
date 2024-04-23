@@ -19,7 +19,7 @@
           "options": {
             "outputPath": "dist/moodmeter-client",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main.ts",            
             "polyfills": [
               "zone.js"
             ],
@@ -68,7 +68,7 @@
               "namedChunks": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

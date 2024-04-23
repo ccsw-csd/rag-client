@@ -6,7 +6,7 @@
 
     <div class="flex flex-row gap-5 mt-6 mb-5">
         <div class="flex flex-1">
-            Al subir ficheros, se hará un split de los documentos incluidos.<br/>Debes seleccionar que tamaño quieres para los splits (en tokens).
+            Al subir ficheros, se generarán los chunks de los documentos incluidos.<br/>Debes seleccionar que tamaño quieres para los chunks (en tokens).
         </div>
         <span class="flex-none w-8rem p-float-label">
             <p-inputNumber [(ngModel)]="tokensDoc" class="w-8rem" inputStyleClass="w-full" [inputStyle]="{'height':'42px'}" [min]="100" [max]="4000" maxFractionDigits="0" locale="es-ES"></p-inputNumber>
@@ -20,12 +20,7 @@
 
 
     <p-fileUpload mode="advanced" [showUploadButton]="false" [showCancelButton]="false" [removeStyleClass]="{'width': '30px'}" 
-        [multiple]="true" accept="application/*" maxFileSize="100_000_000" chooseLabel="Seleccionar archivos" >                
-        <ng-template pTemplate="content">
-            <ul *ngIf="uploadedFiles.length">
-                <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-            </ul>
-        </ng-template>
+        [multiple]="true" accept="application/*" maxFileSize="100_000_000" chooseLabel="Seleccionar archivos" (onSelect)="onSelect($event)" (onRemove)="onRemove($event)">                
     </p-fileUpload>
 
 

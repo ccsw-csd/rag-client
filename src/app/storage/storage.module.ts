@@ -10,7 +10,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { ChunkDialogComponent } from './views/chunk-dialog/chunk-dialog.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -22,7 +21,6 @@ import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [
     StorageComponent, 
-    ChunkDialogComponent,
     UploadDialogComponent
   ],
   imports: [

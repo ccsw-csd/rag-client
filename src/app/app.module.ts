@@ -19,6 +19,11 @@ import { StorageModule } from './storage/storage.module';
 import { ChatModule } from './chat/chat.module';
 import { CollectionResolverService } from './core/services/collection-resolver.service';
 import { PromptModule } from './prompt/prompt.module';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs);
+
 
 @NgModule({
   declarations: [
@@ -47,7 +52,8 @@ import { PromptModule } from './prompt/prompt.module';
     RefreshTokenResolverService,
     CollectionResolverService,
     DatePipe,
-    ConfirmationService
+    ConfirmationService,
+    {provide: LOCALE_ID, useValue: 'es-ES'},
   ],
   bootstrap: [AppComponent]
 })

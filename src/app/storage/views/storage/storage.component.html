@@ -9,20 +9,22 @@
 
             <div *ngIf="files == null || files.length == 0" style="height:calc(100vh - 233px)" class="flex flex-row justify-content-center pt-6">There are no documents in the collection</div>
 
-            <p-treeTable *ngIf="files != null && files.length > 0" [value]="files" [scrollable]="true" [contextMenu]="cmTree" [(contextMenuSelection)]="selectedFile" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" 
-                [tableStyle]="{'width':'18rem'}" [style]="{'height': 'calc(100vh - 233px)', 'max-height': 'none', 'border': '1px solid lightgray'}" >
+            <p-treeTable  *ngIf="files != null && files.length > 0" [value]="files" [scrollable]="true" [contextMenu]="cmTree" [(contextMenuSelection)]="selectedFile" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" scrollHeight="calc(100vh - 233px)" 
+                [tableStyle]="{'width':'20rem', 'overflow': 'hidden'}" [style]="{'border': '1px solid lightgray', 'overflow': 'hidden'}" >
                 <ng-template pTemplate="header">
                 </ng-template>       
                 <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
 
                     <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode">
 
-                        <td class="flex flex-row align-items-center w-16rem">
+                        <td class="flex flex-row align-items-center w-18rem pl-0">
                             <p-treeTableToggler *ngIf="rowData.leaf == false" [rowNode]="rowNode"></p-treeTableToggler>
-                            <div *ngIf="rowData.leaf == true" [ngStyle]="{'margin-left': 'calc('+rowNode.level+'* 18px)', 'min-width':rowNode.level+'px' }" class="h-2rem w-2rem mr-2 text-center align-content-center">
+                            
+                            <div *ngIf="rowData.leaf == true" [ngStyle]="{'margin-left': 'calc('+rowNode.level+'* 18px)' }" class="h-2rem w-2rem text-center align-content-center">
                                 <span class="{{rowData.icon}}"></span>
                             </div>
-                            {{ rowData.data.filename }}
+
+                            <span class="text-xs">{{ rowData.data.filename }}</span>
                         </td>
 
                         <td class="w-2rem">

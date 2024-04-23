@@ -10,6 +10,7 @@ import { DocumentChunk } from '../model/DocumentChunk';
 })
 export class DocumentService {
 
+
   constructor(
     private http: HttpClient,
   ) {}
@@ -47,6 +48,11 @@ export class DocumentService {
     return this.http.delete<void>(environment.server + '/document/delete-from-source/'+documentId);
   }
 
+  uploadDocuments(collectionId: number, formData: FormData): Observable<void> {
+
+    return this.http.post<void>(environment.server + "/document/upload-in-collection/"+collectionId, formData);
+  }
+
 
   /*
   parseDocument(document: DocumentFile, parseType: string): Observable<void> {
@@ -55,12 +61,15 @@ export class DocumentService {
   */
 
 
-  generateChunks(documentId: number, tokens: number): Observable<void> {
-    return this.http.post<void>(environment.server + '/document/'+documentId+'/action', {deleteEmbeddings: true, deleteEnhacedChunks: true, deleteChunks: true, createChunks: true, chunkConfig: {chunkSize: tokens}});
+  generateChunks(documentId: number, tokensDoc: number, tokensCode: number): Observable<void> {
+    return this.http.post<void>(environment.server + '/document/'+documentId+'/action', {deleteEmbeddings: true, deleteEnhacedChunks: true, deleteChunks: true, createChunks: true, chunkConfig: {chunkSizeDocumentation: tokensDoc, chunkSizeCode: tokensCode}});
   }
 
-  generateEmbeddings(documentId: number): Observable<void> {
-    return this.http.post<void>(environment.server + '/document/'+documentId+'/action', {deleteEmbeddings: true, createEmbeddings: true});
+  generateEmbeddings(parentDocumentId: number, documentId: number, pathDocument: string): Observable<void> {
+
+
+
+    return this.http.post<void>(environment.server + '/document/generate-embeddings/'+parentDocumentId, {id: documentId, path: pathDocument});
   }
 
   
