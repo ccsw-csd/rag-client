@@ -16,7 +16,7 @@ import { ChatInfoComponent } from '../chat-info/chat-info.component';
 export class ChatComponent implements OnInit {
 
   messages: Message[];
-  question: string = 'Como puedo realizar la vinculación de paciente? Dame un listado de campos que debo rellenar';
+  question: string = 'Que puntos de acceso tiene en controlador de Paciente?';
   asking: boolean = false;
 
   

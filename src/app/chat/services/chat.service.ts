@@ -25,7 +25,7 @@ export class ChatService {
 
 
   public sendMessage(collectionId: number, message: string): Observable<Message> {
-    return this.http.get<Message>(environment.server + '/chat/'+collectionId+'?question='+message);
+    return this.http.get<Message>(environment.server + '/chat/'+collectionId+'/question?question='+message);
   }
 
 

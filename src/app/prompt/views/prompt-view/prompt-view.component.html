@@ -1,75 +1,145 @@
-<div style="overflow: auto; height:calc(100vh - 60px)" class="flex flex-column w-full scrollbar">
 
-    <div class="flex flex-row mt-0 mb-0 pt-4 pb-0">
+<div class="flex flex-row h-full">
+    
+    <div style="overflow: auto; height:calc(100vh - 60px)" class="flex flex-1 flex-column scrollbar p-0">
+
+        <div class="flex flex-row mt-0 mb-0 pt-4 pb-0">
 
 
-        <div class="flex-none" style="width: 100px;"></div>
-        <div class="flex flex-1 flex-column gap-3">
+            <div class="flex-none" style="width: 100px;"></div>
+            <div class="flex flex-1 flex-column gap-3">
 
-            <p-fieldset legend="Información del prompt"> 
+                <p-fieldset legend="Información del prompt"> 
 
-                <div class="flex flex-column gap-3">
-                    <div class="flex flex-row gap-2">
-                        <span class="p-float-label" style="flex:2">
-                            <input class="p-inputtext-lg" [(ngModel)]="prompt.title"  type="text" class="w-full" pInputText>
-                            <label for="name">Title<span class="text-red-600 text-base">*</span></label>
+                    <div class="flex flex-column gap-3">
+                        <div class="flex flex-row gap-2">
+                            <span class="p-float-label" style="flex:2">
+                                <input class="p-inputtext-lg" [(ngModel)]="prompt.title"  type="text" class="w-full" pInputText>
+                                <label for="name">Title<span class="text-red-600 text-base">*</span></label>
+                            </span>
+                            <span class="p-float-label flex-1" style="flex:2">
+                                <input class="p-inputtext-lg" [(ngModel)]="prompt.person.displayName" type="text" class="w-full" pInputText [readOnly]="true">
+                                <label for="description">Author<span class="text-red-600 text-base">*</span></label>
+                            </span>
+                        </div>
+
+                        <span class="p-float-label p-fluid">
+                            <p-autoComplete [(ngModel)]="prompt.tags" [suggestions]="suggestionTags" (completeMethod)="onSearch($event)" [multiple]="true"></p-autoComplete>
+                            <label for="tags">Tags</label>
                         </span>
-                        <span class="p-float-label flex-1" style="flex:2">
-                            <input class="p-inputtext-lg" [(ngModel)]="prompt.person.displayName" type="text" class="w-full" pInputText >
-                            <label for="description">Author<span class="text-red-600 text-base">*</span></label>
+
+                        <span class="p-float-label">
+                            <textarea class="h-9rem w-full" cols="30" pInputTextarea [(ngModel)]="prompt.description"></textarea>
+                            <label for="description">Descripción</label>
                         </span>
+
+                        <div class="flex flex-row justify-content-end p-0 m-0 w-full gap-2">
+                            <p-button label="Cerrar" [outlined]="true" (click)="onImport()" [style]="{width: '150px'}"></p-button>
+                            <p-button label="Guardar" [outlined]="false" (click)="onImport()" [style]="{width: '150px'}"></p-button>
+                        </div>
+
                     </div>
-                    <div class="card flex align-items-center gap-2 flex-wrap">
-                        <span>Tags:</span>
-                        <p-chip *ngFor="let item of prompt.tags" label="{{item}}"></p-chip>
-                    </div>
-                    <textarea class="h-9rem" cols="30" pInputTextarea [(ngModel)]="prompt.description"></textarea>
-                </div>
-            
-
-
-            </p-fieldset>
-
-            <p-fieldset legend="Prompt"> 
-
-                <div #contentData class="flex flex-column gap-5 mt-3" #divMessages [scrollTop]="divMessages.scrollHeighta" pDroppable (onDrop)="drop($event)">
                 
-                    <div *ngFor="let message of prompt.posts" class="w-full pl-8 pr-8" pDraggable >
+
+
+                </p-fieldset>
+
+                <p-fieldset legend="Prompt"> 
+
+                    <div #contentData class="flex flex-column"> 
+
+                        <div class="flex flex-row justify-content-end p-0 m-0 w-full pb-5">
+                            <p-button icon="pi pi-cloud-upload" [rounded]="true" severity="success" [outlined]="true" (click)="onImport()"></p-button>
+                        </div>
                     
-                        <div class="flex flex-column" [ngClass]="message.author == 'user' ? 'border-user' : 'border-ia'">
-                            <div class="flex flex-row p-2 pb-0">
-                                <div *ngIf="message.author == 'assistant'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
-                                    <img class="flex-none" src="/assets/images/icons8-ai-white.png">
-                                </div>
-                                <div *ngIf="message.author != 'assistant'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle text-white" style="background-color: #272936;">
-                                    {{getAbbreviatedName(message.author)}}
-                                </div>
-                                <div class="flex flex-1 h-2rem align-items-center pl-4">
-                                    <span class="text-base"><b>{{message.author}}</b></span>
-                                </div>
+                        <div *ngFor="let message of prompt.posts; index as i">
+                            
+                            <div class="separator-line">
+                                <div class="line"></div>
+                                <p-button icon="pi pi-plus" [rounded]="true" severity="success" [outlined]="true" (click)="onAddMessage(i)"></p-button>
+                                <div class="line"></div>
                             </div>
-                            <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
-                                <div class="flex w-2rem"></div>
-                                <div class="flex flex-1 align-items-center pl-4">
-                                    <div *ngIf="message.type == 'text'" [innerHTML]="message.content" class="pt-2 pb-2"></div>
-                                    <markdown *ngIf="message.type == 'markdown'" [data]="message.content" [disableSanitizer]="true"></markdown>
-                                </div>                        
-                            </div>
-        
+
+                            <div class="flex flex-row pt-5 pb-5">
+
+                                <div class="flex flex-column flex-1" class="border-{{message.type}}">
+                                    <div class="flex flex-row p-2 pb-0">
+                                        <div *ngIf="message.type == 'user'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle text-white" style="background-color: #272936;">
+                                            {{getAbbreviatedName(message.author)}}
+                                        </div>
+                                        <div *ngIf="message.type == 'ia'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
+                                            <img class="flex-none" src="/assets/images/icons8-ai-white.png">
+                                        </div>
+                                        <div *ngIf="message.type == 'text'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: lightgreen;">
+                                            <span class="pi pi-bookmark-fill"></span>
+                                            
+                                        </div>                                    
+                                        <div class="flex flex-1 h-2rem align-items-center pl-4">
+                                            <span *ngIf="message.type != 'text'" class="text-base"><b>{{message.author}}</b></span>
+                                        </div>
+                                        <div class="pt-2 pr-4">
+                                            <button pButton pRipple label="Pregunta" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'user'}" (click)="onChangeType(message, 'user')"></button>
+                                            <button pButton pRipple label="Respuesta" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'ia'}" (click)="onChangeType(message, 'ia')"></button>
+                                            <button pButton pRipple label="Descripción" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'text'}" (click)="onChangeType(message, 'text')"></button>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
+                                        <div class="flex w-2rem"></div>
+                                        <div class="flex flex-1 align-items-center pl-4">
+
+                                            <p-tabView class="w-full pr-4">
+                                                <p-tabPanel header="{{message.type == 'user' ? 'Editar HTML' : 'Editar Markdown'}}">
+                                                    <textarea class="w-full" style="min-height: 200px" [autoResize]="true" pInputTextarea [(ngModel)]="message.content"></textarea>
+                                                </p-tabPanel>
+
+                                                <p-tabPanel header="Previsualizar">
+                                                    <div *ngIf="message.type == 'user'" [innerHTML]="message.content"></div>
+                                                    <markdown *ngIf="message.type != 'user'" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
+                                                </p-tabPanel>
+                                            </p-tabView>
+
+                                        </div>                        
+                                    </div>
+                
+                                </div>
+
+                                <div class="separator-line align-items-start pl-4 pt-3">
+                                    <p-button icon="pi pi-trash" [rounded]="true" severity="success" [outlined]="true" (click)="onRemove(i)"></p-button>
+                                </div>
                         </div>
                         
+                        </div>
+
+                        <div class="separator-line">
+                            <div class="line"></div>
+                            <p-button icon="pi pi-plus" [rounded]="true" severity="success" [outlined]="true" (click)="onAddMessage()"></p-button>
+                            <div class="line"></div>
+                        </div>
                     
                     </div>
-        
-                
-                </div>
 
-            </p-fieldset>
+                </p-fieldset>
 
+                <br/>
 
+            </div>
+            <div class="flex-none" style="width: 100px;"></div>
 
         </div>
-        <div class="flex-none" style="width: 100px;"></div>
-
     </div>
+    <div class="flex-none" style="width: 5px;"></div>
 </div>
+
+
+<p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
+    <ng-template pTemplate="footer">
+        <div *ngIf="cd.confirmationOptions.rejectVisible == false">
+            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+        </div>
+
+        <div *ngIf="cd.confirmationOptions.rejectVisible == true">
+            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+        </div>
+    </ng-template>
+</p-confirmDialog>

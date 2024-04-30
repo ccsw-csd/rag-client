@@ -12,11 +12,17 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ChipModule } from 'primeng/chip';
-import { DragDropModule } from 'primeng/dragdrop';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TabViewModule } from 'primeng/tabview';
+import { PromptImportComponent } from './views/prompt-import/prompt-import.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { PromptListComponent } from './views/prompt-list/prompt-list.component';
 
 @NgModule({
   declarations: [
-    PromptViewComponent
+    PromptViewComponent,
+    PromptImportComponent,
+    PromptListComponent
   ],
   imports: [
     CommonModule,
@@ -32,8 +38,10 @@ import { DragDropModule } from 'primeng/dragdrop';
     InputNumberModule,
     InputTextareaModule,
     ChipModule,
-    DragDropModule,
+    SelectButtonModule,
     MarkdownModule.forRoot(),
+    TabViewModule,
+    AutoCompleteModule,
   ]
 })
 export class PromptModule { }

@@ -3,23 +3,33 @@ import { ChatService } from 'src/app/chat/services/chat.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { Prompt } from '../../models/Prompt';
-import { DATA } from '../../models/response';
+import { Post } from '../../models/Post';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService } from 'primeng/api';
+import { PromptImportComponent } from '../prompt-import/prompt-import.component';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-prompt-view',
   templateUrl: './prompt-view.component.html',
-  styleUrls: ['./prompt-view.component.scss']
+  styleUrls: ['./prompt-view.component.scss'],
+  providers: [DialogService]
 })
 export class PromptViewComponent implements OnInit {
 
   prompt: Prompt;
  
   @ViewChild("contentData") contentData : ElementRef; 
+
+
+  suggestionTags: any[] = [];
   
+
   constructor(
     private navigatorService: NavigatorService,
-    private authService: AuthService,
-    private chatService: ChatService,
+    private authService: AuthService,    
+    private dialogService: DialogService,
+    private confirmationService: ConfirmationService,
   ) {
   }
 
@@ -43,51 +53,23 @@ export class PromptViewComponent implements OnInit {
       tags: ['cobol', 'challengeIA', 'Capgemini'],
       posts: []
     }
-
-    this.parseChatGPT(DATA);
-
-
   }
 
-  parseChatGPT(data: any) : void {
 
-    let keys = Object.keys(data.mapping);
-
-    let arrayData = [];
-
-    for (let key of keys) {
-
-      arrayData.push(data.mapping[key]);
-    }
-    
-
-    arrayData = arrayData.filter(item => item.message != null && (item.message.author.role == 'user' || item.message.author.role == 'assistant'));
-
-    arrayData.sort((a, b) => {return a.message.create_time - b.message.create_time});
-
-
-
-    let finedArray = arrayData.map(item => {return {author: item.message.author.role, content: item.message.content.parts.join('\n')}});
-
-
-    let order = 1;
-
-    for (let message of finedArray) {
-
-      this.prompt.posts.push(
-      {id: order,
-        order: order,
-        author: message.author,
-        content: message.author == 'user' ? message.content.replaceAll('\n', '&nbsp;<br/>') : message.content,
-        type: message.author == 'user' ? 'text': 'markdown',
-      });
-
-      order++;
-    }
-
-    console.log(this.prompt)
-
+  onSearch(event: AutoCompleteCompleteEvent) {
+    this.suggestionTags = [...Array(10).keys()].map(item => event.query + '-' + item);
   }
+
+
+  onChangeType(message: Post, type: string) {
+  
+    message.type = type;
+
+    if (type == 'ia') message.author = 'Assistant';
+    else message.author = this.authService.getUserInfo().displayName;
+  
+  }
+
 
 
   getAbbreviatedName(name: string): string {
@@ -97,23 +79,76 @@ export class PromptViewComponent implements OnInit {
   }
 
 
-  drop(event: any) {
-    console.log(event);
+  onAddMessage(index?: number) :void  {
+    let type = 'user';
 
-    let y = event.target.offsetTop;
-
-
-
-    for (let i = 0; i < this.contentData.nativeElement.children.length; i++) {
-
-      let element = this.contentData.nativeElement.children[i];
-
-      if (y < element.offsetTop + element.offsetHeight) {
-        break;
-      }
-
+    if (index > 0 && this.prompt.posts[index-1] && this.prompt.posts[index-1].type == 'user') {
+      type = 'ia';
     }
+
+    let item : Post = {       
+      author: '',
+      content: '',
+      type: type
+    };
+
+
+    if (type == 'ia') item.author = 'Assistant';
+    else item.author = this.authService.getUserInfo().displayName;
+
+
+
+    if (index == undefined) {
+      this.prompt.posts.push(item);
+    }
+    else {    
+      this.prompt.posts = [
+        ...this.prompt.posts.slice(0, index),
+        item,
+        ...this.prompt.posts.slice(index)
+      ];
+    }
+
+  }
+
+  onRemove(index: number) :void  {
+
+    this.confirmationService.confirm({
+      message: 'Si eliminas esta sección de información se podrían perder los datos introducidos en esta sección. <br/><br/>¿Estás seguro que deseas eliminarla?',
+      header: 'Atención, pérdida de datos',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.prompt.posts.splice(index, 1);
+      },
+      reject: () => {
+
+      }
+    });
+
+
     
+  }
+
+  onImport() :void {
+
+    let ref = this.dialogService.open(PromptImportComponent, {
+      header: 'Importar prompt',
+      width: '900px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false
+    });
+
+    
+    ref.onClose.subscribe((result) => {
+      if (result.data != undefined) {
+        this.prompt.posts.push(...result.data);
+      }
+    });    
+    
+
+
 
   }
 

@@ -1,7 +1,7 @@
 export interface Post {
-    id: number,
-    order: number,
+    id?: number,
+    order?: number,
     content: string,
     author: string,
-    type: string,
+    type: string
 }
