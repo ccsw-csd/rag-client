@@ -1,1 +1,154 @@
-<p>prompt-list works!</p>
+<div class="flex flex-column p-4">
+
+    <div class="flex flex-row justify-content-between">
+        <h3>
+            Listado de Prompts
+        </h3>
+        <div class="flex flex-1"></div>
+        <p-button label="Crear prompt" [outlined]="false" (click)="onCreate()" [style]="{width: '150px'}"></p-button>        
+    </div>
+    
+    <p-table [style]="{'height':'calc(100vh - 160px)','width':tableWidth}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
+         [value]="prompts" sortField="date" [sortOrder]="-1" styleClass="p-datatable-striped"
+         [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first}-{last} registros de {totalRecords} disponibles">
+  
+         <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    <div pSortableColumn="title" class="text-left pl-2 top-header">
+                        Nombre
+                        <p-sortIcon field="title"></p-sortIcon>
+                    </div>
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="title" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-16rem">
+                    <div pSortableColumn="author" class="text-center top-header">
+                        Autor
+                        <p-sortIcon field="author"></p-sortIcon>
+                    </div>
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="author" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-15rem">
+                    <div pSortableColumn="stringTags" class="text-center top-header">
+                        Tags
+                        <p-sortIcon field="stringTags"></p-sortIcon>
+                    </div> 
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="stringTags" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-9rem">
+                    <div pSortableColumn="date" class="text-center top-header">
+                        Actualizado
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="date" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-5rem">
+                    <div pSortableColumn="likes" class="text-center top-header">
+                        Likes
+                        <p-sortIcon field="likes"></p-sortIcon>
+                    </div> 
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="likes" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-5rem">
+                    <div pSortableColumn="views" class="text-center top-header">
+                        Visitas
+                        <p-sortIcon field="views"></p-sortIcon>
+                    </div> 
+                    <div class="foot-header">
+                        <p-columnFilter class="w-full" type="text" field="views" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                          </ng-template>
+                        </p-columnFilter>
+                    </div>                    
+                </th>
+
+                <th class="w-8rem">
+                    <div class="text-right top-header">
+                        <span></span>
+                    </div> 
+                </th>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-prompt>
+            <tr class="border-bottom-1 border-gray-300">
+                <td>
+                    {{ prompt.title }}
+                </td>
+                <td>
+                    {{ prompt.author }}
+                </td>
+                <td>
+                    {{ prompt.stringTags }}
+                </td>
+                <td class="text-center">
+                    {{ prompt.date | date:"dd/MM/yyyy hh:mm" }}
+                </td>
+                <td class="text-right">
+                    {{ prompt.likes }}
+                </td>
+                <td class="text-right">
+                    {{ prompt.views }}
+                </td>
+                <td class="text-right">
+                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger p-0" (click)="onDelete(prompt)"></button>
+                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger p-0" (click)="onEdit(prompt)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-0" (click)="onView(prompt)"></button>
+                </td>
+            </tr>
+        </ng-template>
+  
+  </p-table>
+</div>  
+
+
+<p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
+    <ng-template pTemplate="footer">
+        <div *ngIf="cd.confirmationOptions.rejectVisible == false">
+            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+        </div>
+
+        <div *ngIf="cd.confirmationOptions.rejectVisible == true">
+            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+
+<p-toast></p-toast>

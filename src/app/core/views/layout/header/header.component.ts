@@ -32,6 +32,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleSideNav() {
+    //TODO: remove when menu is implemented
+    if (true) return;
     this.navOpen = !this.navOpen;
     this.navOpenEvent.emit(this.navOpen);
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Post } from '../../models/Post';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { UserInfoSSO } from 'src/app/core/models/UserInfoSSO';
 
 @Component({
   selector: 'app-prompt-import',
@@ -28,6 +29,8 @@ export class PromptImportComponent implements OnInit {
   }
   
 
+  
+
 
   onClose() {
     this.ref.close({});
@@ -49,7 +52,7 @@ export class PromptImportComponent implements OnInit {
   }
 
 
-  parseChatGPT(parsedJson: any) : Post[] {
+  private parseChatGPT(parsedJson: any) : Post[] {
 
     let posts: Post[] = [];    
     let arrayData = [];
@@ -67,22 +70,10 @@ export class PromptImportComponent implements OnInit {
 
       let item : Post = null;
 
-      if (message.author == 'user') {
-        item = {
-          author: this.authService.getUserInfo().displayName,
-          content: message.content.replaceAll('\n', '<br/>\n'),
-          type: 'user',
-        };
-    
-      }
-      else {
-        item = {
-          author: 'Assistant',
-          content: message.content,
-          type: 'ia',
-        };
-    
-      }
+      item = {
+        content: message.content,
+        type: message.author == 'user' ? 'user' : 'ia',
+      };
 
       posts.push(item);
     }

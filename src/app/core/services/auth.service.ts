@@ -166,6 +166,7 @@ export class AuthService {
   
   public refreshToken(credentials : ResponseCredentials): void {
     this.putSSOCredentials(credentials);
+    this.userInfoSSO = null;
   }   
 
   public hasRole(role : string) : boolean  {

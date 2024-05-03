@@ -1,0 +1,110 @@
+
+:host ::ng-deep {
+
+    .l-fixed {
+        font-size: 12px;
+        top: -0.5rem !important;
+        background-color: #ffffff;
+        padding: 2px 4px;
+        margin-left: -4px;
+        margin-top: 0;        
+    }
+
+    .p-fieldset-legend {
+        background-color: lightgrey !important;
+    }
+
+    button.p-tree-toggler {
+        visibility: hidden !important;
+        width: 0px !important;
+    }
+
+    .pi-ia {
+        background-image: url(../../../../assets/images/icons8-ai.png);
+        width: 16px;
+        height: 16px;
+    }
+
+    .p-menuitem-icon {
+        margin-top: -4px !important;
+    }
+
+    .p-tabview-panels {
+        padding: 0px;
+        padding-top: 10px;
+    }
+
+    /*
+    .p-button {
+        text-300 border-300
+    }
+    */
+
+    
+    .separator-line {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .line {
+            background-color: #CDCDCD;
+            margin: 0px 15px;
+            height:1px;
+            flex: 1;
+        }
+        
+        .p-button.p-button-outlined {
+            color: #CDCDCD !important;
+        }
+
+    }
+
+    .separator-line:hover {
+
+        .line {
+            background-color: #3F51B5;
+        }
+        
+        .p-button.p-button-outlined {
+            color: #3F51B5 !important;
+        }
+
+    }
+
+}
+
+
+.button-type {
+    width: 90px; 
+    height: 25px;
+    font-size: 0.75rem !important;
+    border-radius: 0px;
+}
+
+.button-type:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;    
+}
+
+.button-type:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;    
+}
+
+
+.border-user {
+    border-radius: 25px; 
+    border: thin solid #27293665;
+}
+
+.border-ia {
+    border-radius: 25px; 
+    border: thin solid #4472C465;    
+}
+
+.border-text {
+    border-radius: 25px; 
+    border: thin solid lightgreen;
+}
+
+

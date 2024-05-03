@@ -22,6 +22,7 @@ import { PromptModule } from './prompt/prompt.module';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { PromptLoaderResolverService } from './prompt/services/prompt-loader.resolver.service';
 registerLocaleData(localeEs);
 
 
@@ -50,6 +51,7 @@ registerLocaleData(localeEs);
     DialogService,
     MessageService,
     RefreshTokenResolverService,
+    PromptLoaderResolverService,
     CollectionResolverService,
     DatePipe,
     ConfirmationService,

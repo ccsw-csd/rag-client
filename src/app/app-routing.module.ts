@@ -8,7 +8,9 @@ import { CollectionListComponent } from './collection/collection-list/collection
 import { ChatComponent } from './chat/views/chat/chat.component';
 import { StorageComponent } from './storage/views/storage/storage.component';
 import { CollectionResolverService } from './core/services/collection-resolver.service';
-import { PromptViewComponent } from './prompt/views/prompt-view/prompt-view.component';
+import { PromptListComponent } from './prompt/views/prompt-list/prompt-list.component';
+import { PromptEditComponent } from './prompt/views/prompt-edit/prompt-edit.component';
+import { PromptLoaderResolverService } from './prompt/services/prompt-loader.resolver.service';
 
 
 const routes: Routes = [
@@ -19,14 +21,17 @@ const routes: Routes = [
     resolve: {credentials: RefreshTokenResolverService, collections: CollectionResolverService},
     canActivate: [AuthGuard],
     children: [
-      { path: 'main', component: ChatComponent },
-      { path: 'prompt', component: PromptViewComponent },
+      { path: 'main', component: PromptListComponent },
+      { path: 'prompt', component: PromptListComponent },
+      { path: 'prompt/edit/:id', component: PromptEditComponent, resolve: {prompt: PromptLoaderResolverService}},
+      { path: 'prompt/edit', component: PromptEditComponent},      
+      { path: 'chat', component: ChatComponent },
       { path: 'storage', component: StorageComponent},
       { path: 'collections', component: CollectionListComponent},
-      { path: '**', redirectTo: 'storage', pathMatch: 'full' },
+      { path: '**', redirectTo: 'prompt', pathMatch: 'full' },
     ]
   },  
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'prompt', pathMatch: 'full' }
 ];
 
 @NgModule({

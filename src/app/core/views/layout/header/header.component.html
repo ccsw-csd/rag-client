@@ -4,12 +4,12 @@
         <button pButton pRipple type="button" icon="pi pi-bars" (click)="toggleSideNav()" class="p-button-rounded"></button>
         <div class="flex align-items-center justify-content-start p-fluid">
           <div class="ml-1 text-xl text-white" routerLink="/welcome">
-            <b>Prompt Genia</b>
+            <b>Bienvenido a la PromptpedIA</b>
           </div>
         </div>
       </div>
 
-      <div class="header-button p-toolbar-group-center gap-2">
+      <div *ngIf="false" class="header-button p-toolbar-group-center gap-2">
 
         <span class="pi pi-book text-white"></span>
         <div class="ml-1 text-sm text-white">{{selectedCollection.name}}</div>
@@ -59,7 +59,7 @@
         <span>Feedback</span>
       </div>
 
-      <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu">
+      <div *ngIf="false" class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu">
         <span class="pi pi-book"></span> Collection 
         <p-dropdown [options]="collections" [(ngModel)]="selectedCollection" optionLabel="name" [showClear]="false" styleClass="w-14rem h-2rem" placeholder="Select a Collection" (onChange)="changeCollection($event)"></p-dropdown>
       </div>

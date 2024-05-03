@@ -7,4 +7,5 @@ export interface Message {
     embeddings?: string[],
     spentTime?: number,
     date?: Date,
+    tabActiveIndex?: number,
 }

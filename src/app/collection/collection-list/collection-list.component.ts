@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Collection } from '../model/Collection';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { CollectionService } from '../../core/services/collection.service';
@@ -12,7 +12,7 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./collection-list.component.scss'],
   providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 })
-export class CollectionListComponent {
+export class CollectionListComponent implements OnInit {
 
   tableWidth: string;
 

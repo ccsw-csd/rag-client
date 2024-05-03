@@ -5,83 +5,17 @@
         background-color: lightgrey !important;
     }
 
-    button.p-tree-toggler {
-        visibility: hidden !important;
-        width: 0px !important;
-    }
-
-    .pi-ia {
-        background-image: url(../../../../assets/images/icons8-ai.png);
-        width: 16px;
-        height: 16px;
-    }
-
-    .p-menuitem-icon {
-        margin-top: -4px !important;
-    }
-
-    .p-tabview-panels {
-        padding: 0px;
-        padding-top: 10px;
-    }
-
-    /*
-    .p-button {
-        text-300 border-300
-    }
-    */
-
-    
-    .separator-line {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        .line {
-            background-color: #CDCDCD;
-            margin: 0px 15px;
-            height:1px;
-            flex: 1;
-        }
-        
-        .p-button.p-button-outlined {
-            color: #CDCDCD !important;
-        }
-
-    }
-
-    .separator-line:hover {
-
-        .line {
-            background-color: #3F51B5;
-        }
-        
-        .p-button.p-button-outlined {
-            color: #3F51B5 !important;
-        }
-
+    .p-badge {
+        font-size: 0.60rem !important;
+        background: #3F51B5E0;
+        line-height: 1.0rem;
+        height: 1.0rem;
+        padding: 0 0.25rem;
+        font-weight: bold;
+        min-width: none;
     }
 
 }
-
-
-.button-type {
-    width: 90px; 
-    height: 25px;
-    font-size: 0.75rem !important;
-    border-radius: 0px;
-}
-
-.button-type:first-child {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;    
-}
-
-.button-type:last-child {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;    
-}
-
 
 .border-user {
     border-radius: 25px; 
@@ -97,5 +31,3 @@
     border-radius: 25px; 
     border: thin solid lightgreen;
 }
-
-

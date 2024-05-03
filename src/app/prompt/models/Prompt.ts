@@ -1,6 +1,5 @@
 import { Person } from "./Person";
 import { Post } from "./Post";
-import { Tag } from "./Tag";
 
 export interface Prompt {
     id: number,
@@ -9,4 +8,12 @@ export interface Prompt {
     description: string,
     tags: string[],
     posts: Post[],
+    views?: number,
+    likes?: number,
+    userLiked?: boolean,
+    date?: Date,
+
+
+    stringTags?: string,
+    author?: string,
 }
