@@ -17,6 +17,24 @@
 
 }
 
+
+.button-type {
+    width: 90px; 
+    height: 25px;
+    font-size: 0.75rem !important;
+    border-radius: 0px;
+}
+
+.button-type:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;    
+}
+
+.button-type:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;    
+}
+
 .border-user {
     border-radius: 25px; 
     border: thin solid #27293665;

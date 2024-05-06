@@ -76,14 +76,25 @@
                                         <div *ngIf="message.type == 'text'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: lightgreen;">
                                             <span class="pi pi-bookmark-fill"></span>
                                         </div>                                    
-                                        <div *ngIf="message.type == 'text'" class="flex flex-1 h-2rem align-items-center pl-4"></div>                                            
+                                        <div *ngIf="message.type == 'text'" class="flex flex-1 h-2rem align-items-center pl-4"></div> 
+                                        
+                                        <div class="pt-2 pr-4">
+                                            <button pButton pRipple label="Renderizado" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'normal'}" (click)="onChangePostView(message, 'normal')"></button>
+                                            <button pButton pRipple label="Texto plano" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'text'}" (click)="onChangePostView(message, 'text')"></button>
+                                        </div>                                        
                                     </div>
                                     <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
                                         <div class="flex w-2rem"></div>
-                                        <div class="flex flex-1 align-items-center pl-4">
-                                            <div class="pb-3 pt-3 flex-1" *ngIf="message.type == 'user'" [innerHTML]="message.content"></div>
+                                        
+                                        <div *ngIf="message.view == 'normal'" class="flex flex-1 align-items-center pl-4">
+                                            <div class="pb-3 flex-1" style='padding-top:13px' *ngIf="message.type == 'user'" [innerHTML]="message.content"></div>
                                             <markdown class="flex-1" *ngIf="message.type != 'user'" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
                                         </div>
+
+                                        <div *ngIf="message.view == 'text'" class="flex flex-1 align-items-center pl-4">
+                                            <div class="pb-3 flex-1" style='padding-top:13px' [innerHTML]="convertTextPlainToHtml(message.content)"></div>
+                                        </div>
+                                        
                                         <div class="flex w-2rem"></div>
                                     </div>
                 

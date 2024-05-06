@@ -48,9 +48,9 @@ export class PromptListComponent implements OnInit {
       this.prompts.forEach((prompt) => {
         prompt.stringTags = prompt.tags.join(', ');
         prompt.author = prompt.person.name + ' ' + prompt.person.lastname;
-
-        this.navigatorService.setLoading(false);
       });
+      
+      this.navigatorService.setLoading(false);
     });
 
 

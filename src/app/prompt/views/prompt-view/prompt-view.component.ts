@@ -4,6 +4,7 @@ import { Prompt } from '../../models/Prompt';
 import { PromptService } from '../../services/prompt.service';
 import { Person } from '../../models/Person';
 import { PromptStats } from '../../models/PromptStats';
+import { Post } from '../../models/Post';
 
 @Component({
   selector: 'app-prompt-view',
@@ -30,14 +31,22 @@ export class PromptViewComponent implements OnInit {
     this.promptService.getById(this.config.data.id).subscribe((data: Prompt) => {
       this.prompt = data;
 
+      this.prompt.posts.forEach((post) => {
+        post.view = 'normal';
+      });
 
       this.promptService.view(this.prompt.id).subscribe((data: PromptStats) => {
         this.prompt.likes = data.likes;
         this.prompt.views = data.views;
         this.prompt.userLiked = data.userLiked;
-        });
-    });
+      });
 
+    });
+  }
+
+  convertTextPlainToHtml(text: string): string {
+    text = text.replaceAll('<br/>\n', '<br>');
+    return text.replace(/\n/g, '<br>');
   }
 
   getLikes(): string {
@@ -72,6 +81,10 @@ export class PromptViewComponent implements OnInit {
 
   onClose() {
     this.ref.close({});
+  }
+
+  onChangePostView(post: Post, view: string) {
+    post.view = view;
   }
 
 }
