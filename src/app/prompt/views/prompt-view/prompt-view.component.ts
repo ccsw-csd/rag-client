@@ -44,7 +44,7 @@ export class PromptViewComponent implements OnInit {
     });
   }
 
-  convertTextPlainToHtml(text: string): string {
+  convertPlainTextToHtml(text: string): string {
     text = text.replaceAll('<br/>\n', '<br>');
     return text.replace(/\n/g, '<br>');
   }

@@ -67,7 +67,7 @@
                                         </div>
 
                                         <div *ngIf="message.type == 'ia'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
-                                            <img class="flex-none" src="/assets/images/icons8-ai-white.png">
+                                            <img class="flex-none" src="./assets/images/icons8-ai-white.png">
                                         </div>
                                         <div *ngIf="message.type == 'ia'" class="flex flex-1 h-2rem align-items-center pl-4">
                                             <span class="text-base"><b>Asistente</b></span>
@@ -87,12 +87,12 @@
                                         <div class="flex w-2rem"></div>
                                         
                                         <div *ngIf="message.view == 'normal'" class="flex flex-1 align-items-center pl-4">
-                                            <div class="pb-3 flex-1" style='padding-top:13px' *ngIf="message.type == 'user'" [innerHTML]="message.content"></div>
+                                            <div class="pb-3 flex-1" style='padding-top:13px' *ngIf="message.type == 'user'" [innerHTML]="convertPlainTextToHtml(message.content)"></div>
                                             <markdown class="flex-1" *ngIf="message.type != 'user'" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
                                         </div>
 
                                         <div *ngIf="message.view == 'text'" class="flex flex-1 align-items-center pl-4">
-                                            <div class="pb-3 flex-1" style='padding-top:13px' [innerHTML]="convertTextPlainToHtml(message.content)"></div>
+                                            <div class="pb-3 flex-1" style='padding-top:13px' [innerHTML]="convertPlainTextToHtml(message.content)"></div>
                                         </div>
                                         
                                         <div class="flex w-2rem"></div>

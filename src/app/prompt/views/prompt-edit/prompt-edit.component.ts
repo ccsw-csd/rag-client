@@ -72,8 +72,9 @@ export class PromptEditComponent implements OnInit {
     return person.name + ' ' + person.lastname;
   }
 
-  convertPlainTextToHtml(content: string): string {
-    return content.replace(/\n/g, "<br>");
+  convertPlainTextToHtml(text: string): string {
+    text = text.replaceAll('<br/>\n', '<br>');
+    return text.replace(/\n/g, '<br>');
   }
 
   onSave() : void {

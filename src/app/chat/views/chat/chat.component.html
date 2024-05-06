@@ -10,7 +10,7 @@
                 <div class="flex flex-column" [ngClass]="message.user ? 'border-user' : 'border-ia'">
                     <div class="flex flex-row p-2 pb-0">
                         <div *ngIf="message.user == false" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: #4472C4;">
-                            <img class="flex-none" src="/assets/images/icons8-ai-white.png">
+                            <img class="flex-none" src="./assets/images/icons8-ai-white.png">
                         </div>
                         <div *ngIf="message.user == true" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle text-white" style="background-color: #272936;">
                             {{getAbbreviatedName(message.author)}}
