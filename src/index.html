@@ -1,13 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <title>PromptpedIA</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="./assets/images/bot.png">
+
+  <link rel="icon" type="image/png" href="./assets/images/bot-light.png" id="light-scheme-icon">
+  <link rel="icon" type="image/png" href="./assets/images/bot-dark.png" id="dark-scheme-icon">
+
+  <script>
+    matcher = window.matchMedia('(prefers-color-scheme: dark)');
+    matcher.addListener(onUpdate);
+    onUpdate();
+  
+    function onUpdate() {
+  
+      lightSchemeIcon = document.querySelector('link#light-scheme-icon');
+      darkSchemeIcon = document.querySelector('link#dark-scheme-icon');
+  
+      if (matcher.matches) {
+        console.log("borramos el light")
+        lightSchemeIcon.remove();
+        document.head.append(darkSchemeIcon);
+      } else {
+        console.log("borramos el dark")
+        document.head.append(lightSchemeIcon);
+        darkSchemeIcon.remove();
+      }
+    }    
+  </script>
 </head>
 <body>
   <app-root></app-root>
+
 </body>
+
 </html>
