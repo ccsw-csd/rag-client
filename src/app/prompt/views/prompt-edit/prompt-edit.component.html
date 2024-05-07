@@ -100,7 +100,7 @@
 
                                                 <p-tabView class="w-full pr-4" [(activeIndex)]="message.tabActiveIndex">
                                                     <p-tabPanel header="{{message.type == 'user' ? 'Editar HTML' : 'Editar Markdown'}}">
-                                                        <textarea class="w-full" style="min-height: 200px; max-height: 700px" [autoResize]="true" pInputTextarea [(ngModel)]="message.content"></textarea>
+                                                        <textarea class="w-full" style="max-height: 700px" [ngStyle]="{'min-height': getTextareaMinHeight(message.content)}" pInputTextarea [(ngModel)]="message.content"></textarea>
                                                     </p-tabPanel>
                                                     
                                                     <p-tabPanel header="Previsualizar">

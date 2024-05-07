@@ -187,6 +187,14 @@ export class PromptEditComponent implements OnInit {
     this.router.navigate(['prompt']);
   }
 
+
+  getTextareaMinHeight(content: string) {
+    let lines = content.split('\n').length;
+    let height = Math.min(700, Math.max(200, Math.round(lines * 19.5)));
+
+
+    return height + 'px';
+  }
 }
 
 
