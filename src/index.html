@@ -20,11 +20,9 @@
       darkSchemeIcon = document.querySelector('link#dark-scheme-icon');
   
       if (matcher.matches) {
-        console.log("borramos el light")
         lightSchemeIcon.remove();
         document.head.append(darkSchemeIcon);
       } else {
-        console.log("borramos el dark")
         document.head.append(lightSchemeIcon);
         darkSchemeIcon.remove();
       }
