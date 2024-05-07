@@ -84,6 +84,7 @@ export class PromptEditComponent implements OnInit {
 
     this.promptService.save(this.prompt).subscribe({
       next: (data) => {
+        this.prompt.id = data;
         this.messageService.add({ severity: 'success', summary: 'Guardado', detail: 'Los datos se han guardado con éxito' });
       },
       error: (error) => {
@@ -185,7 +186,6 @@ export class PromptEditComponent implements OnInit {
   onClose() {
     this.router.navigate(['prompt']);
   }
-
 
 }
 

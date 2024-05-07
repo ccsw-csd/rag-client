@@ -37,8 +37,8 @@ export class PromptService {
     return this.http.get<string[]>(environment.server + '/prompt/tags/'+query);
   }
 
-  save(prompt: Prompt): Observable<void> {
-    return this.http.put<void>(environment.server + '/prompt', prompt);    
+  save(prompt: Prompt): Observable<number> {
+    return this.http.put<number>(environment.server + '/prompt', prompt);    
   }
 
   delete(promptId: any): Observable<void> {

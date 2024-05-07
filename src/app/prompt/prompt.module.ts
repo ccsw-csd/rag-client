@@ -21,6 +21,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { PromptViewComponent } from './views/prompt-view/prompt-view.component';
 import { BadgeModule } from 'primeng/badge';
+import {AutosizeModule} from 'ngx-autosize';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { BadgeModule } from 'primeng/badge';
     AutoCompleteModule,
     ToastModule,
     BadgeModule,
+    AutosizeModule,
   ]
 })
 export class PromptModule { }

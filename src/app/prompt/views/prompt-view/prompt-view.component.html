@@ -9,7 +9,7 @@
             <div class="flex-none" style="width: 25px;"></div>
             <div class="flex flex-1 flex-column gap-3">
 
-                <p-fieldset legend="Información del prompt"> 
+                <p-fieldset legend="Información del prompt" [toggleable]="true" [collapsed]="false"> 
 
                     <div class="flex flex-column gap-3">
                         <div class="flex flex-row gap-2">
@@ -39,7 +39,7 @@
                         </span>
 
                         <span class="p-float-label">
-                            <textarea class="h-9rem w-full" cols="30" pInputTextarea [(ngModel)]="prompt.description"></textarea>
+                            <textarea class="h-9rem w-full" cols="30" pInputTextarea [(ngModel)]="prompt.description" [readonly]="true"></textarea>
                             <label for="description">Descripción</label>
                         </span>
                     </div>
@@ -54,7 +54,7 @@
 
                         <div *ngFor="let message of prompt.posts; index as i">
                             
-                            <div class="flex flex-row pt-5 pb-5">
+                            <div class="flex flex-row pt-2 pb-2">
 
                                 <div class="flex flex-column flex-1" class="border-{{message.type}}">
                                     <div class="flex flex-row p-2 pb-0">
@@ -88,7 +88,7 @@
                                         
                                         <div *ngIf="message.view == 'normal'" class="flex flex-1 align-items-center pl-4">
                                             <div class="pb-3 flex-1" style='padding-top:13px' *ngIf="message.type == 'user'" [innerHTML]="convertPlainTextToHtml(message.content)"></div>
-                                            <markdown class="flex-1" *ngIf="message.type != 'user'" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
+                                            <markdown clipboard class="flex-1" *ngIf="message.type != 'user'" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
                                         </div>
 
                                         <div *ngIf="message.view == 'text'" class="flex flex-1 align-items-center pl-4">
