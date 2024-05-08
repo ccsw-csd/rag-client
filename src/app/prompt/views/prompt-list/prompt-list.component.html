@@ -42,7 +42,7 @@
                     </div>                    
                 </th>
 
-                <th class="w-15rem">
+                <th class="w-22rem">
                     <div pSortableColumn="stringTags" class="text-center top-header">
                         Tags
                         <p-sortIcon field="stringTags"></p-sortIcon>
@@ -98,7 +98,7 @@
                     </div>                    
                 </th>
 
-                <th class="w-8rem">
+                <th class="w-6rem">
                     <div class="text-right top-header">
                         <span></span>
                     </div> 
@@ -115,7 +115,7 @@
                     {{ prompt.author }}
                 </td>
                 <td>
-                    {{ prompt.stringTags }}
+                    <p-chip *ngFor="let label of prompt.tags" label="{{label}}"></p-chip>
                 </td>
                 <td class="text-center">
                     {{ prompt.date | date:"dd/MM/yyyy hh:mm" }}
@@ -127,9 +127,9 @@
                     {{ prompt.views }}
                 </td>
                 <td class="text-right">
-                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger p-0" (click)="onDelete(prompt)"></button>
-                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger p-0" (click)="onEdit(prompt)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-0" (click)="onView(prompt)"></button>
+                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-plain p-button-text w-1rem h-2rem p-button-danger p-0 mr-2" (click)="onDelete(prompt)"></button>
+                    <button *ngIf="isGrantEdit(prompt)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-1rem h-2rem p-button-danger p-0 mr-2" (click)="onEdit(prompt)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-rounded p-button-plain p-button-text w-1rem h-2rem p-0" (click)="onView(prompt)"></button>
                 </td>
             </tr>
         </ng-template>

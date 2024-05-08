@@ -25,6 +25,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
 
     this.items = [
+      {label: "Dashboard", routerLink: '/dashboard', visible: this.authService.hasRole('ADMIN')},
       {label: "Prompt", routerLink: '/prompt'},
       //{label: "Chat", routerLink: '/main'},
       //{label: "Storage", routerLink: '/storage'},

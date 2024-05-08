@@ -33,22 +33,16 @@ export class UploadDialogComponent {
 
     this.selectedFiles = event.currentFiles;
 
-    console.log(this.selectedFiles)
-
   }
 
   onRemove(event: FileRemoveEvent) {
 
     this.selectedFiles = this.selectedFiles.filter(file => file.name !== event.file.name);
-
-    console.log(this.selectedFiles)
   }
 
   onSave(){
 
     let collectionId = this.authService.getProperty("selected-collection").id;
-
-    console.log(this.uploadedFiles);
 
     let formData = new FormData;
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -69,7 +63,4 @@ export class UploadDialogComponent {
     this.ref.close({ toRefresh: false });
   }
 
-  onUpload(event) {
-    console.log('onUpload', event);
-  }
 }

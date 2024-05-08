@@ -23,6 +23,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { PromptLoaderResolverService } from './prompt/services/prompt-loader.resolver.service';
+import { DashboardModule } from './dashboard/dashboard.module';
 registerLocaleData(localeEs);
 
 
@@ -42,6 +43,7 @@ registerLocaleData(localeEs);
     CollectionModule,
     StorageModule,
     PromptModule,
+    DashboardModule,
   ],
   providers: [
     HttpClientModule,

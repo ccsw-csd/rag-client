@@ -40,16 +40,16 @@
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeflex/primeflex.css",
               "src/styles.scss",
-              "node_modules/prismjs/themes/prism-okaidia.css",
-              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css"
+              "./node_modules/prismjs/themes/prism-okaidia.css",
+              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css"
             ],
             "scripts": [
-              "node_modules/mermaid/dist/mermaid.min.js",
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-csharp.min.js",
-              "node_modules/prismjs/components/prism-css.min.js",
-              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "./node_modules/clipboard/dist/clipboard.js",
+              "./node_modules/mermaid/dist/mermaid.min.js",
+              "./node_modules/prismjs/prism.js",
+              "./node_modules/prismjs/components/prism-csharp.min.js",
+              "./node_modules/prismjs/components/prism-css.min.js",
+              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js"
             ]
           },
           "configurations": {
@@ -57,8 +57,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",

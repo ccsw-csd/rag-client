@@ -5,4 +5,15 @@
         font-size: 1rem !important;
         padding-top: 0.75rem;
     }
+
+    .p-chip {
+        padding: 0 0.4rem;
+        margin: 0 0.1rem;
+        font-size: 0.7rem;
+
+        .p-chip-text {
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+        }
+    }
 }

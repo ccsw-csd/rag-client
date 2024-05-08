@@ -522,9 +522,6 @@ export class StorageComponent implements OnInit {
 
 
   onLaunchAction(action: number, data: any) {
-
-    console.log(data)
-
     
     if (action == 2) {
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PromptEditComponent } from './views/prompt-edit/prompt-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MarkdownModule } from 'ngx-markdown';
+import { CLIPBOARD_OPTIONS, ClipboardButtonComponent, MarkdownModule } from 'ngx-markdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -45,7 +45,14 @@ import { BadgeModule } from 'primeng/badge';
     ChipModule,
     TableModule,
     SelectButtonModule,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      clipboardOptions: {
+        provide: CLIPBOARD_OPTIONS,
+        useValue: {
+          buttonComponent: ClipboardButtonComponent,
+        },
+      },
+    }),
     TabViewModule,
     AutoCompleteModule,
     ToastModule,
