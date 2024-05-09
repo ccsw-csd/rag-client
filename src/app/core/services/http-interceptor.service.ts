@@ -43,6 +43,9 @@ export class HttpInterceptorService implements HttpInterceptor {
             case 500:
               errorMessage = 'Se ha producido un error del servidor. Por favor, póngase en contacto con un administrador. Disculpe las molestias.';
               break;
+            case 403:
+              this.auth.logout();
+              break;
             default:
               errorMessage = 'Se ha producido un error. Por favor, inténtelo de nuevo.';
           }

@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { ResponseCredentials } from '../models/ResponseCredentials';
+import { ApplicationData, ResponseCredentials } from '../models/ResponseCredentials';
 import { UserInfoDetailed } from '../models/UserInfoDetailed';
 import { UserInfoSSO } from '../models/UserInfoSSO';
 
@@ -17,6 +17,7 @@ export class AuthService {
   ssoPictureKey : string = 'ssoPicture';
   ssoToken : string = null;
   ssoPicture : string = null;
+  applications: ApplicationData[] = [];
 
   userInfoSSO: UserInfoSSO | null = null;
   userInfoDetailed: UserInfoDetailed | null = null;
@@ -43,6 +44,7 @@ export class AuthService {
   public putSSOCredentials(res: ResponseCredentials) : void {
     this.ssoToken = res.token;
     this.ssoPicture = res.photo;
+    this.applications = res.apps;
 
     localStorage.setItem(this.ssoCredentialsKey, this.ssoToken);
     localStorage.setItem(this.ssoPictureKey, this.ssoPicture);
@@ -86,12 +88,16 @@ export class AuthService {
     this.ssoPicture = null;
     this.userInfoDetailed = null;
     this.userInfoSSO = null;
+    this.applications = [];
   }  
     
   // *************************** //
   // **        UTILS          ** //
   // *************************** //
 
+  getApplications() : ApplicationData[] {
+    return this.applications;
+  }
 
   isTokenValid() : boolean {
     try {

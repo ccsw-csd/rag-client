@@ -1,6 +1,19 @@
-@import "./src/assets/scss/master";
 
 ::ng-deep {
+
+    .p-divider.p-divider-horizontal {
+        margin: 0.5rem 0;
+    }
+
+    .p-overlaypanel {
+        border-radius: 30px;
+    }
+
+    .p-overlaypanel:before, .p-overlaypanel:after {
+        left: calc(var(--overlayArrowLeft, 0) + 3.75rem);
+        margin-left: 0px;
+    }
+
     .toolbar-header {
         height: 56px; 
 
@@ -41,8 +54,8 @@
     .header-icon .pi {
         font-size: 21px;
         font-style: normal;
-        color: #dedede;
     }
+
 
     .item-menu {
         padding: 12px 0px;

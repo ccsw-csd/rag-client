@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output  } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild  } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserInfoSSO } from 'src/app/core/models/UserInfoSSO';
 import { environment } from 'src/environments/environment';
 import { Collection } from 'src/app/collection/model/Collection';
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { ApplicationData } from 'src/app/core/models/ResponseCredentials';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +14,7 @@ import { Collection } from 'src/app/collection/model/Collection';
 })
 export class HeaderComponent implements OnInit {
 
+  applications: ApplicationData[] = [];
   userPicture: string = null;
   user : UserInfoSSO | null = null;
   navOpen = true;
@@ -29,7 +32,15 @@ export class HeaderComponent implements OnInit {
     this.user = this.auth.getUserInfo();
     this.userPicture = this.auth.getSSOPicture();
     this.selectedCollection = this.auth.getProperty("selected-collection");
+    this.applications = this.auth.getApplications();
   }
+
+
+  getAppPicture(application: ApplicationData): string | null {
+
+    if (application == null || application.photo == null) return null;
+    return 'data:image/png;base64,'+application.photo;
+  }  
 
   toggleSideNav() {
     this.navOpen = !this.navOpen;
@@ -41,17 +52,22 @@ export class HeaderComponent implements OnInit {
     return this.user.email;
   }  
 
-  getName() : string {
+  getFullName() : string {
     if (this.user == null) return "";
     return this.user.displayName;
+  }
+
+  getName() : string {
+    if (this.user == null) return "";
+    return this.user.firstName;
   }
 
   logout() {
     this.auth.logout();
   }
 
-  apps() : void {
-    window.open('https://cca.'+this.getDomain()+'.com'+environment.ssoApp, "_blank");
+  openApp(application: ApplicationData) : void {
+    window.open(application.url, "_blank");
   }
 
   getDomain() : string {

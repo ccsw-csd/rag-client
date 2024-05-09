@@ -20,6 +20,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { HeaderComponent } from './views/layout/header/header.component';
 import { NavComponent } from './views/layout/nav/nav.component';
+import { DividerModule } from 'primeng/divider';
  
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { NavComponent } from './views/layout/nav/nav.component';
     OverlayPanelModule,
     ProgressSpinnerModule,
     DropdownModule,
+    DividerModule,
   ],
 })
 export class CoreModule { }
