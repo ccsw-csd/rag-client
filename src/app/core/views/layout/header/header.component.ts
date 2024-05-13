@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.user = this.auth.getUserInfo();
     this.userPicture = this.auth.getSSOPicture();
     this.selectedCollection = this.auth.getProperty("selected-collection");
-    this.applications = this.auth.getApplications();
+    this.applications = this.auth.getApplications().sort((a, b) => a.name.localeCompare(b.name));
   }
 
 

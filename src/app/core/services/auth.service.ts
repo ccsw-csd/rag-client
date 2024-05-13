@@ -95,9 +95,6 @@ export class AuthService {
   // **        UTILS          ** //
   // *************************** //
 
-  getApplications() : ApplicationData[] {
-    return this.applications;
-  }
 
   isTokenValid() : boolean {
     try {
@@ -203,5 +200,8 @@ export class AuthService {
     return JSON.parse(localStorage.getItem(composedKey));
   }
 
+  getApplications() : ApplicationData[] {
+    return this.applications;
+  }
 
 }
