@@ -1,49 +1,41 @@
+
 <div class="toolbar-header">
-    <p-toolbar>
-      <div class="header-button p-toolbar-group-left">
-        <button pButton pRipple type="button" icon="pi pi-bars" (click)="toggleSideNav()" class="p-button-rounded"></button>
-        <div class="flex align-items-center justify-content-start p-fluid">
-          <div class="ml-1 text-xl text-white" routerLink="/welcome">
-            <img src="./assets/images/bot-white.png" height="32px" alt="" style="vertical-align: middle; padding-right: 15px;"/>
-            <b style="vertical-align: middle;">Bienvenido a la PromptpedIA</b>
-          </div>
+  <p-toolbar>
+    <div class="header-button p-toolbar-group-left">
+      <button pButton pRipple type="button" icon="pi pi-bars" (click)="toggleSideNav()" class="p-button-rounded"></button>
+      <div class="flex align-items-center justify-content-start p-fluid">
+        <div class="ml-1 text-xl text-white" routerLink="/welcome">
+          <img src="./assets/images/bot-white.png" height="32px" alt="" style="vertical-align: middle; padding-right: 15px;"/>
+          <b style="vertical-align: middle;">{{ 'header.title' | translate }}</b> 
         </div>
       </div>
+    </div>
 
-      <div *ngIf="false" class="header-button p-toolbar-group-center gap-2">
+    <div class="header-button p-toolbar-group-right gap-2">
 
-        <span class="pi pi-book text-white"></span>
-        <div class="ml-1 text-sm text-white">{{selectedCollection.name}}</div>
-        
+      <div class="flex flex-1 flex-row p-2 pr-4 hover:text-0 text-400 cursor-pointer" (click)="appMenu.toggle($event)">
+        <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
+        <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
+        <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
       </div>
 
+      <div class="p-buttonset" class="flex flex-row text-white cursor-pointer gap-2 align-items-center" style="min-width: 1rem" (click)="menu.toggle($event)">
+        <img *ngIf="userPicture != null" [src]="userPicture" class="w-2rem h-2rem" style="border-radius: 50%;" />
+        <div *ngIf="userPicture == null" class="header-icon text-200"><i class="pi pi-user"></i></div>
 
-      <div class="header-button p-toolbar-group-right gap-2">
+        <span>{{getFullName()}}</span>
 
-        <div class="flex flex-1 flex-row pr-4 hover:text-0 text-400 cursor-pointer" (click)="appMenu.toggle($event)">
-          <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
-          <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
-          <div class="header-icon"><i style="width: 7px; left: -7px; position: relative;" class="pi pi-ellipsis-v"></i></div>
-        </div>
-
-
-        <div class="p-buttonset" class="flex flex-row text-white cursor-pointer gap-2 align-items-center" (click)="menu.toggle($event)">
-  
-          <img *ngIf="userPicture != null" [src]="userPicture" class="w-2rem h-2rem" style="border-radius: 50%;" />
-          <div *ngIf="userPicture == null" class="header-icon text-200"><i class="pi pi-user"></i></div>
-  
-          <span>{{getFullName()}}</span>
-  
-          <div class="header-icon text-200">
-            <span class="pi pi-angle-down"></span>
-          </div>
+        <div class="header-icon text-200">
+          <span class="pi pi-angle-down"></span>
         </div>
       </div>
-    </p-toolbar>
+    </div>
+  </p-toolbar>
 </div>
 
 
 <p-overlayPanel #appMenu>
+<div class="overlaypanel-rounded">
   <div class="p-2 pt-3 w-22rem">
 
     <div class="flex flex-row justify-content-around flex-wrap scrollbar" style="min-height: 100px; max-height: 60vh; overflow: auto">
@@ -57,9 +49,11 @@
     </div>
 
   </div>
+</div>
 </p-overlayPanel>
 
 <p-overlayPanel #menu>
+<div class="overlaypanel-rounded">
   <div class="flex flex-column align-items-center p-2" style="min-width: 20rem;">
 
     <div class="flex flex-column align-items-center gap-2 pb-3">
@@ -74,26 +68,40 @@
         </div>
       </div>
       
-      <div class="pt-2 text-lg"><b>¡Hola, {{getName()}}!</b></div>
+      <div class="pt-2 text-lg"><b>{{ 'header.hello' | translate : {name : getName() } }}</b></div>
     </div>
 
     <p-divider class="w-full pl-4 pr-4 pt-1 pb-1"></p-divider>
 
+    <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu">
+      <span class="pi pi-book"></span> {{ 'header.language' | translate }} 
+        <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="name" [showClear]="false" styleClass="w-10rem h-2rem" (onChange)="onChangeLanguage($event)">
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
+              <img src="./assets/images/flag_placeholder.png" class="flag {{selectedLanguage.flag}}" style="width: 18px"/>
+              <div>{{ selectedLanguage.key | translate }}</div>
+            </div>
+        </ng-template>
+        <ng-template let-country pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <img src="./assets/images/flag_placeholder.png" class="flag {{country.flag}}" style="width: 18px"/>
+              <div>{{ country.key | translate }}</div>
+            </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
       <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu" (click)="emailRef()">
         <span class="pi pi-question-circle"></span>
-        <span>Feedback</span>
-      </div>
-
-      <div *ngIf="false" class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu">
-        <span class="pi pi-book"></span> Collection 
-        <p-dropdown [options]="collections" [(ngModel)]="selectedCollection" optionLabel="name" [showClear]="false" styleClass="w-14rem h-2rem" placeholder="Select a Collection" (onChange)="changeCollection($event)"></p-dropdown>
+        <span>{{ 'header.feedback' | translate }}</span>
       </div>
 
       <p-divider class="w-full pl-4 pr-4"></p-divider>
 
       <div class="flex flex-row w-full align-items-center gap-2 cursor-pointer pl-4 pr-4 item-menu" (click)="logout()">
         <span class="pi pi-sign-out"></span>
-        <span>Sign out</span>
+        <span>{{ 'header.signout' | translate }}</span>
       </div>
   </div>
+</div>
 </p-overlayPanel>

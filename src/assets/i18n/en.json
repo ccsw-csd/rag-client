@@ -1,0 +1,178 @@
+{
+  "general": {
+    "title": "Prompt Library",
+    "username": "Username",
+    "password": "Password",
+    "login": "Log in",
+    "help-login": "If you need support to solve your doubts or have technical problems, please send us an <a class='text-gray-700' href='mailto:ccsw.support@%63%61%70%67%65%6D%69%6E%69.%63%6F%6D?subject=[{{appCode}}] Feedback'>email</a>.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "Ok",
+    "spanish": "Spanish",
+    "english": "English",
+    "error": "Error",
+    "save": "Save",
+    "close": "Close",
+    "saved": "Saved",
+    "save-ok": "Data saved successfully",
+    "save-error": "An error occurred while saving the data. Please contact the administrator"    
+  },
+
+  "menu": {
+    "dashboard": "Dashboard",
+    "prompts": "Prompts",
+    "chat": "Chat",
+    "storage": "Storage",
+    "collections": "Collections"
+  },
+
+  "header": {
+    "title": "Welcome to the Prompt Library",
+    "hello": "Hello, {{ name }}!",
+    "feedback": "Feedback",
+    "signout": "Sign out",
+    "language": "Language"
+  },
+
+  "dashboard": {
+    "total": "Total",
+    "last-month": "Last month",
+    "prompts": "Prompts",
+    "tags": "Tags",
+    "authors": "Authors",
+    "views": "Views",
+    "top-10": "Top 10"
+},
+
+"prompts": {
+    "title": "Prompt List",
+    "button-add": "Create prompt",
+    "header-title": "Prompt Title",
+    "header-author": "Author",
+    "header-tags": "Tags",
+    "header-update": "Updated",
+    "header-likes": "Likes",
+    "header-views": "Views",
+    "footer-table": "Showing {first}-{last} of {totalRecords} available records",
+    "delete-title": "Attention, data loss",
+    "delete-content": "If you delete this prompt, all traces of personal notes and generated posts associated with this prompt will be removed.<br/><br/>Are you sure you want to delete the prompt?",
+    "delete-problem": "There was a problem with the deletion. You may not have permissions. Please contact the administrator."
+},
+
+"edit-prompt": {
+    "title-view": "View prompt",
+    "fieldset-prompt": "Prompt information",
+    "fieldset-post": "Posts",
+    "title": "Title",
+    "tags": "Tags",
+    "author": "Author",
+    "description": "Description",
+    "views": "Views",
+    "help-create": "<span>You can create posts manually &nbsp;&nbsp;&nbsp;<i class='help-button text-xl pi pi-plus text-400'></i>&nbsp;&nbsp;&nbsp; or import a prompt in JSON format &nbsp;&nbsp;&nbsp;<i class='help-button text-xl pi pi-cloud-upload text-400'></i></span>",
+    "button-question": "Question",
+    "button-answer": "Answer",
+    "button-description": "Description",
+    "button-parsed": "Parsed",
+    "button-plaintext": "Plain text",
+    "assistant-name": "Assistant",
+    "tab-edit-html": "Edit HTML",
+    "tab-edit-markdown": "Edit Markdown",
+    "tab-preview": "Preview",
+    "delete-title": "Attention, data loss",
+    "delete-content": "If you delete this information section, the entered data in this section could be lost.<br/><br/>Are you sure you want to delete it?",
+    "add-tag": "Add Tag: "
+  },
+
+  "import-prompt": {
+    "title": "Import Prompt",
+    "content": "From this screen, you will be able to import prompt information semi-automatically.<br/><br/>Currently, we only have import available from ChatGPT, but we are working to incorporate other services.",
+    "button-import": "Import",
+    "json-data-import": "Paste here the content of the prompt in JSON format",
+    "fieldset-chatGPT-title": "Instructions for Importing from ChatGPT",
+    "fieldset-chatGPT-instructions": "To import a prompt from ChatGPT, follow these steps: <ul> <li class='pt-2'>Access the ChatGPT website, <a href='https://chat.openai.com/' target='_blank'>by clicking here</a></li> <li class='pt-2'>Open your browser's developer console (in Chrome by pressing F12)</li> <li class='pt-2'>Open the 'Network' section and then click the 'Fetch/XHR' filter</li> <img class='help-image' src='./assets/images/chatGPT-01.png'/> <li class='pt-2'>Access the chat you want to import</li> <li class='pt-2'>Some requests will have appeared in the developer console. Look for and click on the one with a name consisting of random numbers and letters and has a path of <i>'/backend-api/conversation/...'</i></li> <img class='help-image' src='./assets/images/chatGPT-02.png'/> <li class='pt-2'>Open the 'Response' tab which will contain the chat in Json format. Copy the text and paste it into the textarea above</li> </ul>"
+  },
+
+  "collections": {
+    "title": "Collection List",
+    "button-add": "Create collection",
+    "header-code": "Code",
+    "header-description": "Description",
+    "edit": {
+      "title-new": "Create collection",
+      "title-edit": "Edit collection",
+      "code": "Code",
+      "description": "Description"
+    }
+  },
+
+  "errors": {
+    "credentials": "Incorrect credentials. Make sure you have entered the username (not the email) and the corporate password",
+    "not-granted": "The user does not have valid permissions in the application. Contact the administrator",
+    "user-error": "User error: ",
+    "server-error": "A server error has occurred. Please contact an administrator. We apologize for the inconvenience.",
+    "not-found": "Resource not found",
+    "not-processed": "The sent item could not be processed",
+    "invalid-element": "An invalid element was sent"
+  },
+
+  "primeng": {
+    "dayNames": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "monthNames": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "today": "Today",
+    "weekHeader": "Wk",
+    "clear": "Clear",
+    "apply": "Apply",
+    "addRule": "Add rule",
+    "removeRule": "Delete rule",
+    "matchAll": "Match all",
+    "matchAny": "Match any",
+    "startsWith": "Start by",
+    "contains": "Contains",
+    "notContains": "It does not have",
+    "endsWith": "Ends by",
+    "equals": "Equals",
+    "notEquals": "Distinct",
+    "is": "Is",
+    "isNot": "It's not",
+    "before": "Before",
+    "after": "After"    
+  }
+
+}

@@ -10,17 +10,17 @@
                 <div class="flex-none" style="width: 100px;"></div>
                 <div class="flex flex-1 flex-column gap-3">
 
-                    <p-fieldset legend="Información del prompt"> 
+                    <p-fieldset legend="{{'edit-prompt.fieldset-prompt' | translate}}"> 
 
                         <div class="flex flex-column gap-3">
                             <div class="flex flex-row gap-2">
                                 <span class="p-float-label" style="flex:2">
                                     <input class="p-inputtext-lg" [(ngModel)]="prompt.title"  type="text" class="w-full" pInputText>
-                                    <label for="name">Título<span class="text-red-600 text-base">*</span></label>
+                                    <label for="name">{{'edit-prompt.title' | translate}}<span class="text-red-600 text-base">*</span></label>
                                 </span>
                                 <span class="p-float-label flex-1" style="flex:2">
                                     <input class="p-inputtext-lg" [ngModel]="displayName(prompt.person)" type="text" class="w-full" pInputText [readOnly]="true">
-                                    <label for="description">Autor<span class="text-red-600 text-base">*</span></label>
+                                    <label for="description">{{'edit-prompt.author' | translate}}<span class="text-red-600 text-base">*</span></label>
                                 </span>
                             </div>
 
@@ -30,13 +30,13 @@
                                         <div class="flex align-items-center gap-2">{{ tag.name }}</div>
                                     </ng-template>                            
                                 </p-autoComplete>
-                                <label *ngIf="promptTags.length > 0" class="l-fixed" for="tags">Tags</label>
+                                <label *ngIf="promptTags.length > 0" class="l-fixed" for="tags">{{'edit-prompt.tags' | translate}}</label>
                                 <label *ngIf="promptTags.length == 0" for="tags">Tags</label>
                             </span>
 
                             <span class="p-float-label">
                                 <textarea class="h-9rem w-full" cols="30" pInputTextarea [(ngModel)]="prompt.description"></textarea>
-                                <label for="description">Descripción</label>
+                                <label for="description">{{'edit-prompt.description' | translate}}</label>
                             </span>
 
 
@@ -46,12 +46,12 @@
 
                     </p-fieldset>
 
-                    <p-fieldset legend="Posts"> 
+                    <p-fieldset legend="{{'edit-prompt.fieldset-post' | translate}}"> 
 
                         <div #contentData class="flex flex-column"> 
 
                             <div class="flex flex-row p-0 m-0 w-full pb-5 justify-content-end">
-                                <div *ngIf="prompt.posts.length == 0" class="flex flex-1 pt-3 justify-content-center text-400 text-xl"><span>Puedes crear posts de forma manual &nbsp;&nbsp;&nbsp;<i style="border-radius: 20px; border: thin solid var(--surface-400); padding: 5px;" class="text-xl pi pi-plus text-400"></i>&nbsp;&nbsp;&nbsp; o importar un prompt en formato JSON &nbsp;&nbsp;&nbsp;<i style="border-radius: 20px; border: thin solid var(--surface-400); padding: 5px;" class="text-xl pi pi-cloud-upload text-400"></i></span></div>
+                                <div *ngIf="prompt.posts.length == 0" class="flex flex-1 pt-3 justify-content-center text-400 text-xl" [innerHTML]="'edit-prompt.help-create' | translate"></div>
                                 <p-button icon="pi pi-cloud-upload" [rounded]="true" severity="success" [outlined]="true" (click)="onImport()"></p-button>
                             </div>
                         
@@ -79,7 +79,7 @@
                                                 <img class="flex-none" src="./assets/images/icons8-ai-white.png">
                                             </div>
                                             <div *ngIf="message.type == 'ia'" class="flex flex-1 h-2rem align-items-center pl-4">
-                                                <span class="text-base"><b>Asistente</b></span>
+                                                <span class="text-base"><b>{{'edit-prompt.assistant-name' | translate}}</b></span>
                                             </div>
 
                                             <div *ngIf="message.type == 'text'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: lightgreen;">
@@ -89,9 +89,9 @@
 
 
                                             <div class="pt-2 pr-4">
-                                                <button pButton pRipple label="Pregunta" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'user'}" (click)="onChangeType(message, 'user')"></button>
-                                                <button pButton pRipple label="Respuesta" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'ia'}" (click)="onChangeType(message, 'ia')"></button>
-                                                <button pButton pRipple label="Descripción" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'text'}" (click)="onChangeType(message, 'text')"></button>
+                                                <button pButton pRipple label="{{'edit-prompt.button-question' | translate}}" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'user'}" (click)="onChangeType(message, 'user')"></button>
+                                                <button pButton pRipple label="{{'edit-prompt.button-answer' | translate}}" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'ia'}" (click)="onChangeType(message, 'ia')"></button>
+                                                <button pButton pRipple label="{{'edit-prompt.button-description' | translate}}" class="button-type" [ngClass]="{'p-button-outlined': message.type != 'text'}" (click)="onChangeType(message, 'text')"></button>
                                             </div>
                                         </div>
                                         <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
@@ -99,11 +99,17 @@
                                             <div class="flex flex-1 align-items-center pl-4">
 
                                                 <p-tabView class="w-full pr-4" [(activeIndex)]="message.tabActiveIndex">
-                                                    <p-tabPanel header="{{message.type == 'user' ? 'Editar HTML' : 'Editar Markdown'}}">
+
+                                                    <p-tabPanel *ngIf="message.type == 'user'" header="{{'edit-prompt.tab-edit-html' | translate}}">
+                                                        <textarea class="w-full" style="max-height: 700px" [ngStyle]="{'min-height': getTextareaMinHeight(message.content)}" pInputTextarea [(ngModel)]="message.content"></textarea>
+                                                    </p-tabPanel>                                                    
+
+                                                    <p-tabPanel *ngIf="message.type != 'user'" header="{{'edit-prompt.tab-edit-markdown' | translate}}">
                                                         <textarea class="w-full" style="max-height: 700px" [ngStyle]="{'min-height': getTextareaMinHeight(message.content)}" pInputTextarea [(ngModel)]="message.content"></textarea>
                                                     </p-tabPanel>
+
                                                     
-                                                    <p-tabPanel header="Previsualizar">
+                                                    <p-tabPanel header="{{'edit-prompt.tab-preview' | translate}}">
                                                         <div *ngIf="message.type == 'user'" class="pb-3" [innerHTML]="convertPlainTextToHtml(message.content)"></div>
                                                         <markdown *ngIf="message.type != 'user' && message.tabActiveIndex == 1" [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers></markdown>
                                                     </p-tabPanel>
@@ -143,8 +149,8 @@
     </div>
 
     <div class="flex flex-row justify-content-end gap-2" style="padding: 25px 25px 25px 0px">
-        <p-button label="Cerrar" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
-        <p-button label="Guardar" [outlined]="false" (click)="onSave()" [style]="{width: '150px'}"></p-button>
+        <p-button label="{{'general.close' | translate}}" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
+        <p-button label="{{'general.save' | translate}}" [outlined]="false" (click)="onSave()" [style]="{width: '150px'}"></p-button>
     </div>
 
 </div>
@@ -152,12 +158,12 @@
 <p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
     <ng-template pTemplate="footer">
         <div *ngIf="cd.confirmationOptions.rejectVisible == false">
-            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+            <button pButton pRipple p-button-label="10px" class="w-8rem" label="{{'general.ok' | translate}}" (click)="cd.accept()"></button>
         </div>
 
         <div *ngIf="cd.confirmationOptions.rejectVisible == true">
-            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
-            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+            <button pButton pRipple p-button-label="10px" label="{{'general.no' | translate}}" class="w-8rem p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" class="w-8rem" label="{{'general.yes' | translate}}" (click)="cd.accept()"></button>
         </div>
     </ng-template>
 </p-confirmDialog>

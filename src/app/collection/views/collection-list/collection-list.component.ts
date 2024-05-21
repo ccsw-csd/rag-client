@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Collection } from '../model/Collection';
+import { Collection } from '../../models/Collection';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
-import { CollectionService } from '../../core/services/collection.service';
+import { CollectionService } from '../../services/collection.service';
 import { CollectionEditComponent } from '../collection-edit/collection-edit.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: './collection-list.component.html',
   styleUrls: ['./collection-list.component.scss'],
-  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
+  providers: [ DynamicDialogRef, DynamicDialogConfig]
 })
 export class CollectionListComponent implements OnInit {
 
@@ -21,8 +22,8 @@ export class CollectionListComponent implements OnInit {
   constructor(
     private navigatorService: NavigatorService,
     private collectionService: CollectionService,
-    private ref: DynamicDialogRef,
     private dialogService: DialogService,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -36,51 +37,43 @@ export class CollectionListComponent implements OnInit {
     this.loadCollections();
   }
 
-  loadCollections(){
+  loadCollections() : void {
+
+    this.navigatorService.setLoading(true);
+
     this.collectionService.findAll().subscribe({
       next: (res: Collection[]) => {
         this.collections = res;
+        this.navigatorService.setLoading(false);
       },
     });
   }
 
-  editCollection(collection: Collection){
-    let header = 'Edit collection';
-    this.ref = this.dialogService.open(CollectionEditComponent,{
-      width:'75vw',
-      data:{
-        collection: collection,
-        name: collection.name,
-        description: collection.description,
-      },
-      closable:false,
-      showHeader: true,
-      header: header
+  onEdit(collection: Collection){
+
+    let header = this.translateService.instant('collections.edit.title-new');
+    if (collection)
+      header = this.translateService.instant('collections.edit.title-edit');
+
+    let ref = this.dialogService.open(CollectionEditComponent,{
+      header: header,
+      width:'500px',
+      height: '275px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false,
+      data: collection
     });
-    this.onClose();
+
+    ref.onClose.subscribe((results: any) => {
+      if (results)
+        this.loadCollections();
+    });
   }
 
-  createCollection(){
-    let header = 'New collection';
-    this.ref = this.dialogService.open(CollectionEditComponent,{
-      width:'75vw',
-      data:{
-        collection: null,
-        name: null,
-        description: null,
-      },
-      closable:false,
-      showHeader: true,
-      header: header
-    });
-    this.onClose();
-  }
-
-
-  onClose(): void {
-    this.ref.onClose.subscribe((results: any) => {
-      this.loadCollections();
-    });
+  onCreate(){
+    this.onEdit(null);
   }
 
 

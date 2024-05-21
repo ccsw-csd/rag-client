@@ -1,22 +1,20 @@
 <div class="flex flex-column p-4">
 
     <div class="flex flex-row justify-content-between">
-        <h3>
-            Listado de Prompts
-        </h3>
+        <h3>{{ 'prompts.title' | translate }}</h3>
         <div class="flex flex-1"></div>
-        <p-button label="Crear prompt" [outlined]="false" (click)="onCreate()" [style]="{width: '150px'}"></p-button>        
+        <p-button label="{{ 'prompts.button-add' | translate }}" [outlined]="false" (click)="onCreate()" [style]="{width: '150px'}"></p-button>        
     </div>
     
     <p-table [style]="{'height':'calc(100vh - 160px)','width':tableWidth}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
          [value]="prompts" sortField="date" [sortOrder]="-1" styleClass="p-datatable-striped"
-         [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first}-{last} registros de {totalRecords} disponibles">
+         [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]" [showCurrentPageReport]="true" currentPageReportTemplate="{{ 'prompts.footer-table' | translate }}">
   
          <ng-template pTemplate="header">
             <tr>
                 <th>
                     <div pSortableColumn="title" class="text-left pl-2 top-header">
-                        Nombre
+                        {{ 'prompts.header-title' | translate }}
                         <p-sortIcon field="title"></p-sortIcon>
                     </div>
                     <div class="foot-header">
@@ -30,7 +28,7 @@
 
                 <th class="w-16rem">
                     <div pSortableColumn="author" class="text-center top-header">
-                        Autor
+                        {{ 'prompts.header-author' | translate }}
                         <p-sortIcon field="author"></p-sortIcon>
                     </div>
                     <div class="foot-header">
@@ -44,7 +42,7 @@
 
                 <th class="w-22rem">
                     <div pSortableColumn="stringTags" class="text-center top-header">
-                        Tags
+                        {{ 'prompts.header-tags' | translate }}
                         <p-sortIcon field="stringTags"></p-sortIcon>
                     </div> 
                     <div class="foot-header">
@@ -58,7 +56,7 @@
 
                 <th class="w-9rem">
                     <div pSortableColumn="date" class="text-center top-header">
-                        Actualizado
+                        {{ 'prompts.header-update' | translate }}
                         <p-sortIcon field="date"></p-sortIcon>
                     </div>
                     <div class="foot-header">
@@ -72,7 +70,7 @@
 
                 <th class="w-5rem">
                     <div pSortableColumn="likes" class="text-center top-header">
-                        Likes
+                        {{ 'prompts.header-likes' | translate }}
                         <p-sortIcon field="likes"></p-sortIcon>
                     </div> 
                     <div class="foot-header">
@@ -86,7 +84,7 @@
 
                 <th class="w-5rem">
                     <div pSortableColumn="views" class="text-center top-header">
-                        Visitas
+                        {{ 'prompts.header-views' | translate }}
                         <p-sortIcon field="views"></p-sortIcon>
                     </div> 
                     <div class="foot-header">
@@ -141,12 +139,12 @@
 <p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
     <ng-template pTemplate="footer">
         <div *ngIf="cd.confirmationOptions.rejectVisible == false">
-            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+            <button pButton pRipple p-button-label="10px" class="w-8rem" label="{{'general.ok' | translate}}" (click)="cd.accept()"></button>
         </div>
 
         <div *ngIf="cd.confirmationOptions.rejectVisible == true">
-            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
-            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+            <button pButton pRipple p-button-label="10px" label="{{'general.no' | translate}}" class="w-8rem p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" class="w-8rem" label="{{'general.yes' | translate}}" (click)="cd.accept()"></button>
         </div>
     </ng-template>
 </p-confirmDialog>

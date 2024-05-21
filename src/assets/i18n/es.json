@@ -1,0 +1,178 @@
+{
+  "general": {
+    "title": "Prompt Library",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "login": "Acceder",
+    "help-login": "Si necesitas soporte para resolver tus dudas o tienes problemas técnicos, por favor envíanos un <a class='text-gray-700' href='mailto:ccsw.support@%63%61%70%67%65%6D%69%6E%69.%63%6F%6D?subject=[{{appCode}}] Feedback'>correo</a>.",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "Ok",
+    "spanish": "Español",
+    "english": "Inglés",
+    "error": "Error",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "saved": "Guardado",
+    "save-ok": "Los datos se han guardado con éxito",
+    "save-error": "Ha ocurrido un error al guardar los datos. Contacte con el administrador"
+  },
+
+  "menu": {
+    "dashboard": "Dashboard",
+    "prompts": "Prompts",
+    "chat": "Chat",
+    "storage": "Almacenamiento",
+    "collections": "Colecciones"
+  },
+
+  "header": {
+    "title": "Bienvenido a la Prompt Library",
+    "hello": "¡Hola, {{ name }}!",
+    "feedback": "Feedback",
+    "signout": "Sign out",
+    "language": "Idioma"
+  },
+
+  "dashboard": {
+    "total": "Total",
+    "last-month": "Último mes",
+    "prompts": "Prompts",
+    "tags": "Tags",
+    "authors": "Autores",
+    "views": "Visitas",
+    "top-10": "Top 10"
+  },
+
+  "prompts": {
+    "title": "Listado de Prompts",
+    "button-add": "Crear prompt",
+    "header-title": "Título del prompt",
+    "header-author": "Autor",
+    "header-tags": "Tags",
+    "header-update": "Actualizado",
+    "header-likes": "Likes",
+    "header-views": "Visitas",
+    "footer-table": "Mostrando {first}-{last} registros de {totalRecords} disponibles",
+    "delete-title": "Atención, pérdida de datos",
+    "delete-content": "Si borras este prompt, se eliminará todo rastro de notas personales y posts generados asociados a este prompt.<br/><br/>¿Estás seguro que quieres eliminar el prompt?",
+    "delete-problem": "Ocurrió un problema en el borrado. Es posible que no tenga permisos. Contacte con el administrador"
+  },
+
+  "edit-prompt": {
+    "title-view": "Visualizar prompt",
+    "fieldset-prompt": "Information del prompt",
+    "fieldset-post": "Posts",
+    "title": "Título",
+    "tags": "Tags",
+    "author": "Autor",
+    "description": "Descripción",
+    "views": "Visitas",
+    "help-create": "<span>Puedes crear posts de forma manual &nbsp;&nbsp;&nbsp;<i class='help-button text-xl pi pi-plus text-400'></i>&nbsp;&nbsp;&nbsp; o importar un prompt en formato JSON &nbsp;&nbsp;&nbsp;<i class='help-button text-xl pi pi-cloud-upload text-400'></i></span>",
+    "button-question": "Pregunta",
+    "button-answer": "Respuesta",
+    "button-description": "Descripción",
+    "button-parsed": "Parseado",
+    "button-plaintext": "Texto plano",
+    "assistant-name": "Asistente",
+    "tab-edit-html": "Editar HTML",
+    "tab-edit-markdown": "Editar Markdown",
+    "tab-preview": "Vista previa",
+    "delete-title": "Atención, pérdida de datos",
+    "delete-content": "Si eliminas esta sección de información se podrían perder los datos introducidos en esta sección.<br/><br/>¿Estás seguro que deseas eliminarla?",
+    "add-tag": "Añadir Tag: "
+  },
+
+  "import-prompt": {
+    "title": "Importar prompt",
+    "content": "Desde esta pantalla se podrá importar la información de un prompt de forma semi-automática.<br/><br/>De momento solo tenemos disponible la importación desde ChatGPT, pero estamos trabajando para incorporar otros servicios.",
+    "button-import": "Importar",
+    "json-data-import": "Pega aquí el contenido del prompt en formato JSON",
+    "fieldset-chatGPT-title": "Instrucciones para importar desde ChatGPT",
+    "fieldset-chatGPT-instructions": "Para importar un prompt desde ChatGPT, siga los siguientes pasos: <ul> <li class='pt-2'>Accede a la web de ChatGPT, <a href='https://chat.openai.com/' target='_blank'>pulsando aquí</a></li> <li class='pt-2'>Abre la consola de desarrollador de tu navegador (en Chrome pulsando F12)</li> <li class='pt-2'>Abre la sección de 'Network' y ahí pulsa el filtro de 'Fetch/XHR'</li> <img class='help-image' src='./assets/images/chatGPT-01.png'/> <li class='pt-2'>Accede al chat que quieres importar</li> <li class='pt-2'>Habrán aparecido algunas peticiones en la consola del desarrollador. Busca y pincha sobre la que tiene un nombre con números y letras aleatorios y tiene de path <i>'/backend-api/conversation/...'</i></li> <img class='help-image' src='./assets/images/chatGPT-02.png'/> <li class='pt-2'>Abre la pestaña 'Response' que contendrá el chat en formato Json. Copia el texto y pégamelo en el textarea de arriba</li> </ul>"
+  },
+
+  "collections": {
+    "title": "Listado de Colecciones",
+    "button-add": "Crear colección",
+    "header-code": "Código",
+    "header-description": "Descripción",
+    "edit": {
+      "title-new": "Crear colección",
+      "title-edit": "Editar colección",
+      "code": "Código",
+      "description": "Descripción"
+    }
+  },
+
+  "errors": {
+    "credentials": "Credenciales erróneas. Asegúrate de haber puesto el username (no el email) y el password corporativo",
+    "not-granted": "El usuario no tiene permisos válidos en la aplicación. Contacta con el administrador",
+    "user-error": "Error de usuario: ",
+    "server-error": "Se ha producido un error del servidor. Por favor, póngase en contacto con un administrador. Disculpe las molestias.",
+    "not-found": "Recurso no encontrado",
+    "not-processed": "No se puede procesar el elemento enviado",
+    "invalid-element": "No se ha enviado un elemento válido"
+  },
+
+  "primeng": {
+    "dayNames": [
+      "domingo",
+      "lunes",
+      "martes",
+      "miércoles",
+      "jueves",
+      "viernes",
+      "sábado"
+    ],
+    "dayNamesShort": ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+    "dayNamesMin": ["D", "L", "M", "X", "J", "V", "S"],
+    "monthNames": [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ],
+    "monthNamesShort": [
+      "ene",
+      "feb",
+      "mar",
+      "abr",
+      "may",
+      "jun",
+      "jul",
+      "ago",
+      "sep",
+      "oct",
+      "nov",
+      "dic"
+    ],
+    "today": "Hoy",
+    "weekHeader": "Sem",
+    "clear": "Borrar",
+    "apply": "Aplicar",
+    "addRule": "Añade regla",
+    "removeRule": "Borra regla",
+    "matchAll": "Coincidir todo",
+    "matchAny": "Coincidir alguno",
+    "startsWith": "Empieza por",
+    "contains": "Contiene",
+    "notContains": "No contiene",
+    "endsWith": "Acaba por",
+    "equals": "Igual",
+    "notEquals": "Distinto",
+    "is": "Es",
+    "isNot": "No es",
+    "before": "Antes de",
+    "after": "Después de"
+  }
+
+}

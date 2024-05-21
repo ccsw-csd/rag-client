@@ -4,13 +4,17 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService, 
+    private translateService: TranslateService,
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -25,29 +29,25 @@ export class HttpInterceptorService implements HttpInterceptor {
           let errorMessage;
           switch (error.status) {
             case 400:
-              errorMessage = 'Error de usuario: ' + error.error;
+              errorMessage = this.translateService.instant('errors.user-error') + error.error;
               break;
             case 401:
-              this.auth.logout();
-              errorMessage = 'Token expirado.';
-              break;
-            case 404:
-              errorMessage = 'Recurso no encontrado.';
-              break;
-            case 415:
-              errorMessage = 'No se ha enviado un elemento válido.';
-              break;
-            case 422:
-              errorMessage = 'No se puede procesar el elemento enviado.';
-              break;
-            case 500:
-              errorMessage = 'Se ha producido un error del servidor. Por favor, póngase en contacto con un administrador. Disculpe las molestias.';
-              break;
             case 403:
               this.auth.logout();
+              errorMessage = this.translateService.instant('errors.credentials');
               break;
+            case 404:
+              errorMessage = this.translateService.instant('errors.not-found');
+              break;
+            case 415:
+              errorMessage = this.translateService.instant('errors.invalid-element');
+              break;
+            case 422:
+              errorMessage = this.translateService.instant('errors.not-processed');
+              break;
+            case 500:
             default:
-              errorMessage = 'Se ha producido un error. Por favor, inténtelo de nuevo.';
+              errorMessage = this.translateService.instant('errors.server-error');
           }
           return throwError(() => new Error(errorMessage));
         })

@@ -6,12 +6,10 @@ import { DocumentChunk } from '../../model/DocumentChunk';
 import { ConfirmationService, MenuItem, TreeNode } from 'primeng/api';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { TabPanel } from 'primeng/tabview';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
-
-
-
+import { Collection } from 'src/app/collection/models/Collection';
+import { CollectionService } from 'src/app/collection/services/collection.service';
 
 interface PropertyItem {
   id: number;
@@ -27,6 +25,8 @@ interface PropertyItem {
 })
 export class StorageComponent implements OnInit {
 
+  collections : Collection[];
+  selectedCollection : Collection;
   timerGenerateChunksFromCodeEditor: any = null;
 
   documentModified : boolean = false;
@@ -40,9 +40,7 @@ export class StorageComponent implements OnInit {
   files!: TreeNode[];
   selectedFile: TreeNode;
 
-
   itemsContextMenuTree!: MenuItem[];
-
 
   maxTokens = 0;
   properties!: PropertyItem[];
@@ -67,11 +65,11 @@ export class StorageComponent implements OnInit {
     }
   };
 
-  @ViewChild('tabPanelContent', { static: false })
-  private tabPanel: TabPanel;
+  @ViewChild('containerEditor', { static: false })
+  private containerEditor: any;
   
   @ViewChild(CodeEditorComponent, { static: false })
-  private codeEditor: CodeEditorComponent;
+  private codeEditor: any;
 
 
   
@@ -82,12 +80,32 @@ export class StorageComponent implements OnInit {
     private documentService: DocumentService,
     private confirmationService: ConfirmationService,
     private authService: AuthService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private collectionService: CollectionService,
   ) {
   }
 
 
   ngOnInit(): void {
+
+
+    this.collectionService.findAll().subscribe(collections => {
+
+      this.collections = collections;
+      let selectedCollection = this.authService.getProperty("selected-collection");
+
+      if (selectedCollection == null) {
+        this.selectedCollection = collections[0];
+        this.authService.setProperty("selected-collection", this.selectedCollection);
+      }
+      else {
+        this.selectedCollection = selectedCollection;
+      }
+
+
+      this.loadDocuments();
+
+    });
 
     this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.onResize(null);
@@ -100,7 +118,7 @@ export class StorageComponent implements OnInit {
       { label: 'Remove Document', icon: 'pi pi-trash', command: (event) => this.onLaunchAction(3, this.selectedFile.data) }
     ];
 
-    this.loadDocuments();
+    
 
   }
 
@@ -271,7 +289,7 @@ export class StorageComponent implements OnInit {
     this.selectedFile = null;
     this.setTextInCodeEditor("No document selected");
     this.documentModified = false;
-    let collectionId = this.authService.getProperty("selected-collection").id;
+    let collectionId = this.selectedCollection.id;
 
     this.documentService.getDocumentsByCollectionId(collectionId).subscribe(
       documents => {
@@ -459,8 +477,8 @@ export class StorageComponent implements OnInit {
   onSelectDocumentChunk(event) : void {
     let lineNumber = this.selectedDocumentChunk.lineNumber;
 
-    this.codeEditor.editor.revealLineNearTop(lineNumber);
-    this.codeEditor.editor.setPosition({column: 1, lineNumber: lineNumber});
+    this.codeEditor._editor.revealLineNearTop(lineNumber);
+    this.codeEditor._editor.setPosition({column: 1, lineNumber: lineNumber});
   }
 
   onSelectDocument(event) : void {   
@@ -594,18 +612,25 @@ export class StorageComponent implements OnInit {
   }
 
 
+  onChangeCollection(event) : void {
+    this.authService.setProperty("selected-collection", this.selectedCollection);
+    this.loadDocuments();
+  }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event) : void {
-    let editor = this.codeEditor.editor;
-
+    
+    if (this.codeEditor == null || this.codeEditor._editor == null) return;
+    let editor = this.codeEditor._editor;
     editor.layout({width: 0, height: 0});
 
     window.requestAnimationFrame(() => {
-        const rect = this.tabPanel.el.nativeElement.getBoundingClientRect()
-
+      const rect = this.containerEditor.nativeElement.getBoundingClientRect()
+      
         editor.layout({width: rect.width, height: rect.height-2})
     })
+    
   }
 
 }

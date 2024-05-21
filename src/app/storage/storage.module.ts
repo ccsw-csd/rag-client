@@ -16,6 +16,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { TreeTableModule } from 'primeng/treetable';
 import { UploadDialogComponent } from './views/upload-dialog/upload-dialog.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TranslateModule } from '@ngx-translate/core';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     InputTextModule,
     InputNumberModule,
     FileUploadModule,
+    TranslateModule,
+    DropdownModule,
   ]
 })
 export class StorageModule { }

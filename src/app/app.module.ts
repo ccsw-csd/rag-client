@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { DatePipe } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -17,14 +17,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CollectionModule } from './collection/collection.module';
 import { StorageModule } from './storage/storage.module';
 import { ChatModule } from './chat/chat.module';
-import { CollectionResolverService } from './core/services/collection-resolver.service';
 import { PromptModule } from './prompt/prompt.module';
-import { LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';
 import { PromptLoaderResolverService } from './prompt/services/prompt-loader.resolver.service';
 import { DashboardModule } from './dashboard/dashboard.module';
-registerLocaleData(localeEs);
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 
 @NgModule({
@@ -44,6 +46,13 @@ registerLocaleData(localeEs);
     StorageModule,
     PromptModule,
     DashboardModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     HttpClientModule,
@@ -54,11 +63,10 @@ registerLocaleData(localeEs);
     MessageService,
     RefreshTokenResolverService,
     PromptLoaderResolverService,
-    CollectionResolverService,
     DatePipe,
     ConfirmationService,
-    {provide: LOCALE_ID, useValue: 'es-ES'},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [TranslateModule]
 })
 export class AppModule { }

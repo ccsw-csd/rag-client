@@ -5,14 +5,7 @@
         margin: 0.5rem 0;
     }
 
-    .p-overlaypanel {
-        border-radius: 30px;
-    }
-
-    .p-overlaypanel:before, .p-overlaypanel:after {
-        left: calc(var(--overlayArrowLeft, 0) + 3.75rem);
-        margin-left: 0px;
-    }
+    
 
     .toolbar-header {
         height: 56px; 
@@ -47,9 +40,6 @@
         }
     }
 
-    .p-overlaypanel-content{
-        padding: 0 !important;
-    }
 
     .header-icon .pi {
         font-size: 21px;
@@ -65,7 +55,23 @@
         background-color: #ededed;
     }
 
-    .p-dropdown-label {
-        padding: 7px 0.75rem;
+    .p-overlaypanel {
+        background-color: transparent;
+        box-shadow: none;
     }
+
+    .p-overlaypanel-content {
+        padding: 0 !important;    
+    }
+    
 }
+
+.overlaypanel-rounded {
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+
+

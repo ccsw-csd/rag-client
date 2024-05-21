@@ -9,6 +9,7 @@ import { AutoCompleteCompleteEvent, AutoCompleteOnSelectEvent } from 'primeng/au
 import { ActivatedRoute, Router } from '@angular/router';
 import { PromptService } from '../../services/prompt.service';
 import { Person } from '../../models/Person';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-prompt-edit',
@@ -33,12 +34,16 @@ export class PromptEditComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translateService: TranslateService
   ) {
 
     this.activatedRoute.data.subscribe((data: any) => { 
       this.prompt = data.prompt;
-      this.promptTags = this.prompt.tags.map((tag) => { return {code: tag, name: tag}});
+      this.promptTags = [];
+
+      if (this.prompt != null && this.prompt.tags != null)
+        this.promptTags = this.prompt.tags.map((tag) => { return {code: tag, name: tag}});
     });
   }
 
@@ -85,10 +90,10 @@ export class PromptEditComponent implements OnInit {
     this.promptService.save(this.prompt).subscribe({
       next: (data) => {
         this.prompt.id = data;
-        this.messageService.add({ severity: 'success', summary: 'Guardado', detail: 'Los datos se han guardado con éxito' });
+        this.messageService.add({ severity: 'success', summary: this.translateService.instant('general.saved'), detail: this.translateService.instant('general.save-ok') });
       },
       error: (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocurrió un problema en el guardado. Contacte con el administrador' });
+        this.messageService.add({ severity: 'error', summary: this.translateService.instant('general.error'), detail: this.translateService.instant('general.save-error') });
       }
     });
   }
@@ -106,7 +111,7 @@ export class PromptEditComponent implements OnInit {
       let arrayData = filterData.map((tag) => { return {code: tag, name: tag}});
 
       if (data.indexOf(event.query) >= 0) this.suggestionTags = [...arrayData];
-      else this.suggestionTags = [{code:event.query, name: 'Añadir Tag: '+event.query}, ...arrayData];
+      else this.suggestionTags = [{code:event.query, name: this.translateService.instant('edit-prompt.add-tag')+event.query}, ...arrayData];
     });
   }
 
@@ -152,8 +157,8 @@ export class PromptEditComponent implements OnInit {
   onRemove(index: number) :void  {
 
     this.confirmationService.confirm({
-      message: 'Si eliminas esta sección de información se podrían perder los datos introducidos en esta sección. <br/><br/>¿Estás seguro que deseas eliminarla?',
-      header: 'Atención, pérdida de datos',
+      header: this.translateService.instant('edit-prompt.delete-title'),
+      message: this.translateService.instant('edit-prompt.delete-content'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.prompt.posts.splice(index, 1);
@@ -167,12 +172,13 @@ export class PromptEditComponent implements OnInit {
   onImport() :void {
 
     let ref = this.dialogService.open(PromptImportComponent, {
-      header: 'Importar prompt',
+      header: this.translateService.instant('import-prompt.title'),
       width: '900px',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: false,
-      closable: false
+      closable: false,
+      modal: true
     });
 
     

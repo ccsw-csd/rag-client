@@ -1,39 +1,23 @@
 <div class="flex flex-column">
 
-    <p>
-        Desde esta pantalla se podrá importar la información de un prompt de forma semi-automática.
-    </p>
-    <p>
-        De momento solo tenemos disponible la importación desde ChatGPT, pero estamos trabajando para incorporar otros servicios.
-    </p>
+    <div class="mb-4" [innerHTML]="'import-prompt.content' | translate">
+
+    </div>
 
     <p>
         <span class="p-float-label" style="flex:2">
             <textarea class="h-9rem w-full" pInputTextarea [(ngModel)]="jsonData"></textarea>
-            <label for="name">Json Data Prompt<span class="text-red-600 text-base">*</span></label>
+            <label for="name">{{'import-prompt.json-data-import' | translate}}<span class="text-red-600 text-base">*</span></label>
         </span>
     </p>
 
     <div class="flex flex-row justify-content-end p-0 m-0 w-full pb-5 gap-2">
-        <p-button label="Cerrar" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
-        <p-button label="Importar" [outlined]="false" (click)="onImport()" [style]="{width: '150px'}"></p-button>
+        <p-button label="{{'general.close' | translate}}" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
+        <p-button label="{{'import-prompt.button-import' | translate}}" [outlined]="false" (click)="onImport()" [style]="{width: '150px'}"></p-button>
     </div>
 
-    <p-fieldset legend="Instrucciones para importar desde ChatGPT" [toggleable]="true" collapsed="true"> 
-        <div *ngIf="showDelayedView">
-            Para importar un prompt desde ChatGPT, siga los siguientes pasos:
-            <ul>
-                <li class="pt-2">Accede a la web de ChatGPT, <a href="https://chat.openai.com/" target="_blank">pulsando aquí</a></li>
-                <li class="pt-2">Abre la consola de desarrollador de tu navegador (en Chrome pulsando F12)</li>
-                <li class="pt-2">Abre la sección de "Network" y ahí pulsa el filtro de "Fetch/XHR"</li>
-                <img style="padding: 10px; width:700px" src="./assets/images/chatGPT-01.png"/>
-                <li class="pt-2">Accede al chat que quieres importar</li>
-                <li class="pt-2">Habrán aparecido algunas peticiones en la consola del desarrollador. Busca y pincha sobre la que tiene un nombre con números y letras aleatorios y tiene de path <i>"/backend-api/conversation/..."</i></li>
-                <img style="padding: 10px; width:700px" src="./assets/images/chatGPT-02.png"/>
-                <li class="pt-2">Abre la pestaña "Response" que contendrá el chat en formato Json. Copia el texto y pégamelo en el textarea de arriba</li>
-            </ul>
-
-
+    <p-fieldset legend="{{'import-prompt.fieldset-chatGPT-title' | translate}}" [toggleable]="true" collapsed="true"> 
+        <div *ngIf="showDelayedView" [innerHTML]="'import-prompt.fieldset-chatGPT-instructions' | translate">
         </div>
     </p-fieldset>
 

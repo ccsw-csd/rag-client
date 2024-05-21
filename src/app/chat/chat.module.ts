@@ -9,7 +9,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,11 @@ import { TableModule } from 'primeng/table';
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
     FieldsetModule,
+    TranslateModule,
+    DropdownModule,
+    InputTextareaModule,
+    OverlayPanelModule,
+    ListboxModule,
   ]
 })
 export class ChatModule { }

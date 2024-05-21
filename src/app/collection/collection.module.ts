@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CollectionListComponent } from './collection-list/collection-list.component';
+import { CollectionListComponent } from './views/collection-list/collection-list.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { CollectionEditComponent } from './collection-edit/collection-edit.component';
+import { CollectionEditComponent } from './views/collection-edit/collection-edit.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -22,7 +23,8 @@ import { InputTextModule } from 'primeng/inputtext';
     DynamicDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    InputTextModule
+    InputTextModule,
+    TranslateModule
   ]
 })
 export class CollectionModule { }

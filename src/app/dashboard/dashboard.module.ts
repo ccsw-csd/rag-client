@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { PromptModule } from '../prompt/prompt.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { PromptModule } from '../prompt/prompt.module';
     DividerModule,
     ChartModule,
     PromptModule,
+    TranslateModule,
   ]
 })
 export class DashboardModule { }

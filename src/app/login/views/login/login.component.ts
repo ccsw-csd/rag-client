@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { environment } from 'src/environments/environment';
 import { LoginService } from '../../services/login.service';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -18,17 +20,32 @@ export class LoginComponent implements OnInit {
   password: string = "";
   isloading : boolean = false;
 
+  selectedLanguage : any;
+  languages: any[] = [];
+
   constructor(
     private loginService: LoginService,
     private auth: AuthService,
     private router: Router,
     private snackbarService: SnackbarService,
+    private navigatorService: NavigatorService,
+    private translateSerive: TranslateService,
   ) { }
 
   ngOnInit(): void {
     if(this.auth.isTokenValid() && this.auth.getSSOToken() != null){
       this.accessIntoApp();
     }
+
+    this.navigatorService.changeLanguage();
+
+    this.languages = [
+      { key: 'general.spanish', flag: 'flag-es', code: 'es' },
+      { key: 'general.english', flag: 'flag-uk', code: 'en' }
+    ]; 
+
+    let languageCode = this.auth.getLanguage();
+    this.selectedLanguage = this.languages.find(x => x.code == languageCode);    
   }
 
   login() {
@@ -46,8 +63,8 @@ export class LoginComponent implements OnInit {
         this.loginService.putSSOCredentials(res);
         this.accessIntoApp();
       },
-      error: () => {
-        this.snackbarService.error('Credenciales erróneas. Asegúrate de haber puesto el username (no el email) y el password corporativo.');
+      error: () => {        
+        this.snackbarService.error(this.translateSerive.instant('errors.credentials'));
         this.isloading = false;
       },
     });
@@ -59,26 +76,21 @@ export class LoginComponent implements OnInit {
 
     let roles = this.auth.getRoles();
     if (roles == null || roles.length == 0) {
-      this.snackbarService.error('El usuario no tiene permisos válidos en la aplicación.');
+      this.snackbarService.error(this.translateSerive.instant('not-granted'));
       return;
     }    
     
     this.router.navigate(['main']);
   }
 
-  public getEmail() : string {
-    let gitWord2 = "pge";
-    let gitWord4 = "i";
-    let gitWord3 = "min";
-    let gitWord1 = "ca";
-
-    let gitWord = gitWord1+gitWord2+gitWord3+gitWord4;
-
-    return "ccsw.support@"+gitWord+".com";
+  public getAppCode() : string {
+    return environment.appCode;
   }
 
-
-  public getEmailRef() : string {
-    return "mailto:"+this.getEmail()+"?subject=["+environment.appCode+"] Consulta / Feedback";
+  onChangeLanguage(language: any) {
+    this.selectedLanguage = language;
+    let languageCode = language.code;
+    this.navigatorService.changeLanguage(languageCode);
   }
+
 }

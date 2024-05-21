@@ -1,60 +1,60 @@
-<div style="background-color: #F8F8F8; overflow: auto;" class="p-4 w-full h-full flex flex-column">
+<div style="background-color: #F8F8F8; overflow: auto; height: calc(100vh - 60px)" class="p-4 w-full flex flex-column">
 
 
     <div class="flex flex-row justify-content-around flex-wrap gap-3 pt-5">
 
-        <p-card header="Prompts" class="max-w-20rem flex-1 left-border border-color-1">
+        <p-card header="{{'dashboard.prompts' | translate}}" class="max-w-20rem flex-1 left-border border-color-1">
             <div class="flex flex-1 flex-row">
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('total_prompts')}}</span>
-                    <span>Total</span>
+                    <span>{{'dashboard.total' | translate}}</span>
                 </div>
                 <p-divider layout="vertical"></p-divider>
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('last_prompts')}}</span>
-                    <span>Último mes</span>
+                    <span>{{'dashboard.last-month' | translate}}</span>
                 </div>
             </div>
         </p-card>
 
-        <p-card header="Tags" class="max-w-20rem flex-1 left-border border-color-2">
+        <p-card header="{{'dashboard.tags' | translate}}" class="max-w-20rem flex-1 left-border border-color-2">
             <div class="flex flex-1 flex-row">
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('total_tags')}}</span>
-                    <span>Total</span>
+                    <span>{{'dashboard.total' | translate}}</span>
                 </div>
                 <p-divider layout="vertical"></p-divider>
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('last_tags')}}</span>
-                    <span>Último mes</span>
+                    <span>{{'dashboard.last-month' | translate}}</span>
                 </div>
             </div>
         </p-card>
 
-        <p-card header="Autores" class="max-w-20rem flex-1 left-border border-color-3">
+        <p-card header="{{'dashboard.authors' | translate}}" class="max-w-20rem flex-1 left-border border-color-3">
             <div class="flex flex-1 flex-row">
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('total_authors')}}</span>
-                    <span>Total</span>
+                    <span>{{'dashboard.total' | translate}}</span>
                 </div>
                 <p-divider layout="vertical"></p-divider>
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('last_authors')}}</span>
-                    <span>Último mes</span>
+                    <span>{{'dashboard.last-month' | translate}}</span>
                 </div>
             </div>
         </p-card>
 
-        <p-card header="Views" class="max-w-20rem flex-1 left-border border-color-4">
+        <p-card header="{{'dashboard.views' | translate}}" class="max-w-20rem flex-1 left-border border-color-4">
             <div class="flex flex-1 flex-row">
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('total_views')}}</span>
-                    <span>Total</span>
+                    <span>{{'dashboard.total' | translate}}</span>
                 </div>
                 <p-divider layout="vertical"></p-divider>
                 <div class="flex flex-1 flex-column text-center">
                     <span class="text-3xl">{{getData('total_views')}}</span>
-                    <span>Último mes</span>
+                    <span>{{'dashboard.last-month' | translate}}</span>
                 </div>
             </div>
         </p-card>
@@ -62,20 +62,23 @@
 
     </div>
 
-    <div class="flex flex-1 flex-row pt-8 gap-5 justify-content-around flex-wrap">
+    <div class="flex flex-1 flex-column pt-8 gap-5 justify-content-around">
 
-        <div class="flex-1 text-center p-4">
-            <h3>Tags <span class="text-xs">(Top 10)</span></h3>
-            <p-chart type="bar" [data]="dataTags" [options]="options"></p-chart>
+        <div class="flex flex-1 flex-row gap-5 justify-content-around">
+
+            <div class="flex-1 text-center p-4 pl-8 pr-8">
+                <h3>{{'dashboard.tags' | translate}} <span class="text-xs">({{'dashboard.top-10' | translate}})</span></h3>
+                <p-chart type="bar" [data]="dataTags" [options]="options"></p-chart>
+            </div>
+            
+            <div class="flex-1 text-center p-4 pl-8 pr-8">
+                <h3>{{'dashboard.authors' | translate}} <span class="text-xs">({{'dashboard.top-10' | translate}})</span></h3>
+                <p-chart type="bar" [data]="dataAuthors" [options]="options"></p-chart>
+            </div>
         </div>
 
-        <div class="flex-1 text-center p-4">
-            <h3>Autores <span class="text-xs">(Top 10)</span></h3>
-            <p-chart type="bar" [data]="dataAuthors" [options]="options"></p-chart>
-        </div>
-
-        <div class="flex-1 text-center p-4">
-            <h3>Visitas <span class="text-xs">(Top 10)</span></h3>
+        <div class="flex-1 text-center p-4 pl-8 pr-8">
+            <h3>{{'dashboard.views' | translate}} <span class="text-xs">({{'dashboard.top-10' | translate}})</span></h3>
             <p-chart type="bar" [data]="dataViews" [options]="options" (onDataSelect)="onDataSelect($event)"></p-chart>
         </div>
 

@@ -15,10 +15,12 @@ import { UserInfoSSO } from '../models/UserInfoSSO';
 export class AuthService {
   ssoCredentialsKey : string = 'ssoCredentials';
   ssoPictureKey : string = 'ssoPicture';
+  languageKey : string = 'cca_language';
   ssoToken : string = null;
   ssoPicture : string = null;
   applications: ApplicationData[] = [];
 
+  language: string = null;
   userInfoSSO: UserInfoSSO | null = null;
   userInfoDetailed: UserInfoDetailed | null = null;
 
@@ -31,6 +33,7 @@ export class AuthService {
     if (environment.production == false) {
       this.ssoCredentialsKey += 'Dev';
       this.ssoPictureKey += 'Dev';
+      this.languageKey += 'Dev';
     }
 
   }
@@ -89,6 +92,16 @@ export class AuthService {
     this.userInfoDetailed = null;
     this.userInfoSSO = null;
     this.applications = [];
+
+    let keys = Object.keys(localStorage);
+    let endKey = '';
+    if (environment.production == false) {
+      endKey = '_Dev';
+    }
+    
+    for (let key of keys) {
+      if (key.startsWith(environment.appCode) && key.endsWith(endKey)) localStorage.removeItem(key);
+    }
   }  
     
   // *************************** //
@@ -203,5 +216,23 @@ export class AuthService {
   getApplications() : ApplicationData[] {
     return this.applications;
   }
+
+  getLanguage() : string {
+
+    if (this.language == null) {
+      this.language = localStorage.getItem(this.languageKey);
+      if (this.language == null) {
+        this.setLanguage('es');
+      }
+    }
+
+    return this.language;
+  }
+
+  setLanguage(languageCode: string) {
+    localStorage.setItem(this.languageKey, languageCode);
+    this.language = languageCode;
+  }
+
 
 }

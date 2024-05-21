@@ -21,6 +21,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { HeaderComponent } from './views/layout/header/header.component';
 import { NavComponent } from './views/layout/nav/nav.component';
 import { DividerModule } from 'primeng/divider';
+import { TranslateModule } from '@ngx-translate/core';
  
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DividerModule } from 'primeng/divider';
     ProgressSpinnerModule,
     DropdownModule,
     DividerModule,
+    TranslateModule,
   ],
 })
 export class CoreModule { }

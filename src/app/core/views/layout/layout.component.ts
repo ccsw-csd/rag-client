@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NavigatorService } from '../../services/navigator.service';
-import { Collection } from 'src/app/collection/model/Collection';
 
 @Component({
   selector: 'app-layout',
@@ -13,7 +12,6 @@ export class LayoutComponent implements OnInit {
 
   visibleSideBar = false;
   isLoading : boolean = false;
-  collections: Collection[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,21 +29,12 @@ export class LayoutComponent implements OnInit {
     this.authService.registerAccess().subscribe();
 
     this.activatedRoute.data.subscribe(response => { 
-      this.collections=response.collections;
-
-      let collection = this.authService.getProperty("selected-collection");
-      if (!collection) {
-        this.authService.setProperty("selected-collection", response.collections[0])
-      }
-
       this.authService.refreshToken(response.credentials);
       //this.loadDetailedUserInfo(response);
 
     }); 
 
-
-      
-    
+    this.navigatorService.changeLanguage();
   }
 
   private loadDetailedUserInfo(response: any) : void {
@@ -66,7 +55,5 @@ export class LayoutComponent implements OnInit {
 
     this.navigatorService.emitNavigatorChangeEvent(this.visibleSideBar);
   }
-
-
 
 }

@@ -1,4 +1,7 @@
 import { EventEmitter, Injectable } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { PrimeNGConfig } from "primeng/api";
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,11 @@ export class NavigatorService {
 
   private cancelLoading : any = null;
 
-  constructor() {    
+  constructor(
+    private translate: TranslateService,
+    private primeNGConfig: PrimeNGConfig,
+    private authService: AuthService,
+  ) {    
   }
 
   emitNavigatorChangeEvent(toogleMenu: boolean) {
@@ -36,5 +43,24 @@ export class NavigatorService {
     else if (this.cancelLoading != null) clearTimeout(this.cancelLoading);
   }
 
+
+  changeLanguage(languageCode?: string) {
+
+    if (languageCode == null) {
+      languageCode = this.authService.getLanguage();
+    }
+
+    this.translate.setDefaultLang(languageCode);
+    this.toogleLanguage(languageCode);
+    this.authService.setLanguage(languageCode);
+
+  }
+
+  private toogleLanguage(lang: string) {
+    this.translate.use(lang);
+    this.translate
+      .get('primeng')
+      .subscribe((res) => this.primeNGConfig.setTranslation(res));
+  }
 
 }

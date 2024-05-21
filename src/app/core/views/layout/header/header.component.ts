@@ -3,9 +3,8 @@ import { AuthService } from '../../../services/auth.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserInfoSSO } from 'src/app/core/models/UserInfoSSO';
 import { environment } from 'src/environments/environment';
-import { Collection } from 'src/app/collection/model/Collection';
-import { OverlayPanel } from 'primeng/overlaypanel';
 import { ApplicationData } from 'src/app/core/models/ResponseCredentials';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
 
 @Component({
   selector: 'app-header',
@@ -19,20 +18,29 @@ export class HeaderComponent implements OnInit {
   user : UserInfoSSO | null = null;
   navOpen = true;
   isloading : boolean = false;
-  @Output() navOpenEvent = new EventEmitter();
-  @Input() collections : Collection[];
-  selectedCollection : Collection;
+  @Output() navOpenEvent = new EventEmitter();  
+
+  languages: any[] = [];
+  selectedLanguage : any;
 
   constructor(
     public auth: AuthService,
-    public dialog: DialogService
+    public dialog: DialogService,
+    private navigatorService: NavigatorService,
   ) { }
 
   ngOnInit(): void {
     this.user = this.auth.getUserInfo();
     this.userPicture = this.auth.getSSOPicture();
-    this.selectedCollection = this.auth.getProperty("selected-collection");
     this.applications = this.auth.getApplications().sort((a, b) => a.name.localeCompare(b.name));
+
+    this.languages = [
+      { key: 'general.spanish', flag: 'flag-es', code: 'es' },
+      { key: 'general.english', flag: 'flag-uk', code: 'en' }
+    ];    
+
+    let languageCode = this.auth.getLanguage();
+    this.selectedLanguage = this.languages.find(x => x.code == languageCode);
   }
 
 
@@ -70,24 +78,15 @@ export class HeaderComponent implements OnInit {
     window.open(application.url, "_blank");
   }
 
-  getDomain() : string {
-    let gitWord2 = "pge";
-    let gitWord4 = "i";
-    let gitWord3 = "min";
-    let gitWord1 = "ca";
-
-    let gitWord = gitWord1+gitWord2+gitWord3+gitWord4;
-
-    return gitWord;
-  }
-
   emailRef() {
-    window.open("mailto:ccsw.support@"+this.getDomain()+".com?subject=["+environment.appCode+"] Consulta / Feedback");
+    window.open("mailto:ccsw.support@%63%61%70%67%65%6D%69%6E%69.%63%6F%6D?subject=["+environment.appCode+"] Feedback");
   }  
 
-  changeCollection(event) : void {
-    this.auth.setProperty("selected-collection", this.selectedCollection);
-    window.location.reload();
+  onChangeLanguage(event: any) {
+    let languageCode = this.selectedLanguage.code;
+    this.navigatorService.changeLanguage(languageCode);
   }
+
+  
 
 }

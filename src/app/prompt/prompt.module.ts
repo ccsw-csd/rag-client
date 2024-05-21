@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PromptEditComponent } from './views/prompt-edit/prompt-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CLIPBOARD_OPTIONS, ClipboardButtonComponent, MarkdownModule } from 'ngx-markdown';
+import { ClipboardButtonComponent, ClipboardOptions, MarkdownModule } from 'ngx-markdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -21,6 +21,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { PromptViewComponent } from './views/prompt-view/prompt-view.component';
 import { BadgeModule } from 'primeng/badge';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { BadgeModule } from 'primeng/badge';
     SelectButtonModule,
     MarkdownModule.forRoot({
       clipboardOptions: {
-        provide: CLIPBOARD_OPTIONS,
+        provide: ClipboardOptions,
         useValue: {
           buttonComponent: ClipboardButtonComponent,
         },
@@ -57,6 +58,7 @@ import { BadgeModule } from 'primeng/badge';
     AutoCompleteModule,
     ToastModule,
     BadgeModule,
+    TranslateModule,
   ]
 })
 export class PromptModule { }

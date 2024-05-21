@@ -3,6 +3,7 @@ import { DashboardService } from '../../services/dashboard.service';
 import { DashboardStats } from '../../models/DasboardStats';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PromptViewComponent } from 'src/app/prompt/views/prompt-view/prompt-view.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,10 +20,13 @@ export class DashboardComponent implements OnInit {
   dataAuthors: any;
   dataViews: any;
 
+  trasnlateLabelsMap = {};
+
 
   constructor(
     private dashboardService: DashboardService,
     private dialogService: DialogService,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -63,6 +67,11 @@ export class DashboardComponent implements OnInit {
             plugins: {
                 legend: {
                 display: false
+                },
+                tooltip: {
+                    callbacks: {
+                      title: (context) => this.trasnlateLabels(context[0].label),
+                    },
                 }
             },
             scales: {
@@ -89,13 +98,22 @@ export class DashboardComponent implements OnInit {
         };
 
 
-        this.dataTags = this.extractChartData(data.topTags);
-        this.dataAuthors = this.extractChartData(data.topAuthors);
-        this.dataViews = this.extractChartData(data.topViews);
+        let labelLimit = 35;
+        if (window.innerWidth > 1000) labelLimit = 50;
+        if (window.innerWidth > 1500) labelLimit = 70;
+
+
+        this.dataTags = this.extractChartData(data.topTags, 35);
+        this.dataAuthors = this.extractChartData(data.topAuthors, 35);
+        this.dataViews = this.extractChartData(data.topViews, labelLimit);
 
     }
 
-    extractChartData(dataArray: any[]) : any {
+    trasnlateLabels(label: string) : string {
+        return this.trasnlateLabelsMap[label];
+    }
+
+    extractChartData(dataArray: any[], labelLimit: number) : any {
 
         const documentStyle = getComputedStyle(document.documentElement);
 
@@ -127,10 +145,12 @@ export class DashboardComponent implements OnInit {
         dataArray.forEach(element => {
 
             let label = element.label;
-            if (label.length > 35) label = label.substring(0, 35) + '...';
+            if (label.length > labelLimit) label = label.substring(0, labelLimit) + '...';
 
             labels.push(label);
             values.push(element.value);
+
+            this.trasnlateLabelsMap[label] = element.label;
         });
 
         for (let i = labels.length; i <= 10; i++) {
@@ -160,7 +180,7 @@ export class DashboardComponent implements OnInit {
         let item = this.data.topViews[index];
 
         let ref = this.dialogService.open(PromptViewComponent, {
-            header: 'Visualizar prompt',
+            header: this.translateService.instant('edit-prompt.title-view'),
             width: '95vw',
             height: '95vh',
             contentStyle: { overflow: 'auto' },

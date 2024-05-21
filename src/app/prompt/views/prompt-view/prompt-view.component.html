@@ -9,21 +9,21 @@
             <div class="flex-none" style="width: 25px;"></div>
             <div class="flex flex-1 flex-column gap-3">
 
-                <p-fieldset legend="Información del prompt" [toggleable]="true" [collapsed]="false"> 
+                <p-fieldset legend="{{'edit-prompt.fieldset-prompt' | translate}}" [toggleable]="true" [collapsed]="false"> 
 
                     <div class="flex flex-column gap-3">
                         <div class="flex flex-row gap-2">
                             <span class="p-float-label flex-1">
                                 <input class="p-inputtext-lg" [(ngModel)]="prompt.title"  type="text" class="w-full" pInputText [readOnly]="true">
-                                <label for="name">Título<span class="text-red-600 text-base">*</span></label>
+                                <label for="name">{{'edit-prompt.title' | translate}}<span class="text-red-600 text-base">*</span></label>
                             </span>
                             <span class="p-float-label flex-none w-20rem">
                                 <input class="p-inputtext-lg" [ngModel]="displayName(prompt.person)" type="text" class="w-full" pInputText [readOnly]="true">
-                                <label for="description">Autor<span class="text-red-600 text-base">*</span></label>
+                                <label for="description">{{'edit-prompt.author' | translate}}<span class="text-red-600 text-base">*</span></label>
                             </span>
                             <span class="p-float-label flex-none w-6rem">
                                 <input class="p-inputtext-lg" [ngModel]="prompt.views" type="text" class="w-full text-right" pInputText [readOnly]="true">
-                                <label for="description">Visitas<span class="text-red-600 text-base">*</span></label>
+                                <label for="description">{{'edit-prompt.views' | translate}}<span class="text-red-600 text-base">*</span></label>
                             </span>
                             <div class="p-3 pt-2 cursor-pointer" (click)="onLike()">
                                 <i *ngIf="prompt.likes > 0 && prompt.userLiked == true" class="pi pi-thumbs-up-fill text-2xl" style="font-size: 1rem" pBadge [value]="getLikes()"></i>
@@ -35,12 +35,12 @@
 
                         <span class="p-float-label l-fixed p-fluid">
                             <p-autoComplete inputId="tags" [(ngModel)]="prompt.tags" [multiple]="true" [readonly]="true"></p-autoComplete>
-                            <label for="tags">Tags</label>
+                            <label for="tags">{{'edit-prompt.tags' | translate}}</label>
                         </span>
 
                         <span class="p-float-label">
                             <textarea class="h-9rem w-full" cols="30" pInputTextarea [(ngModel)]="prompt.description" [readonly]="true"></textarea>
-                            <label for="description">Descripción</label>
+                            <label for="description">{{'edit-prompt.description' | translate}}</label>
                         </span>
                     </div>
                 
@@ -48,7 +48,7 @@
 
                 </p-fieldset>
 
-                <p-fieldset legend="Prompt"> 
+                <p-fieldset legend="{{'edit-prompt.fieldset-post' | translate}}"> 
 
                     <div #contentData class="flex flex-column"> 
 
@@ -70,7 +70,7 @@
                                             <img class="flex-none" src="./assets/images/icons8-ai-white.png">
                                         </div>
                                         <div *ngIf="message.type == 'ia'" class="flex flex-1 h-2rem align-items-center pl-4">
-                                            <span class="text-base"><b>Asistente</b></span>
+                                            <span class="text-base"><b>{{'edit-prompt.assistant-name' | translate}}</b></span>
                                         </div>
 
                                         <div *ngIf="message.type == 'text'" class="flex w-2rem h-2rem align-items-center justify-content-center border-circle" style="background-color: lightgreen;">
@@ -79,8 +79,8 @@
                                         <div *ngIf="message.type == 'text'" class="flex flex-1 h-2rem align-items-center pl-4"></div> 
                                         
                                         <div class="pt-2 pr-4">
-                                            <button pButton pRipple label="Renderizado" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'normal'}" (click)="onChangePostView(message, 'normal')"></button>
-                                            <button pButton pRipple label="Texto plano" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'text'}" (click)="onChangePostView(message, 'text')"></button>
+                                            <button pButton pRipple label="{{'edit-prompt.button-parsed' | translate}}" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'normal'}" (click)="onChangePostView(message, 'normal')"></button>
+                                            <button pButton pRipple label="{{'edit-prompt.button-plaintext' | translate}}" class="button-type" [ngClass]="{'p-button-outlined': message.view != 'text'}" (click)="onChangePostView(message, 'text')"></button>
                                         </div>                                        
                                     </div>
                                     <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
@@ -118,5 +118,5 @@
 </div>
 
 <div class="flex flex-row justify-content-end p-0 m-0 w-full mt-4">
-    <p-button label="Cerrar" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
+    <p-button label="{{'general.close' | translate}}" [outlined]="true" (click)="onClose()" [style]="{width: '150px'}"></p-button>
 </div>

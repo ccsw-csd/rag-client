@@ -3,14 +3,23 @@
     <div class="w-23rem h-full">
         <p-fieldset legend="Documents"> 
 
-            <div class="flex flex-row justify-content-center pb-2">
-                <button pButton pRipple label="Añadir documento" (click)="onUploadFile()" class="w-10rem p-button p-button-secondary p-button-outlined"></button>
+
+            <div class="flex flex-row w-full align-items-center gap-2">
+                <span class="pi pi-book"></span> 
+                <p-dropdown [options]="collections" [(ngModel)]="selectedCollection" optionLabel="description" [showClear]="false" styleClass="w-14rem h-2rem" placeholder="Select a Collection" (onChange)="onChangeCollection($event)"></p-dropdown>
             </div>
 
-            <div *ngIf="files == null || files.length == 0" style="height:calc(100vh - 233px)" class="flex flex-row justify-content-center pt-6">There are no documents in the collection</div>
 
-            <p-treeTable  *ngIf="files != null && files.length > 0" [value]="files" [scrollable]="true" [contextMenu]="cmTree" [(contextMenuSelection)]="selectedFile" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" scrollHeight="calc(100vh - 233px)" 
-                [tableStyle]="{'width':'20rem', 'overflow': 'hidden'}" [style]="{'border': '1px solid lightgray', 'overflow': 'hidden'}" >
+            <div class="flex flex-row justify-content-end p-2 pb-3 gap-3 ">
+                <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" [outlined]="true" (click)="onUploadFile()"></p-button>
+                <p-button icon="pi pi-cloud-upload" [rounded]="true" severity="secondary" [outlined]="true" (click)="onUploadFile()"></p-button>
+            </div>
+
+            <div *ngIf="files == null || files.length == 0" style="height:calc(100vh - 303px)" class="flex flex-row justify-content-center pt-6">There are no documents in the collection</div>
+
+            <p-treeTable  *ngIf="files != null && files.length > 0" [value]="files" [scrollable]="true" [contextMenu]="cmTree" [(contextMenuSelection)]="selectedFile" 
+                selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="onSelectDocument($event)" scrollHeight="calc(100vh - 305px)" 
+                [tableStyle]="{'width':'20rem', 'overflow': 'hidden'}" [style]="{'border': '1px solid lightgray', 'overflow': 'hidden'}">
                 <ng-template pTemplate="header">
                 </ng-template>       
                 <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
@@ -46,28 +55,10 @@
 
             <div class="flex flex-1 flex-row gap-4">
 
-                <div class="flex-1">
-
-                    <p-tabView>
-
-                        <p-tabPanel #tabPanelContent header="Original Content">
-                            <div style="border:1px solid lightgray;">
-                                <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 232px);" (valueChanged)="onCodeChanged()"></ngs-code-editor>
-                            </div>
-                        </p-tabPanel>
-
-                        <p-tabPanel header="Enhanced Content">
-
-                        </p-tabPanel>
-
-                        <p-tabPanel header="Personal Notes">
-
-                        </p-tabPanel>
-
-
-                    </p-tabView>
-
+                <div #containerEditor class="flex-1" style="border:1px solid lightgray;">
+                    <ngs-code-editor [readOnly]="selectedDocument == null" [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(100vh - 180px);" (valueChanged)="onCodeChanged()"></ngs-code-editor>
                 </div>
+
 
                 <div class="w-16rem flex flex-column">
 

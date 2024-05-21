@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../../model/Message';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ChatInfoComponent } from '../chat-info/chat-info.component';
+import { Collection } from 'src/app/collection/models/Collection';
+import { CollectionService } from 'src/app/collection/services/collection.service';
+import { DocumentService } from 'src/app/storage/services/document.service';
+import { DocumentFile } from 'src/app/storage/model/DocumentFile';
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { Chat } from '../../model/Chat';
 
 
 @Component({
@@ -15,42 +21,93 @@ import { ChatInfoComponent } from '../chat-info/chat-info.component';
 })
 export class ChatComponent implements OnInit {
 
+  @ViewChild('assistantPanel') assistantPanel: OverlayPanel;  
+  @ViewChild('divMessages') comment: ElementRef;  
+  
+
+  chats: Chat[] = [];
+  selectedChat: Chat = null;
+
+  scrolltop: number = null;
+
+  questionArea: number = 50;
+  documents: DocumentFile[] = [];
+
   messages: Message[];
-  question: string = 'Que puntos de acceso tiene en controlador de Paciente?';
+  question: string = '@noAutocontext @file(*Entity.java) Dame el código SQL de creación de la BBDD para MySQL';
   asking: boolean = false;
 
+  collections : Collection[];
+  selectedCollection : Collection;
+
+  assistantContent: string = '';
+
+  assistantAnottations: any[] = [];
+
+  generalAnnotations: any[] = [
+    {key: '@noAutocontext', value: 'No genera contexto automático para la IA'},
+    {key: '@onlyDoc', value: 'Genera el contexto automático solamente con documentación'},
+    {key: '@onlyCode', value: 'Genera el contexto automático solamente con código fuente'},
+    {key: '@file(regex)', value: 'Añade un fichero al contexto de forma manual'},
+    {key: '@query', value: 'La respuesta de la IA será una query SQL'},
+  ];
   
   constructor(
     private navigatorService: NavigatorService,
     private authService: AuthService,
     private chatService: ChatService,
     private dialogService: DialogService,
+    private collectionService: CollectionService,
+    private documentService: DocumentService,
   ) {
   }
-
-
+  
+  
   ngOnInit(): void {
-
-
-    this.chatService.getMessages(1).subscribe({
-      next: res => {
-        this.messages = res;
-      },
-      error: err => {
-        console.error(err);
+    this.navigatorService.setLoading(true);
+    this.collectionService.findAll().subscribe(collections => {
+      
+      
+      this.collections = collections;
+      let selectedCollection = this.authService.getProperty("selected-collection");
+      
+      if (selectedCollection == null) {
+        this.selectedCollection = collections[0];
+        this.authService.setProperty("selected-collection", this.selectedCollection);
       }
+      else {
+        this.selectedCollection = selectedCollection;
+      }
+      
+      this.onWriteQuestion(null);
+      this.loadConfig();
     });
 
+  }
+
+  loadConfig() : void {
+
+    this.navigatorService.setLoading(true);
+    this.messages = [];
+
+    this.chatService.getChats(this.selectedCollection.id).subscribe(chats => {
+      this.chats = chats;
+
+      this.navigatorService.setLoading(false);
+    });
+
+
     /*
-    this.messages = [
-      {id:null, user: true, author:'Pablo Jiménez Martínez', date: new Date(), content: 'Cuantos Casos de Uso hay en el documento de Trabajo de Final de Grado? Haz un breve resumen de cada uno de ellos'},
-      {id:null, user: false, author:'Assistant', date: new Date(), content: 'En el documento de Trabajo de Final de Grado se describen varios casos de uso en el contexto del aplicativo móvil y web destinado al seguimiento de pacientes con trastorno mental grave (TMG). Los casos de uso principales se detallan a continuación:\n\n1. **Acceso a la aplicación**: Este caso de uso permite que los usuarios (pacientes y profesionales sanitarios) accedan al sistema mediante la introducción de sus credenciales. Se asegura que solo los usuarios autorizados puedan entrar y interactuar con el aplicativo.\n\n2. **Navegación**: Describe cómo los usuarios pueden moverse a través de las diferentes secciones de la aplicación. Esto incluye la visualización de menús, la selección de opciones y la navegación entre distintas pantallas y funcionalidades.\n\n3. **Notificaciones**: Este caso abarca el envío de recordatorios al usuario sobre la toma de medicación y la realización de cuestionarios. Es fundamental para asegurar la adherencia al tratamiento y la recolección de datos necesarios para el seguimiento.\n\n4. **Perfil del usuario**: Permite a los usuarios ver y actualizar su información personal y médica dentro de la aplicación. Esto puede incluir detalles como historial médico, medicamentos actuales y contactos de emergencia.\n\n5. **Cuestionarios**: Los usuarios responden a preguntas específicas asignadas por el personal sanitario. Estas preguntas están diseñadas para evaluar diferentes aspectos de la salud mental y física del paciente.\n\n6. **Agenda**: Muestra eventos, talleres o citas a los cuales el paciente puede asistir. Proporciona detalles y resúmenes de estas actividades, ayudando a los usuarios a mantenerse organizados y comprometidos con su tratamiento.\n\n7. **Foro**: Facilita un espacio de interacción donde los usuarios pueden hacer preguntas, responder a consultas de otros y participar en discusiones. Este caso de uso fomenta el apoyo comunitario y la interacción social entre los usuarios.\n\n8. **Medicación**: Notifica a los usuarios sobre las medicaciones que deben tomar, permitiendo además confirmar la toma de estas. Es crucial para el manejo efectivo de la medicación y el seguimiento de la adherencia.\n\n9. **Diario**: Los usuarios pueden registrar notas personales sobre su día a día, síntomas o cualquier otro aspecto que consideren relevante. Este diario puede ser revisado luego por profesionales de la salud para un mejor entendimiento del estado del paciente.\n\nCada uno de estos casos de uso contribuye al objetivo general del aplicativo de proporcionar un seguimiento integral y personalizado a pacientes con TMG, mejorando la comunicación entre pacientes y profesionales de la salud y facilitando una mejor gestión del tratamiento.'},
-      {id:null, user: true, author:'Pablo Jiménez Martínez', date: new Date(), content: 'Como puedo realizar la vinculación de paciente? Dame un listado de campos que debo rellenar'},
-      {id:null, user: false, author:'Assistant', date: new Date(), content: 'Para realizar la vinculación de un paciente en el sistema, debes rellenar los siguientes campos en el formulario correspondiente:\n\n### Campos para la Vinculación de Paciente:\n1. **NIF**: Documento de identificación único del paciente (campo de texto).\n2. **Sexo**: Sexo del paciente (selector).\n3. **Edad**: Edad del paciente (campo numérico).\n4. **Nombre**: Nombre del paciente (campo de texto).\n5. **Apellidos**: Apellidos del paciente (campo de texto).\n6. **Correo electrónico**: Correo electrónico del paciente (campo de texto).\n7. **Teléfono**: Teléfono del paciente (campo de texto).\n8. **SIP**: Número de la tarjeta sanitaria individual del paciente (campo numérico).\n9. **H. Clínica**: Número de la historia clínica del paciente (campo numérico).\n\nEstos campos deben ser completados para formalizar la vinculación del paciente. Asegúrate de que todos los campos obligatorios, que están marcados con un asterisco (*), sean llenados correctamente para proceder con el registro en el sistema.'},
-    ];
+    this.documentService.getDocumentsByCollectionId(this.selectedCollection.id).subscribe(
+      documents => {
+
+        this.documents = documents;
+    });
     */
 
+    
   }
+
 
   onButtonInfo(message: Message) : void {
 
@@ -80,14 +137,14 @@ export class ChatComponent implements OnInit {
   }
 
 
-  onQuestionSubmit(event: any) : void {
+  onQuestionSend() : void {
     
     let textQuestion = this.question;
     this.question = '';
     
     if (textQuestion != null && textQuestion.length > 0) {
 
-      let collectionId = this.authService.getProperty("selected-collection").id;
+      let collectionId = this.selectedCollection.id;
       this.asking = true;
 
       this.messages.push({
@@ -98,15 +155,41 @@ export class ChatComponent implements OnInit {
         date: new Date()
       });
       
-      this.chatService.sendMessage(collectionId, textQuestion).subscribe({
-        next: res => {
-          this.messages.push(res);
-          this.asking = false;
-        },
-        error: err => {
-          console.error(err);
-        }
-      });
+      this.calculateScroll();
+
+      if (this.selectedChat == null) {
+
+        this.chatService.createChats(collectionId, textQuestion).subscribe( chat => {
+          this.selectedChat = chat;
+
+          this.chats = [chat, ...this.chats];
+
+          this.chatService.sendMessage(this.selectedChat.id, textQuestion).subscribe({
+            next: res => {
+              this.messages.push(res);
+              this.asking = false;
+              this.calculateScroll();
+            },
+            error: err => {
+              console.error(err);
+            }
+          });    
+        });
+      }
+
+      else {
+        this.chatService.sendMessage(this.selectedChat.id, textQuestion).subscribe({
+          next: res => {
+            this.messages.push(res);
+            this.asking = false;
+            this.calculateScroll();
+          },
+          error: err => {
+            console.error(err);
+          }
+        });
+      }
+
 
     }
 
@@ -119,5 +202,189 @@ export class ChatComponent implements OnInit {
 
     return name.split(' ').map((n) => n.charAt(0)).join('').substring(0, 2);
   }
+
+  onChangeCollection(event) : void {
+    this.authService.setProperty("selected-collection", this.selectedCollection);
+    this.loadConfig();
+  }
+
+  lastControlKeyTime: number = 0;
+
+  onWriteQuestion(event: KeyboardEvent) : void {
+        
+    if (event != null) {
+
+      let textarea : any = document.getElementById('question');
+      let caretPosition = textarea.selectionStart - 1;
+
+
+      if (event.key == 'Control') {
+        this.lastControlKeyTime = event.timeStamp;
+        return;
+      }
+
+      
+      else if ((event.code == 'Enter' && event.ctrlKey) || (event.code == 'Enter' && event.timeStamp - this.lastControlKeyTime < 100)) {
+        this.assistantPanel.hide();
+        this.onQuestionSend();
+        return;
+      }
+      
+      else if (event.code == 'Enter' && this.assistantPanel.overlayVisible == true && this.assistantAnottations.length > 0) {
+        this.onAnnotationClick(this.assistantAnottations[0]);
+      }
+
+      else if (this.question.charAt(caretPosition) == '@' && this.assistantPanel.overlayVisible == false) {
+        this.generateAssistantContent('@');
+        this.assistantPanel.toggle(event, null);
+        this.calculateAssistantPosition(250);
+      }
+
+      else if (event.code == 'Space' && this.assistantPanel.overlayVisible == true) {
+        this.assistantPanel.hide();  
+      }
+
+      else if ((event.code == 'Space' && event.ctrlKey) || (event.code == 'Space' && event.timeStamp - this.lastControlKeyTime < 100)) {
+        this.generateAssistantContent(null);
+        this.assistantPanel.toggle(event, null);
+        this.calculateAssistantPosition(250);
+      }
+      
+      if (this.assistantPanel.overlayVisible) {
+        let textarea : any = document.getElementById('question');
+        let caretPosition = textarea.selectionStart - 1;
+        
+        let annotation = '';
+
+        let lastSpace = Math.max(0, this.question.lastIndexOf(' ', caretPosition));
+        let annotationStart = Math.max(lastSpace, this.question.lastIndexOf('@', caretPosition)-1);
+  
+        if (annotationStart >= 0 && caretPosition > annotationStart) {
+          annotation = this.question.substring(annotationStart, caretPosition+1).trim();
+        } 
+  
+        this.generateAssistantContent(annotation);
+        this.calculateAssistantPosition();
+      }
+
+    }
+
+
+    let text = this.question+' ';
+
+    let numberOfLines = text.split('\n').length;
+    if (numberOfLines > 10) numberOfLines = 10;
+    if (numberOfLines < 1) numberOfLines = 1;
+
+    this.questionArea = 30 + numberOfLines * 20;
+  }
+
+  calculateAssistantPosition(time?: number) {
+    if (!time) time = 1;
+
+    setTimeout(() => {
+      let panel : any = document.getElementsByClassName('p-overlaypanel')[0];
+      if (!panel) return;
+      let panelRect = panel.getBoundingClientRect();
+
+      let textarea : any = document.getElementById('question');
+      if (!textarea) return;
+      let textareaRect = textarea.getBoundingClientRect();
+
+      panel.style.top = (textareaRect.top - 20 - panelRect.height) + 'px';
+    }, time);
+
+  }
+  
+  calculateScroll() {
+    setTimeout(() => {
+      this.scrolltop = this.comment.nativeElement.scrollHeight;
+    }, 100);
+  }
+
+
+
+  
+
+
+  generateAssistantContent(annotationCode?: string) : void {
+    this.assistantAnottations = [];
+
+    for (let annotation of this.generalAnnotations) {
+
+      if (!annotationCode || annotation.key.toLowerCase().indexOf(annotationCode.toLowerCase()) >= 0) {
+        this.assistantAnottations.push({
+          key: annotation.key,
+          value: annotation.value,
+          code: annotationCode
+        });
+      }
+    }
+  }
+
+  onAnnotationClick(annotation: any) : void {
+
+    let textarea : any = document.getElementById('question');
+    let caretPosition = textarea.selectionStart - 1;    
+
+    if (annotation.code && annotation.code.length > 0) {
+      let anottationStart = this.question.lastIndexOf(annotation.code, caretPosition);
+
+      if (anottationStart >= 0) {
+
+        let firstText = this.question.substring(0, anottationStart);
+        let secondText = this.question.substring(anottationStart+annotation.code.length+1);
+
+        this.question = firstText + annotation.key + ' ' + secondText;
+      }
+    }
+
+    else {
+      this.question = this.question.substring(0, caretPosition) + ' ' + annotation.key + ' ' + this.question.substring(caretPosition);
+    }
+
+
+    this.assistantPanel.hide();  
+  }
+
+  formattedKey(annotation: any) : string {
+
+    let key = annotation.key;
+    let annotationCode = annotation.code;
+
+    let index = key.toLowerCase().indexOf(annotationCode.toLowerCase());
+    if (index < 0) return key;
+
+    let originalPartialKey= key.substring(index, index+annotationCode.length);
+    return key.replace(originalPartialKey, '<span class="text-blue-500 font-bold">'+originalPartialKey+'</span>');
+  }
+
+  onChangeChat(event: any) : void {
+
+    this.messages = [];
+    if (this.selectedChat == null) return;
+
+    this.navigatorService.setLoading(true);
+
+    this.chatService.getMessages(this.selectedChat.id).subscribe({
+      next: res => {
+        this.messages = res;
+        this.navigatorService.setLoading(false);
+        this.calculateScroll();
+      },
+      error: err => {
+        console.error(err);
+        this.navigatorService.setLoading(false);
+      }
+    });
+  }
+
+  onCreateChat() : void {
+    this.messages = [];
+    this.question = '';
+    //this.chats = [...this.chats];
+    this.selectedChat = null;
+  }
+
 
 }

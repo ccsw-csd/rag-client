@@ -7,6 +7,7 @@ import { PromptService } from '../../services/prompt.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PromptViewComponent } from '../prompt-view/prompt-view.component';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-prompt-list',
@@ -27,6 +28,7 @@ export class PromptListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -75,9 +77,11 @@ export class PromptListComponent implements OnInit {
 
   onDelete(item: any) : void {
 
+    
+
     this.confirmationService.confirm({
-      message: 'Si borras este prompt, se eliminará todo rastro de notas personales y posts generados asociados a este prompt.<br/><br/>¿Estás seguro que quieres eliminar el prompt?',
-      header: 'Atención, pérdida de datos',
+      header: this.translateService.instant('prompts.delete-title'),
+      message: this.translateService.instant('prompts.delete-content'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
 
@@ -88,7 +92,7 @@ export class PromptListComponent implements OnInit {
           },
           error: (err) => {
             this.navigatorService.setLoading(false);
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocurrió un problema en el borrado. Es posible que no tenga permisos. Contacte con el administrador' });
+            this.messageService.add({ severity: 'error', summary: this.translateService.instant('general.error'), detail: this.translateService.instant('prompts.delete-problem') });
         }
         });
       },
@@ -97,14 +101,12 @@ export class PromptListComponent implements OnInit {
       }
     });
 
-
-    //this.router.navigate(['prompt/edit/'+item.id]);
   }
 
   onView(item: any) : void {
 
     let ref = this.dialogService.open(PromptViewComponent, {
-      header: 'Visualizar prompt',
+      header: this.translateService.instant('edit-prompt.title-view'),
       width: '95vw',
       height: '95vh',
       contentStyle: { overflow: 'auto' },

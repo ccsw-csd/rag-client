@@ -4,10 +4,9 @@ import { LayoutComponent } from './core/views/layout/layout.component';
 import { LoginComponent } from './login/views/login/login.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { AuthGuard } from './core/services/auth.guard';
-import { CollectionListComponent } from './collection/collection-list/collection-list.component';
+import { CollectionListComponent } from './collection/views/collection-list/collection-list.component';
 import { ChatComponent } from './chat/views/chat/chat.component';
 import { StorageComponent } from './storage/views/storage/storage.component';
-import { CollectionResolverService } from './core/services/collection-resolver.service';
 import { PromptListComponent } from './prompt/views/prompt-list/prompt-list.component';
 import { PromptEditComponent } from './prompt/views/prompt-edit/prompt-edit.component';
 import { PromptLoaderResolverService } from './prompt/services/prompt-loader.resolver.service';
@@ -19,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    resolve: {credentials: RefreshTokenResolverService, collections: CollectionResolverService},
+    resolve: {credentials: RefreshTokenResolverService},
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [

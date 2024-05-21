@@ -1,0 +1,54 @@
+<div class="flex flex-column p-4">
+
+  <div class="flex flex-row justify-content-between">
+      <h3>{{ 'collections.title' | translate }}</h3>
+      <div class="flex flex-1"></div>
+      <p-button label="{{ 'collections.button-add' | translate }}" [outlined]="false" (click)="onCreate()" [style]="{width: '150px'}"></p-button>        
+  </div>
+
+
+  <p-table [style]="{'height':'calc(100vh - 175px)','width':tableWidth}"  
+         [scrollable]="true" scrollHeight="flex" selectionMode="single" 
+         [value]="collections" [responsive]="true" 
+         sortField="name" [sortOrder]="1" styleClass="p-datatable-striped">
+  
+         <ng-template pTemplate="header">
+          <tr>
+            <th class="w-14rem">
+              <div pSortableColumn="name" class="text-left pl-2 top-header">
+                {{ 'collections.header-code' | translate }}
+                <p-sortIcon field="name"></p-sortIcon>
+              </div>
+            </th>
+        
+            <th>
+              <div pSortableColumn="description" class="text-left pl-2 top-header w-12rem">
+                {{ 'collections.header-description' | translate }}
+                <p-sortIcon field="description"></p-sortIcon>
+              </div>
+            </th>
+            <th class="w-3rem">
+              <div class="text-right top-header">
+                  <span></span>
+              </div> 
+          </th>
+          </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-collection>
+          <tr class="border-bottom-1 border-gray-300">
+            <td>
+              {{ collection.name }}
+            </td>
+            <td>
+              {{ collection.description }}
+            </td>
+            <td>
+              <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="onEdit(collection)"></button>
+            </td>
+          </tr>
+        </ng-template>
+  
+  </p-table>
+
+</div>    

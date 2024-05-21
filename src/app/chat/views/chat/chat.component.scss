@@ -1,4 +1,31 @@
-/* HTML: <div class="loader"></div> */
+
+:host ::ng-deep {
+
+  .p-fieldset-legend {
+      background-color: lightgrey !important;
+  }
+
+  .p-fieldset-content {
+      padding: 0.75rem 0 0.75rem 0;
+  }
+
+  .p-overlaypanel {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+}
+
+
+.overlaypanel-squared {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+
+
 .loader {
   height: 30px;
   aspect-ratio: 2.5;
@@ -18,12 +45,16 @@
 }
 
 
-  .border-user {
-    border-radius: 25px; 
-    border: thin solid #27293695;
-  }
+.border-user {
+  border-radius: 25px; 
+  border: thin solid #27293695;
+}
 
-  .border-ia {
-    border-radius: 25px; 
-    border: thin solid #4472C495;    
-  }
+.border-ia {
+  border-radius: 25px; 
+  border: thin solid #4472C495;    
+}
+
+
+
+
