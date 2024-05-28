@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   appCode: 'promptlibrary',
-  server: '../promptpedia-data',
+  server: '../promptlibrary-data',
   sso: '../sso',
   ssoApp: '/apps'
 };

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "promptpedia": {
+    "promptlibrary": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/promptpedia",
+            "outputPath": "dist/promptlibrary",
             "index": "src/index.html",
             "main": "src/main.ts",            
             "polyfills": [
@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "promptpedia:build:production"
+              "browserTarget": "promptlibrary:build:production"
             },
             "development": {
-              "browserTarget": "promptpedia:build:development"
+              "browserTarget": "promptlibrary:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +100,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "promptpedia:build"
+            "browserTarget": "promptlibrary:build"
           }
         },
         "test": {
