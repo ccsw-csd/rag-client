@@ -27,9 +27,9 @@ const routes: Routes = [
       { path: 'prompt/edit/:id', component: PromptEditComponent, resolve: {prompt: PromptLoaderResolverService}},
       { path: 'prompt/edit', component: PromptEditComponent},      
       { path: 'dashboard', component: DashboardComponent, data:{role:['DASHBOARD', 'ADMIN']} },
-      { path: 'chat', component: ChatComponent, data:{role:['CHAT', 'ADMIN'] },
-      { path: 'storage', component: StorageComponent, data:{role:['CHAT', 'ADMIN']},
-      { path: 'collections', component: CollectionListComponent, data:{role:['ADMIN']},
+      { path: 'chat', component: ChatComponent, data:{role:['CHAT', 'ADMIN']} },
+      { path: 'storage', component: StorageComponent, data:{role:['CHAT', 'ADMIN']} },
+      { path: 'collections', component: CollectionListComponent, data:{role:['ADMIN']} },
       { path: '**', redirectTo: 'prompt', pathMatch: 'full' },
     ]
   },  
