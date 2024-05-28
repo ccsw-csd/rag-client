@@ -7,10 +7,12 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ChatInfoComponent } from '../chat-info/chat-info.component';
 import { Collection } from 'src/app/collection/models/Collection';
 import { CollectionService } from 'src/app/collection/services/collection.service';
-import { DocumentService } from 'src/app/storage/services/document.service';
-import { DocumentFile } from 'src/app/storage/model/DocumentFile';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Chat } from '../../model/Chat';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ChatItemList } from '../../model/ChatItemList';
+import { CollectionConfigurationComponent } from 'src/app/collection/views/collection-configuration/collection-configuration.component';
+
 
 
 @Component({
@@ -24,23 +26,23 @@ export class ChatComponent implements OnInit {
   @ViewChild('assistantPanel') assistantPanel: OverlayPanel;  
   @ViewChild('divMessages') comment: ElementRef;  
   
+  chatItems: ChatItemList[] = [];
+  itemsContextMenuList!: MenuItem[];
+  cmListSelected: ChatItemList = null;
+  renameChatName: string = '';
+  renameChatDialogVisible: boolean = false;
 
-  chats: Chat[] = [];
   selectedChat: Chat = null;
-
   scrolltop: number = null;
 
   questionArea: number = 50;
-  documents: DocumentFile[] = [];
 
   messages: Message[];
-  question: string = '@noAutocontext @file(*Entity.java) Dame el código SQL de creación de la BBDD para MySQL';
+  question: string = '';
   asking: boolean = false;
 
   collections : Collection[];
   selectedCollection : Collection;
-
-  assistantContent: string = '';
 
   assistantAnottations: any[] = [];
 
@@ -58,7 +60,7 @@ export class ChatComponent implements OnInit {
     private chatService: ChatService,
     private dialogService: DialogService,
     private collectionService: CollectionService,
-    private documentService: DocumentService,
+    private confirmationService: ConfirmationService,
   ) {
   }
   
@@ -67,6 +69,7 @@ export class ChatComponent implements OnInit {
     this.navigatorService.setLoading(true);
     this.collectionService.findAll().subscribe(collections => {
       
+      collections.sort((a, b) => a.description.localeCompare(b.description));
       
       this.collections = collections;
       let selectedCollection = this.authService.getProperty("selected-collection");
@@ -83,29 +86,130 @@ export class ChatComponent implements OnInit {
       this.loadConfig();
     });
 
+    this.itemsContextMenuList = [
+      { label: 'Renombrar', icon: 'pi pi-pencil', command: (event) => this.renameChatDialog(event) },
+      { label: 'Borrar', icon: 'pi pi-trash', command: (event) => this.deleteChat(event) }
+    ];
+
+
   }
+
+  onRenameChat() : void {
+
+    this.navigatorService.setLoading(true);
+    this.chatService.renameChat(this.cmListSelected.chat.id, this.renameChatName).subscribe( res => {
+      this.onWriteQuestion(null);
+      this.loadConfig();
+    });
+
+    this.renameChatName = ''; 
+    this.renameChatDialogVisible = false; 
+    this.cmListSelected = null;
+  }
+
+  renameChatDialog(event) : void  {
+
+    this.renameChatName = this.cmListSelected.chat.title;
+    this.renameChatDialogVisible = true;
+
+  }
+
+
+  deleteChat(event) : void {
+
+    let title = this.cmListSelected.chat.title;
+    if (title.length > 25) title = title.substring(0, 25)+'...';
+
+    this.confirmationService.confirm({
+        message: 'Vas a borrar el chat con título "'+title+'".<br/><br/>¿Estás seguro que quieres eliminar el chat?',
+        header: 'Atención, pérdida de datos',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+
+          this.navigatorService.setLoading(true);
+          this.chatService.deleteChat(this.cmListSelected.chat.id).subscribe( res => {
+            this.onWriteQuestion(null);
+            this.loadConfig();
+      
+          });
+
+          this.cmListSelected = null;
+        },
+        reject: () => {
+          this.cmListSelected = null;
+        }
+      });
+    
+  }
+
 
   loadConfig() : void {
 
     this.navigatorService.setLoading(true);
     this.messages = [];
+    this.selectedChat = null;
 
     this.chatService.getChats(this.selectedCollection.id).subscribe(chats => {
-      this.chats = chats;
-
+      this.createItemListChat(chats);
       this.navigatorService.setLoading(false);
     });
 
+  }
 
-    /*
-    this.documentService.getDocumentsByCollectionId(this.selectedCollection.id).subscribe(
-      documents => {
 
-        this.documents = documents;
+  createItemListChat(chats: Chat[]) : void {
+
+    chats.sort((a, b) => (new Date(b.updateDate).getTime())  - (new Date(a.updateDate).getTime()));
+
+    this.chatItems = [];
+    let lastTitle = null;
+
+    for (let chat of chats) {
+
+      let title = this.generateTitle(new Date(chat.updateDate));
+
+
+      if (lastTitle == null || lastTitle != title) {
+        this.chatItems.push({isTitle: true, title: title});
+        lastTitle = title;
+      }
+
+      this.chatItems.push({chat: chat, isTitle: false});
+    }    
+
+  }
+
+
+  generateTitle(date: Date) : string {
+
+    let today = new Date();
+
+    let diff = today.getTime() - date.getTime();
+    let diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (diffDays == 0) return 'Hoy';
+    if (diffDays == 7) return 'Hace una semana';
+    if (diffDays == 14) return 'Hace dos semanas';
+    if (diffDays == 31) return 'Hace un mes';
+
+    return 'Anteriores';
+
+
+  }
+
+  onButtonConfigure() : void {
+
+    let ref = this.dialogService.open(CollectionConfigurationComponent, {
+      header: 'Configuración de la colección: '+this.selectedCollection.description,
+      width: '800px',
+      height: '615px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false,
+      data: this.selectedCollection
     });
-    */
 
-    
   }
 
 
@@ -123,16 +227,6 @@ export class ChatComponent implements OnInit {
       closable: false,
       data: { message: message, messagePrevious: index > 0 ? this.messages[index-1] : null}
     });
-
-    /*
-    ref.onClose.subscribe((result) => {
-      if (result.toRefresh) {
-        this.navigatorService.setLoading(true);
-        this.loadDocuments();
-      }
-    });    
-    */
-
 
   }
 
@@ -162,7 +256,10 @@ export class ChatComponent implements OnInit {
         this.chatService.createChats(collectionId, textQuestion).subscribe( chat => {
           this.selectedChat = chat;
 
-          this.chats = [chat, ...this.chats];
+          let chats = this.chatItems.filter(item => item.isTitle == false).map(item => item.chat);
+          chats = [chat, ...chats];
+
+          this.createItemListChat(chats);
 
           this.chatService.sendMessage(this.selectedChat.id, textQuestion).subscribe({
             next: res => {
@@ -359,10 +456,10 @@ export class ChatComponent implements OnInit {
     return key.replace(originalPartialKey, '<span class="text-blue-500 font-bold">'+originalPartialKey+'</span>');
   }
 
-  onChangeChat(event: any) : void {
+  onChangeChat(item: ChatItemList) : void {
 
+    this.selectedChat = item.chat;
     this.messages = [];
-    if (this.selectedChat == null) return;
 
     this.navigatorService.setLoading(true);
 

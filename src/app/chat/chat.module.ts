@@ -14,11 +14,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ListboxModule } from 'primeng/listbox';
+import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { SliderModule } from 'primeng/slider';
+import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
     ChatComponent,
-    ChatInfoComponent
+    ChatInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -28,13 +34,19 @@ import { ListboxModule } from 'primeng/listbox';
     FormsModule,
     TableModule,
     ReactiveFormsModule,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forChild(),
     FieldsetModule,
     TranslateModule,
     DropdownModule,
     InputTextareaModule,
     OverlayPanelModule,
     ListboxModule,
+    MenuModule,
+    ConfirmDialogModule,
+    DialogModule,
+    SliderModule,
+    PasswordModule,
+    CheckboxModule,
   ]
 })
 export class ChatModule { }

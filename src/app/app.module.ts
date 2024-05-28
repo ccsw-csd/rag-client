@@ -22,6 +22,9 @@ import { PromptLoaderResolverService } from './prompt/services/prompt-loader.res
 import { DashboardModule } from './dashboard/dashboard.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ClipboardButtonComponent, ClipboardOptions, MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { preserveWhitespacesDefault } from '@angular/compiler';
+import { CodeEditorModule } from '@ngstack/code-editor';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -46,11 +49,29 @@ export function createTranslateLoader(http: HttpClient) {
     StorageModule,
     PromptModule,
     DashboardModule,
+    CodeEditorModule.forRoot({
+      baseUrl: 'assets/monaco'
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
         deps: [HttpClient],
+      },
+    }),
+    MarkdownModule.forRoot({
+      clipboardOptions: {
+        provide: ClipboardOptions,
+        useValue: {
+          buttonComponent: ClipboardButtonComponent,
+        },
+      },
+      markedOptions: {        
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          breaks: false,
+        }
       },
     }),
   ],
@@ -70,3 +91,4 @@ export function createTranslateLoader(http: HttpClient) {
   exports: [TranslateModule]
 })
 export class AppModule { }
+

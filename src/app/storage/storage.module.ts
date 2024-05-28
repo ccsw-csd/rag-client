@@ -18,7 +18,7 @@ import { UploadDialogComponent } from './views/upload-dialog/upload-dialog.compo
 import { FileUploadModule } from 'primeng/fileupload';
 import { TranslateModule } from '@ngx-translate/core';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -36,9 +36,7 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     ReactiveFormsModule,
     TabViewModule,
-    CodeEditorModule.forRoot({
-      baseUrl: 'assets/monaco'
-    }),
+    CodeEditorModule.forChild(),
     TableModule,
     DynamicDialogModule,
     InputTextModule,
@@ -46,6 +44,7 @@ import { DropdownModule } from 'primeng/dropdown';
     FileUploadModule,
     TranslateModule,
     DropdownModule,
+    DialogModule,
   ]
 })
 export class StorageModule { }

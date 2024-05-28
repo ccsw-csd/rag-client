@@ -26,19 +26,26 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.items = [
-      {label: this.translateService.instant('menu.dashboard'), routerLink: '/dashboard', visible: this.authService.hasRole('ADMIN')},
-      {label: this.translateService.instant('menu.prompts'), routerLink: '/prompt'},
-      {label: this.translateService.instant('menu.chat'), routerLink: '/chat'},
-      {label: this.translateService.instant('menu.storage'), routerLink: '/storage'},
-      {label: this.translateService.instant('menu.collections'), routerLink: '/collections'},
-    ];
+    this.createTexts();
+    this.translateService.onLangChange.subscribe(() => this.createTexts());
 
     
     this.utilsService.getAppVersion().subscribe((result: any) => {
       this.backVersion = result.version;
     });
     
+  }
+
+
+  createTexts() {
+    this.items = [
+      {label: this.translateService.instant('menu.dashboard'), routerLink: '/dashboard', visible: this.authService.hasRole('DASHBOARD') || this.authService.hasRole('ADMIN')},
+      {label: this.translateService.instant('menu.prompts'), routerLink: '/prompt'},
+      {label: this.translateService.instant('menu.chat'), routerLink: '/chat', visible: this.authService.hasRole('CHAT') || this.authService.hasRole('ADMIN')},
+      {label: this.translateService.instant('menu.storage'), routerLink: '/storage', visible: this.authService.hasRole('CHAT') || this.authService.hasRole('ADMIN')},
+      {label: this.translateService.instant('menu.collections'), routerLink: '/collections', visible: this.authService.hasRole('ADMIN')},
+    ];
+
   }
 
 }

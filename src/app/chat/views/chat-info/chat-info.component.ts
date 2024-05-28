@@ -41,4 +41,11 @@ export class ChatInfoComponent {
     this.ref.close();
   }
 
+  convertPlainTextToHtml(text: string): string {
+    text = text.replaceAll('<br/>\n', '<br>');
+    return text.replace(/\n/g, '<br>');
+  }
+
+
+  
 }

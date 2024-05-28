@@ -4,7 +4,6 @@ export interface Message {
     user: boolean,
     content: string,
     tokens?: number,
-    embeddings?: string[],
     spentTime?: number,
     date?: Date,
     tabActiveIndex?: number,

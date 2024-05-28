@@ -1,0 +1,22 @@
+
+<div class="flex flex-column mt-3 gap-3">
+
+
+    <span class="flex-none w-30rem p-float-label">
+        <p-dropdown class="w-full" styleClass="w-full" [options]="prompts" [(ngModel)]="selectedPrompt" (onChange)="onChangePrompt()" placeholder="Select a Prompt" optionLabel="name"></p-dropdown>
+        <label for="float-label">Select a Prompt</label>
+    </span>
+
+
+    <div #containerEditor class="flex-1" style="border:1px solid lightgray;">
+        <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options" style="height:calc(90vh - 245px);"></ngs-code-editor>
+    </div>    
+
+    
+    <div class="flex flex-row justify-content-end gap-2 pt-4">    
+        <button pButton pRipple label="Cerrar" class="w-8rem p-button p-button-secondary p-button-outlined bg-white" (click)="onClose()"></button>
+        <button pButton pRipple label="Guardar" class="w-8rem"  (click)="onSave()" ></button>
+    </div>
+
+
+</div>

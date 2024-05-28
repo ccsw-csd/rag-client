@@ -24,6 +24,13 @@ export class ChatService {
     return this.http.get<Message[]>(environment.server + '/chat/'+chatId);
   }
 
+  public renameChat(chatId: number, title: string): Observable<void> {
+    return this.http.post<void>(environment.server + '/chat/'+chatId+'/rename', {title: title});
+  }
+
+  public deleteChat(chatId: number): Observable<void> {
+    return this.http.delete<void>(environment.server + '/chat/'+chatId);
+  }
 
   public sendMessage(collectionId: number, message: string): Observable<Message> {
     return this.http.get<Message>(environment.server + '/chat/'+collectionId+'/question?question='+message);

@@ -24,7 +24,7 @@ export class NavigatorService {
     this.navchange.emit(toogleMenu);
   }
 
-  getNavivagorChangeEmitter() {
+  getNavigatorChangeEmitter() {
     return this.navchange;
   }
 

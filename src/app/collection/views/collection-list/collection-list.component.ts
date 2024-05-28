@@ -4,8 +4,9 @@ import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionEditComponent } from '../collection-edit/collection-edit.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { CollectionConfigurationComponent } from '../collection-configuration/collection-configuration.component';
+import { CollectionPromptComponent } from '../collection-prompt/collection-prompt.component';
 
 @Component({
   selector: 'app-collection-list',
@@ -29,7 +30,7 @@ export class CollectionListComponent implements OnInit {
   ngOnInit(): void {
     this.resizeTable();
 
-    this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
+    this.navigatorService.getNavigatorChangeEmitter().subscribe((menuVisible) => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
       else this.tableWidth = 'calc(100vw - 50px)';
     });
@@ -49,7 +50,40 @@ export class CollectionListComponent implements OnInit {
     });
   }
 
-  onEdit(collection: Collection){
+  onEditPrompt(collection: Collection) : void{
+
+    let ref = this.dialogService.open(CollectionPromptComponent, {
+      header: 'Configuración de los prompts de la colección: '+collection.description,
+      width: '900px',
+      height: '90vh',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false,
+      data: collection
+    });
+
+
+  }
+
+
+  onConfig(collection: Collection) : void{
+
+    let ref = this.dialogService.open(CollectionConfigurationComponent, {
+      header: 'Configuración de la colección: '+collection.description,
+      width: '800px',
+      height: '615px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      closable: false,
+      data: collection
+    });
+
+
+  }
+
+  onEdit(collection: Collection) : void {
 
     let header = this.translateService.instant('collections.edit.title-new');
     if (collection)

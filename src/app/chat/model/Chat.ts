@@ -3,5 +3,5 @@ export interface Chat {
     author: string,
     user: boolean,
     title: string,
-    updateDate?: Date,
+    updateDate: Date,
 }

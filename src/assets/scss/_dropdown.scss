@@ -1,0 +1,25 @@
+.p-multiselect-header {
+    display: none !important;
+}
+
+p-autocomplete {
+    span {
+        width: 100%;
+        input { width: 100%; }
+    }
+}
+
+
+.p-autocomplete-token-label {
+    white-space:nowrap;
+}
+
+
+p-columnfilter p-dropdown span,
+p-columnfilter p-multiselect span {
+    font-size: .85rem !important;
+}
+
+.p-dropdown {
+    height: 42px;
+}

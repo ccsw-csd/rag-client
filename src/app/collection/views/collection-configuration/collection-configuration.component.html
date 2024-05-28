@@ -1,0 +1,89 @@
+
+<div class="flex flex-column gap-3">
+
+    <p-fieldset legend="Datos del LLM">
+
+
+        <div class="flex flex-column gap-3 pt-2">
+
+            <div class="flex flex-1 flex-row gap-3">
+
+                <span class="flex-none w-10rem p-float-label">
+                    <p-dropdown class="w-full" styleClass="w-full" [options]="llms" [(ngModel)]="selectedLLM" placeholder="Select a LLM" optionLabel="name"></p-dropdown>
+                    <label for="float-label">Select a LLM</label>
+                </span>
+
+                <span class="flex-1 p-float-label">
+                    <p-password class="w-full text-right" styleClass="w-full" inputStyleClass="w-full" [(ngModel)]="key" [feedback]="false" inputId="apiKey"></p-password>
+                    <label htmlFor="tokens">API Key</label>
+                </span>
+
+
+                <span class="flex-none w-8rem p-float-label">
+                    <input id="tokens"  class="w-full text-right" inputStyleClass="w-full" pInputText value="{{selectedLLM.tokens | number:'1.0-0'}}" readonly/>
+                    <label htmlFor="tokens">Tokens max.</label>
+                </span>
+
+            </div>
+
+            <div class="flex flex-1 flex-row gap-3 align-items-center">
+
+                <span>Context ratio: </span>
+                <p-slider class="flex-1" [(ngModel)]="deltaTokens"></p-slider>
+
+                <span class="flex-none w-8rem p-float-label">
+                    <input id="tokens"  class="w-full text-right" inputStyleClass="w-full" pInputText value="{{(selectedLLM.tokens * deltaTokens / 100.0) | number:'1.0-0'}}" readonly/>
+                    <label htmlFor="tokens">Question Tokens</label>
+                </span>
+
+                <span class="flex-none w-8rem p-float-label">
+                    <input id="tokens"  class="w-full text-right" inputStyleClass="w-full" pInputText value="{{(selectedLLM.tokens-(selectedLLM.tokens * deltaTokens / 100.0)) | number:'1.0-0'}}" readonly/>
+                    <label htmlFor="tokens">Response Tokens</label>
+                </span>                
+
+            </div>
+
+
+    </div>
+
+    </p-fieldset>
+
+    <p-fieldset legend="Datos del Asistente">
+        <div class="flex flex-column gap-3 pt-2">
+            <p-checkbox [binary]="true" label="No genera contexto automático para la IA" [(ngModel)]="noAutocontext"></p-checkbox>
+            <p-checkbox [binary]="true" label="Genera el contexto automático solamente con documentación" [(ngModel)]="onlyDoc"></p-checkbox>
+            <p-checkbox [binary]="true" label="Genera el contexto automático solamente con código fuente" [(ngModel)]="onlyCode"></p-checkbox>
+            <p-checkbox [binary]="true" label="La respuesta de la IA será una query SQL" [(ngModel)]="query"></p-checkbox>
+
+            <div class="flex flex-1 flex-row gap-3">
+
+                <span class="flex-1 p-float-label">
+                    <input  class="w-full text-left" inputStyleClass="w-full" pInputText [(ngModel)]="databaseURL"/>
+                    <label for="float-label">Database URL</label>
+                </span>
+
+                <span class="flex-none w-10rem p-float-label">
+                    <input   class="w-full text-right" inputStyleClass="w-full" pInputText [(ngModel)]="databaseUsername"/>
+                    <label >Username</label>
+                </span>
+
+                <span class="flex-none w-10rem p-float-label">
+                    <p-password class="w-full" styleClass="w-full" inputStyleClass="w-full text-right" [(ngModel)]="databasePassword" [feedback]="false"></p-password>
+                    <label >Password</label>
+                </span>
+
+            </div>
+
+
+        </div>
+    </p-fieldset>
+
+</div>
+
+<div class="flex flex-row justify-content-end gap-2 pt-4">    
+    <button pButton pRipple label="Cerrar" class="w-8rem p-button p-button-secondary p-button-outlined bg-white" (click)="onClose()"></button>
+    <button pButton pRipple label="Guardar" class="w-8rem"  (click)="onSave()" ></button>
+</div>
+
+
+

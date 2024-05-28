@@ -14,6 +14,13 @@
     box-shadow: none;
   }
 
+  
+  .collection-dropdown {
+    span {
+      margin-top: -0.3rem
+    }
+  }
+
 }
 
 
@@ -58,3 +65,33 @@
 
 
 
+.item-title {
+  color: var(--surface-600); 
+}
+
+
+.item-chat {
+
+  div {
+
+    background: #090909;
+    background: linear-gradient(to right, #090909 85%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  cursor: pointer;
+
+  span {
+    visibility: hidden;  
+  }
+}
+
+.item-chat:hover {
+
+  background-color: var(--gray-200);
+
+  span {
+    visibility: visible;
+  }
+}

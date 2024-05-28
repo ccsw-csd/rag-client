@@ -11,7 +11,7 @@
             </span>
 
             <span class="flex-none w-14rem p-float-label">
-                <input id="embeddings"  class="w-14rem text-right" inputStyleClass="w-full" pInputText value="{{message.embeddings.length}}" readonly/>
+                <input id="embeddings"  class="w-14rem text-right" inputStyleClass="w-full" pInputText value="{{embeddings.length}}" readonly/>
                 <label htmlFor="embeddings">Embeddings</label>
             </span>
 
@@ -30,11 +30,13 @@
     </p-fieldset>
 
     <p-fieldset *ngIf="messagePrevious != null" legend="Mensaje de {{messagePrevious.author}}" [toggleable]="true" collapsed="true">
-        <p [innerHTML]="messagePrevious.content"></p>
+        <p [innerHTML]="convertPlainTextToHtml(messagePrevious.content)"></p>
     </p-fieldset>
 
     <p-fieldset legend="Respuesta del Assistant" [toggleable]="true" collapsed="true">
-        <markdown [data]="message.content" [disableSanitizer]="true"></markdown>
+        <p [innerHTML]="convertPlainTextToHtml(message.content)"></p>
+
+        <!--<markdown [data]="message.content" [disableSanitizer]="true"></markdown>-->
     </p-fieldset>
 
     <p-fieldset legend="Embeddings" [toggleable]="true" collapsed="true">
@@ -43,8 +45,6 @@
         
             <ng-template pTemplate="header">
                 <tr>
-                    <th class="flex-none w-5rem top-header justify-content-start"></th>
-
                     <th class="flex-1 top-header text-left"><div class="ml-2">Document</div></th>
                     <th class="flex-none w-5rem top-header text-center"><div class="ml-2"># Chunk</div></th>
                     <th class="flex-none w-20rem top-header text-center"><div class="ml-2">EmbeddingId</div></th>
@@ -52,27 +52,14 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-embedding let-expanded="expanded">
+            <ng-template pTemplate="body" let-embedding>
                 <tr>
-                    <td>
-                        <button type="button" pButton pRipple [pRowToggler]="embedding" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                    </td>
-                    <td class="flex-1 text-left">{{ embedding.document }}</td>
-                    <td class="flex-none w-5rem text-center">{{ embedding.order }}</td>
-                    <td class="flex-none w-20rem text-center">{{ embedding.embeddingId }}</td>
-                    <td class="flex-none w-6rem text-right">{{ embedding.tokens }}</td>
+                    <td class="text-left">{{ embedding.filename }}</td>
+                    <td class="text-center">{{ embedding.chunkNumber }}</td>
+                    <td class="text-center">{{ embedding.embeddingId }}</td>
+                    <td class="text-right">{{ embedding.tokens }}</td>
                 </tr>
             </ng-template>
-        
-            <ng-template pTemplate="rowexpansion" let-embedding>
-                <tr>
-                    <td colspan="5">
-                        <div>
-                            <markdown [data]="embedding.content" [disableSanitizer]="true"></markdown>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>            
         
         </p-table>
 

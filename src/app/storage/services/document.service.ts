@@ -54,6 +54,11 @@ export class DocumentService {
   }
 
 
+  createDocument(collectionId: number, filename: string):  Observable<void> {
+    return this.http.put<void>(environment.server + "/document/create-in-collection/"+collectionId, {filename: filename});
+  }
+
+
   /*
   parseDocument(document: DocumentFile, parseType: string): Observable<void> {
     return this.http.post<void>(environment.server + '/document/parse', {collectionId: document.collectionId, filename: document.filename, parseType: parseType, overwrite: true});

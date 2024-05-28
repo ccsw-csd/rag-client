@@ -1,8 +1,11 @@
 export interface EmbeddingMessage {
     id: number,
-    embeddingId: string,
-    content: string,
-    type: number,
-    order: number,
-    document: string
+    filename: string,
+    tokens: number,
+    status: string,
+    path: string,
+    chunkNumber: number,
+    type: string,
+    modifyTpe: string,
+    embeddingId: string
 }

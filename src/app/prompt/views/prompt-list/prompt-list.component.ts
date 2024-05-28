@@ -34,7 +34,7 @@ export class PromptListComponent implements OnInit {
   ngOnInit(): void {
     this.resizeTable(document.getElementById('p-slideMenu'));
 
-    this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
+    this.navigatorService.getNavigatorChangeEmitter().subscribe((menuVisible) => {
       this.resizeTable(menuVisible);
     });
 

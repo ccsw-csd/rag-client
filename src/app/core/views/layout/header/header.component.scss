@@ -1,59 +1,18 @@
 
 ::ng-deep {
 
-    .p-divider.p-divider-horizontal {
-        margin: 0.5rem 0;
-    }
-
-    
-
     .toolbar-header {
         height: 56px; 
-
+    
         .p-toolbar {
             background-color: #272936;
             border-radius: 0px !important;
-
+    
             padding-top: 5px;
             padding-bottom: 6px;;
         }
     }
-
-    .header-button {
-        height: 45px; 
-
-        .p-button {
-            min-width: 0px;
-            background: transparent;
-
-            .p-avatar{
-                background: transparent;
-            }
-        }
-
-        .p-button:enabled:focus {
-            background: transparent;
-        }
-
-        .p-button:enabled:hover {
-            background: transparent;
-        }
-    }
-
-
-    .header-icon .pi {
-        font-size: 21px;
-        font-style: normal;
-    }
-
-
-    .item-menu {
-        padding: 12px 0px;
-    }
-
-    .item-menu:hover {
-        background-color: #ededed;
-    }
+   
 
     .p-overlaypanel {
         background-color: transparent;
@@ -62,16 +21,50 @@
 
     .p-overlaypanel-content {
         padding: 0 !important;    
-    }
-    
+    }        
+
 }
+
+
+
+.header-button {
+    height: 45px; 
+
+    .p-button {
+        min-width: 0px;
+        background: transparent;
+
+        .p-avatar{
+            background: transparent;
+        }
+    }
+
+    .p-button:enabled:focus {
+        background: transparent;
+    }
+
+    .p-button:enabled:hover {
+        background: transparent;
+    }
+}
+
+
+.item-menu {
+    padding: 12px 0px;
+}
+
+.item-menu:hover {
+    background-color: #ededed;
+}
+
+.header-icon .pi {
+    font-size: 21px;
+    font-style: normal;
+}
+
 
 .overlaypanel-rounded {
     background-color: white;
     border-radius: 30px;
     box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
 }
-
-
-
-

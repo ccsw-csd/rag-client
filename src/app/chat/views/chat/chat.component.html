@@ -4,30 +4,30 @@
     <div class="w-20rem">
         <p-fieldset legend="Config"> 
 
-            <div style="height:calc(100vh - 175px)" class="pl-3 pr-3 flex flex-1 flex-column gap-3">
+            <div style="height:calc(100vh - 175px)" class="pl-1 pr-1 flex flex-1 flex-column gap-3">
 
 
                 <div class="flex flex-row w-full align-items-center">
                     <span class="pi pi-book text-500 w-2rem"></span>
-                    <p-dropdown [options]="collections" [(ngModel)]="selectedCollection" optionLabel="description" [showClear]="false" styleClass="w-15rem h-2rem" placeholder="Select a Collection" (onChange)="onChangeCollection($event)"></p-dropdown>
+                    <p-dropdown [options]="collections" [(ngModel)]="selectedCollection" optionLabel="description" [showClear]="false" styleClass="w-15rem h-2rem collection-dropdown" placeholder="Select a Collection" (onChange)="onChangeCollection($event)"></p-dropdown>
                 </div>
                 
-                <div class="flex flex-row justify-content-end p-0 gap-3 w-17rem">
-                    <span class="pi pi-cog cursor-pointer text-red-500 border-red-500 hover:text-primary hover:border-primary border-circle w-2rem h-2rem border-1 align-content-center text-center"></span>
+                <div class="flex flex-row justify-content-end p-0 gap-3 w-18rem">
+                    <span class="pi pi-cog cursor-pointer text-red-500 border-red-500 hover:text-primary hover:border-primary border-circle w-2rem h-2rem border-1 align-content-center text-center" (click)="onButtonConfigure()"></span>
                     <span class="pi pi-plus cursor-pointer text-red-500 border-red-500 hover:text-primary hover:border-primary border-circle w-2rem h-2rem border-1 align-content-center text-center" (click)="onCreateChat()"></span>
                 </div>                
 
-                <p-listbox [options]="chats" [(ngModel)]="selectedChat" scrollHeight="calc(100vh - 285px)" [style]="{ width: '17rem', height: 'calc(100vh - 285px)' }" class="pt-2" (onChange)="onChangeChat($event)">
-                    <ng-template let-chat pTemplate="item">
-                        <div class="flex align-items-center gap-2">                            
-                            <div style="text-wrap: nowrap;">{{ chat.title }}</div>
+                <div class="flex flex-column scrollbar border-1 border-gray-300 border-round gap-1 p-0 w-18rem" style="height: calc(100vh - 285px)">                    
+                    <div *ngFor="let item of chatItems" class="{{item.isTitle ? 'item-title' : 'item-chat'}} {{item?.isTitle == false && item?.chat?.id == selectedChat?.id ? 'bg-blue-100': ''}} flex flex-row" [contextMenu]="cmList">                    
+                        <div *ngIf="item.isTitle == true" class="pt-3 pl-2">{{item.title}}</div>
+                        <div *ngIf="item.isTitle == false" class="p-2 pl-3 white-space-nowrap overflow-hidden flex-1" (click)="onChangeChat(item)">
+                            {{item.chat.title}}
                         </div>
-                    </ng-template>
-                </p-listbox>
-
+                        <span *ngIf="item.isTitle == false" class="pt-2 pr-2 pi pi-ellipsis-h" (click)="cmListSelected = item; cmList.toggle($event)"></span>                    
+                    </div>
+                </div>
 
             </div>
-
 
         </p-fieldset> 
     </div>
@@ -59,7 +59,7 @@
                                 <div class="flex flex-1 flex-row pl-2 pr-2 pb-2">
                                     <div class="flex w-2rem"></div>
                                     <div class="flex flex-1 align-items-center pl-4">
-                                        <markdown [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers clipboard style="width: calc(100vw - 45rem);"></markdown>
+                                        <markdown [data]="message.content" [disableSanitizer]="true" mermaid lineNumbers clipboard style="width: calc(100vw - 45rem);" class="scrollbar"></markdown>
                                     </div>                        
                                 </div>
 
@@ -104,3 +104,36 @@
     </div>
 </div>
 </p-overlayPanel>
+
+<p-menu #cmList [model]="itemsContextMenuList" [popup]="true"></p-menu>
+
+<p-confirmDialog #cd [style]="{width: '35vw'}" defaultFocus="none">
+    <ng-template pTemplate="footer">
+        <div *ngIf="cd.confirmationOptions.rejectVisible == false">
+            <button pButton pRipple p-button-label="10px" label="Ok" (click)="cd.accept()"></button>
+        </div>
+
+        <div *ngIf="cd.confirmationOptions.rejectVisible == true">
+            <button pButton pRipple styleClass="" label="No" class="p-button p-button-secondary p-button-outlined" (click)="cd.reject()"></button>
+            <button pButton pRipple p-button-label="10px" label="Sí" (click)="cd.accept()"></button>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+
+
+<p-dialog header="Header" [(visible)]="renameChatDialogVisible">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Renombrar chat</span>
+    </ng-template>
+    <p>
+        Para renombrar el chat, proponga un nuevo nombre.
+    </p>
+    <span class="p-float-label w-28rem">
+        <input pInputText [(ngModel)]="renameChatName" class="w-full" />
+        <label>Filename</label>
+    </span>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cerrar" class="w-10rem p-button p-button-secondary p-button-outlined" (click)="renameChatName = ''; renameChatDialogVisible = false; cmListSelected = null;"></button>
+        <button pButton pRipple label="Renombrar" class="w-10rem" (click)="onRenameChat()"></button>
+    </ng-template>
+</p-dialog>

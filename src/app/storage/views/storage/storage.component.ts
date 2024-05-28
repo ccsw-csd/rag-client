@@ -25,6 +25,9 @@ interface PropertyItem {
 })
 export class StorageComponent implements OnInit {
 
+  createFileDialogVisible = false;
+  createFileName = '';
+
   collections : Collection[];
   selectedCollection : Collection;
   timerGenerateChunksFromCodeEditor: any = null;
@@ -71,10 +74,6 @@ export class StorageComponent implements OnInit {
   @ViewChild(CodeEditorComponent, { static: false })
   private codeEditor: any;
 
-
-  
-
-
   constructor(
     private navigatorService: NavigatorService,
     private documentService: DocumentService,
@@ -90,6 +89,8 @@ export class StorageComponent implements OnInit {
 
 
     this.collectionService.findAll().subscribe(collections => {
+
+      collections.sort((a, b) => a.description.localeCompare(b.description));
 
       this.collections = collections;
       let selectedCollection = this.authService.getProperty("selected-collection");
@@ -107,7 +108,7 @@ export class StorageComponent implements OnInit {
 
     });
 
-    this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
+    this.navigatorService.getNavigatorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.onResize(null);
       else setTimeout(()=>this.onResize(null), 200);
     });
@@ -617,6 +618,13 @@ export class StorageComponent implements OnInit {
     this.loadDocuments();
   }
 
+  onCreateNewFile(): void {
+    this.navigatorService.setLoading(true);
+      this.documentService.createDocument(this.selectedCollection.id, this.createFileName).subscribe( res => {
+        this.loadDocuments();
+        this.createFileDialogVisible = false;
+      });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) : void {

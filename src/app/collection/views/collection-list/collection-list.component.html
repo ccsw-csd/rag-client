@@ -27,7 +27,7 @@
                 <p-sortIcon field="description"></p-sortIcon>
               </div>
             </th>
-            <th class="w-3rem">
+            <th class="w-8rem">
               <div class="text-right top-header">
                   <span></span>
               </div> 
@@ -44,6 +44,8 @@
               {{ collection.description }}
             </td>
             <td>
+              <button pButton pRipple type="button" icon="pi pi-file-edit" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger" (click)="onEditPrompt(collection)"></button>
+              <button pButton pRipple type="button" icon="pi pi-cog" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem p-button-danger" (click)="onConfig(collection)"></button>
               <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="onEdit(collection)"></button>
             </td>
           </tr>
