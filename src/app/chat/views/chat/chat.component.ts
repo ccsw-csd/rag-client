@@ -66,6 +66,8 @@ export class ChatComponent implements OnInit {
   
   
   ngOnInit(): void {
+    this.navigatorService.emitNavigatorChangeEvent(false);
+    
     this.navigatorService.setLoading(true);
     this.collectionService.findAll().subscribe(collections => {
       
@@ -234,7 +236,7 @@ export class ChatComponent implements OnInit {
   onQuestionSend() : void {
     
     let textQuestion = this.question;
-    this.question = '';
+    //this.question = '';
     
     if (textQuestion != null && textQuestion.length > 0) {
 

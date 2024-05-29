@@ -34,6 +34,10 @@ export class LayoutComponent implements OnInit {
 
     }); 
 
+    this.navigatorService.getNavigatorChangeEmitter().subscribe(visible => {
+      this.visibleSideBar = visible;
+    });
+
     this.navigatorService.changeLanguage();
   }
 
@@ -51,9 +55,9 @@ export class LayoutComponent implements OnInit {
   }
 
   public toggleMenu() : void {
-    this.visibleSideBar = !this.visibleSideBar;
+    //this.visibleSideBar = !this.visibleSideBar;
 
-    this.navigatorService.emitNavigatorChangeEvent(this.visibleSideBar);
+    this.navigatorService.emitNavigatorChangeEvent(!this.visibleSideBar);
   }
 
 }

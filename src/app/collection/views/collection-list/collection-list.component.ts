@@ -25,15 +25,20 @@ export class CollectionListComponent implements OnInit {
     private collectionService: CollectionService,
     private dialogService: DialogService,
     private translateService: TranslateService,
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit(): void {
+
     this.resizeTable();
 
     this.navigatorService.getNavigatorChangeEmitter().subscribe((menuVisible) => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
       else this.tableWidth = 'calc(100vw - 50px)';
     });
+
+    this.navigatorService.emitNavigatorChangeEvent(false);
 
     this.loadCollections();
   }

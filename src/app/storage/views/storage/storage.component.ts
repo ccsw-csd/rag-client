@@ -113,6 +113,8 @@ export class StorageComponent implements OnInit {
       else setTimeout(()=>this.onResize(null), 200);
     });
 
+    this.navigatorService.emitNavigatorChangeEvent(false);    
+
     this.itemsContextMenuTree = [
       { label: 'Generate Enhanced', icon: 'pi pi-bolt', command: (event) => this.onLaunchAction(1, this.selectedFile.data) },
       { label: 'Generate Embeddings', icon: 'pi pi-ia', command: (event) => this.onLaunchAction(2, this.selectedFile.data) },
